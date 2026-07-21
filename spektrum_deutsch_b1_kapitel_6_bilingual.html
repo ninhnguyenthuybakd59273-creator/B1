@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 6: Gesundheit - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        .translatable-word {
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .translatable-word:hover {
+            background-color: #ccfbf1;
+            color: #0f766e;
+            border-radius: 2px;
+        }
+
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            user-select: none;
+            -webkit-user-select: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        
+        /* Utility class to distinguish English text and prevent translation on it */
+        .english-text {
+            color: #64748b; /* text-slate-500 */
+            font-size: 0.875rem; /* text-sm */
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Spektrum Deutsch
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 6: Gesundheit</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li class="pt-2 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Inhalt</li>
+                <li><a href="#sec-1" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 1. Gesund und fit im Alltag Healt</a></li>
+                <li><a href="#sec-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 2. Reflexive in Akkusativ (Standa</a></li>
+                <li><a href="#sec-3" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 3. Reflexive in Dativ (With a sec</a></li>
+                <li><a href="#sec-4" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 4. Satzbau: Hauptsatz (Main Claus</a></li>
+                <li><a href="#sec-5" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 5. Satzbau: Nebensatz (Subordinat</a></li>
+                <li><a href="#sec-6" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 6. 1. Konditionalangaben: Nebensä</a></li>
+                <li><a href="#sec-7" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 7. 2. Konsekutivangaben: Hauptsät</a></li>
+                <li><a href="#sec-8" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 8. Kurze Zusammenfassung der Wort</a></li>
+                <li><a href="#sec-9" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 9. 1. Bei (+ Dativ)</a></li>
+                <li><a href="#sec-10" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 10. 2. Gegen (+ Akkusativ)</a></li>
+                <li><a href="#sec-11" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 11. 3. Trotz (+ Genitiv)</a></li>
+                <li><a href="#sec-12" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 12. 4. Zu (+ Dativ)</a></li>
+                <li><a href="#sec-13" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 13. Hier sind die Lösungen, Simula</a></li>
+                <li><a href="#sec-14" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 14. Transkription Hörtext: Gesund </a></li>
+                <li><a href="#sec-15" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 15. Diskussion: Gesundheit und Fit</a></li>
+                <li><a href="#sec-16" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 16. Präsentation: Fitnessarmbänder</a></li>
+                <li><a href="#sec-17" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 17. Der Tagesablauf von Peter & Re</a></li>
+                <li><a href="#sec-18" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 18. Interview: Mittagsruhe & Power</a></li>
+                <li><a href="#sec-19" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 19. Experteninterview: Power-Nap (</a></li>
+                <li><a href="#sec-20" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 20. Bürokrankheiten und was Sie da</a></li>
+                <li><a href="#sec-21" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 21. Schriftlicher Ausdruck: Ihre M</a></li>
+                <li><a href="#sec-22" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 22. Hausmittel: Medikamente aus Om</a></li>
+
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="text-gray-500 hover:text-brand-600 transition-colors mr-1">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                </a>
+                <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 6: Gesundheit</h1>
+            </div>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-5xl mx-auto space-y-12 pb-20">
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Bilingual Edition / Zweisprachige Ausgabe</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 6: Gesundheit</h1>
+                    <p class="text-xl text-gray-600">Ernährung, Sport, Fitness und Entspannung</p>
+                </div>
+
+                <section id="sec-1" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">1</span>
+                        Gesund und fit im Alltag Healthy and fit in everyday life
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">nicht rauchen not smoking</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">kein/weniger Fleisch essen eating no/less meat</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich vegetarisch/gesund ernähren eating a vegetarian/healthy diet</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">auf die Ernährung achten paying attention to nutrition</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">regelmäßig Sport treiben doing sports regularly</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nahrungsergänzungsmittel nehmen taking dietary supplements</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich entspannen relaxing</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich mit dem Thema nicht/intensiv beschäftigen not/intensively dealing with the topic</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Yoga machen doing yoga</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">eine App benutzen/nutzen using/utilizing an app</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sein Ziel erreichen achieving one's goal</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich viel bewegen/täglich laufen moving a lot / walking daily</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ins Fitnessstudio gehen going to the gym</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich ausruhen resting / taking a break</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich gesund/gestresst fühlen feeling healthy/stressed</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">unkonzentriert/müde sein being unfocused/tired</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Der Körper und gesundheitliche Probleme The body and health problems
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Körperteile und Organe: die Nase, die Hände, die Ohren, die Augen, die Haare, die Haut, das Gehirn, der Magen, die Lunge, die Knochen, die Zähne, die Fingernägel, der Rücken, der Oberarm, der Oberschenkel, das Herz, der Darm Body parts and organs: the nose, the hands, the ears, the eyes, the hair, the skin, the brain, the stomach, the lungs, the bones, the teeth, the fingernails, the back, the upper arm, the thigh, the heart, the intestine</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Gesundheitliche Probleme: Ich habe eine Erkältung, eine Grippe, Kopfschmerzen, Migräne, Rückenschmerzen, Schulterschmerzen, Herz-Kreislauf-Probleme, Magenprobleme. Health problems: I have a cold, a flu, a headache, a migraine, back pain, shoulder pain, cardiovascular problems, stomach problems.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">unter Übelkeit leiden suffering from nausea</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Behandlung: zum Arzt/in die Apotheke gehen, eine Überweisung zum Facharzt bekommen, (nicht) lange auf einen Termin warten, behandelt werden, die Behandlung bezahlen Treatment: going to the doctor/pharmacy, getting a referral to a specialist, (not) waiting long for an appointment, being treated, paying for the treatment</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Ratschläge/Tipps geben Giving advice/tips
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du solltest/Sie sollten (einen kurzen Mittagsschlaf machen). You should (take a short midday nap).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es wäre gut, wenn du/Sie (einen kurzen Mittagsschlaf machen würdest/würden). It would be good if you (would take a short midday nap).</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Power-Nap Power nap
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">einen Mittagsschlaf/ein kurzes Schläfchen machen taking a midday nap / a short snooze</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ausreichend/zu wenig/mittags schlafen sleeping sufficiently / too little / at noon</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ein Mittagstief haben having a midday slump</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich mit Kaffee über den Tag retten saving oneself through the day with coffee</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">mit einem Power-Nap die Konzentrationsfähigkeit verbessern improving the ability to concentrate with a power nap</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Stress abbauen reducing stress</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">das Herz-Kreislauf-System/die Nerven stärken strengthening the cardiovascular system / the nerves</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">(nicht) verboten sein (not) being forbidden</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">keinen guten Ruf haben not having a good reputation</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">als schwach und faul/als Zeichen für harte Arbeit gelten being considered weak and lazy / a sign of hard work</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">in den Unternehmensalltag integriert werden being integrated into everyday corporate life</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">spezielle Schlafräume einrichten setting up special sleep rooms</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Hausmittel Home remedies
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">einen Kräutertee trinken drinking a herbal tea</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Rezepte von Generation zu Generation weitergeben passing recipes down from generation to generation</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">bei Krankheiten helfen helping with illnesses</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">die Schmerzen/Beschwerden lindern alleviating the pain/complaints</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">entzündungshemmend wirken having an anti-inflammatory effect</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">eine antibakterielle Wirkung haben having an antibacterial effect</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">bei bakteriellen Erkrankungen zum Einsatz kommen being used for bacterial diseases</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">bei Magenproblemen verwendet werden being used for stomach problems</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">als Mittel gegen Migräne dienen serving as a remedy for migraines</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">einen Insektenstich desinfizieren disinfecting an insect bite</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Dämpfe einatmen inhaling vapors</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">etwas in Tablettenform verkaufen selling something in tablet form</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">zu Ingwer greifen reaching for ginger / using ginger</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Vor- und Nachteile nennen Naming advantages and disadvantages
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">(Gesundheits-Apps) bieten meiner Meinung nach mehr Vorteile als Nachteile. (Health apps) offer more advantages than disadvantages in my opinion.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich bin der Meinung, dass (Gesundheits-Apps) mehr Vorteile als Nachteile haben. I am of the opinion that (health apps) have more advantages than disadvantages.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Als Vorteil/Nachteil sehe ich, dass (man die eigene Bewegung kontrollieren kann). I see it as an advantage/disadvantage that (one can control one's own movement).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich halte es für einen Vorteil/Nachteil, dass (man sich nur noch auf die Gesundheit konzentriert). I consider it an advantage/disadvantage that (one focuses only on health).</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-2" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">2</span>
+                        Reflexive in Akkusativ (Standard)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                In these cases, the reflexive pronoun is the only object.
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">1. Ich freue mich auf meine nächste Vorlesung. I am looking forward to my next lecture.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">2. Du ruhst dich nach einem langen Tag aus. You rest after a long day.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">3. Der Patient setzt sich langsam auf den Stuhl. The patient sits down slowly on the chair.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">4. Wir treffen uns morgen in der Bibliothek. We are meeting tomorrow in the library.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">5. Interessieren Sie sich für menschliche Psychologie? Are you interested in human psychology?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">6. Die Studenten müssen sich auf die Prüfung vorbereiten. The students must prepare themselves for the exam.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">7. Ich konzentriere mich auf meine Forschung. I am concentrating on my research.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-3" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">3</span>
+                        Reflexive in Dativ (With a second object)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                The reflexive pronoun moves to Dativ because you are doing the action "to yourself" regarding a specific object (like a body part).
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">8. Ich wasche mir vor der Arbeit die Hände. I wash my hands before work.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">9. Du ziehst dir die medizinischen Handschuhe an. You put on the medical gloves.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">10. Er kauft sich ein neues Buch über Anatomie. He buys himself a new book about anatomy.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">11. Wir merken uns die wichtigen Fachbegriffe. We memorize the important technical terms.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">12. Ich sehe mir das Video über Erste Hilfe an. I am watching the video about first aid.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-4" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">4</span>
+                        Satzbau: Hauptsatz (Main Clause Order)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Note how "sich" follows the verb or the pronoun.
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">13. Heute beschwert sich der Patient über Schmerzen. Today the patient complains about pain.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">14. Wofür interessieren Sie sich in Ihrem Masterstudium? What are you interested in during your Master's studies?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">15. Erkältet sich Susi oft im Winter? Does Susi often catch a cold in winter?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">16. Morgen melde ich mich für den Deutschkurs an. Tomorrow I will sign up for the German course.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-5" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">5</span>
+                        Satzbau: Nebensatz (Subordinate Clause Order)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                In a "dass" or "ob" clause, the pronoun often stays right after the subjunction.
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">17. Ich finde es toll, dass Sie sich für Krankenpflege interessieren. I think it's great that you are interested in nursing.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">18. Ich weiß nicht, ob er sich heute gesund fühlt. I don't know if he feels healthy today.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">19. Es ist wichtig, dass wir uns regelmäßig die Hände desinfizieren. It is important that we regularly disinfect our hands.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">20. Susi sagt, dass sie sich auf ihren neuen Job an der Uni freut. Susi says that she is looking forward to her new job at the university.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-6" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">6</span>
+                        1. Konditionalangaben: Nebensätze mit „wenn“ und „falls“
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Diese Sätze nennen eine Bedingung. In diesen Nebensätzen steht das konjugierte Verb immer ganz am Ende.
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wenn der Patient Schmerzen hat, rufen Sie bitte sofort den Arzt. If the patient has pain, please call the doctor immediately.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Falls Sie Fragen zum Masterstudium haben, können wir gerne nach der Vorlesung sprechen. In case you have questions about the Master's program, we can gladly speak after the lecture.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich lade das Video auf YouTube hoch, wenn die Bearbeitung in Adobe Premiere fertig ist. I will upload the video to YouTube when the editing in Adobe Premiere is finished.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Falls der Blutdruck sinkt, muss die Infusion gestoppt werden. If the blood pressure drops, the infusion must be stopped.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Studenten bekommen eine gute Note, wenn sie die Hausaufgaben pünktlich abgeben. The students get a good grade if they hand in the homework on time.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Falls ein Kunde Probleme beim Download der PDF-Anleitung hat, schreibe ich ihm eine E-Mail. In case a customer has problems downloading the PDF instructions, I will write him an email.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich kann meinen amerikanischen Akzent verbessern, wenn ich jeden Tag die Aussprache übe. I can improve my American accent if I practice the pronunciation every day.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wenn man die Gesetze der menschlichen Natur versteht, kann man besser mit Kollegen umgehen. If one understands the laws of human nature, one can deal better with colleagues.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Falls die Vorlesung morgen ausfällt, informiere ich die Studenten über die Lernplattform. In case the lecture is cancelled tomorrow, I will inform the students via the learning platform.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir können das neue Design für den Zazzle-Shop besprechen, wenn ich Zeit habe. We can discuss the new design for the Zazzle shop when I have time.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-7" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">7</span>
+                        2. Konsekutivangaben: Hauptsätze mit „sonst“ und „andernfalls“
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Diese Wörter leiten eine Folge ein, die eintritt, wenn man die vorherige Handlung nicht ausführt. Das konjugierte Verb steht hier an Position 2 (direkt nach sonst/andernfalls).
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Desinfizieren Sie sich regelmäßig die Hände, sonst können sich Keime im Krankenhaus verbreiten. Disinfect your hands regularly, otherwise germs can spread in the hospital.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich muss meine Masterarbeit fleißig schreiben, andernfalls schaffe ich den Abschluss nicht rechtzeitig. I must write my master's thesis diligently, otherwise I will not finish on time.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Speichere dein Videoprojekt regelmäßig, sonst ist die ganze Arbeit in Premiere verloren. Save your video project regularly, otherwise all the work in Premiere is lost.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Trinken Sie ausreichend Wasser, andernfalls bekommen Sie während der Schicht Kopfschmerzen. Drink enough water, otherwise you will get a headache during the shift.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Banner für den Nursology-Shop müssen professionell aussehen, sonst kaufen die Kunden nichts. The banners for the Nursology shop must look professional, otherwise the customers won't buy anything.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Hören Sie den Patienten aufmerksam zu, andernfalls könnten Sie wichtige Symptome übersehen. Listen to the patients carefully, otherwise you could overlook important symptoms.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich muss die Grammatik für das A2-Level wiederholen, sonst mache ich zu viele Fehler im Test. I have to review the grammar for the A2 level, otherwise I'll make too many mistakes on the test.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Erklären Sie die medizinischen Fachbegriffe einfach, andernfalls verstehen die Schüler den Stoff nicht. Explain the medical terms simply, otherwise the students will not understand the material.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du solltest dein Passwort für Gumroad ändern, sonst ist dein Account nicht sicher. You should change your password for Gumroad, otherwise your account is not secure.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sei pünktlich im Seminar, andernfalls verpasst du die Einführung in die Psychiatrische Pflege. Be on time for the seminar, otherwise you'll miss the introduction to psychiatric nursing.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-8" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">8</span>
+                        Kurze Zusammenfassung der Wortstellung
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Wort	Satzart	Position des Verbs
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                wenn / falls	Nebensatz	Am Ende
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                sonst / andernfalls	Hauptsatz	Position 2
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-9" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">9</span>
+                        1. Bei (+ Dativ)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Verwendung: Umstände, Bedingungen oder Gleichzeitigkeit (in the case of / during).
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">1. Bei Fragen wenden Sie sich bitte an den Dozenten. In case of questions, please contact the lecturer.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">2. Bei starken Schmerzen sollten Sie sofort einen Arzt rufen. In case of severe pain, you should call a doctor immediately.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">3. Bei der Arbeit trage ich immer bequeme Schuhe. At work, I always wear comfortable shoes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">4. Bei Regen bleiben die Studenten lieber im Seminarraum. During rain, the students prefer to stay in the seminar room.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">5. Bei Stress hilft mir ruhige Musik zur Entspannung. During stress, calm music helps me relax.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">6. Bei schönem Wetter findet die Vorlesung im Park statt. In case of beautiful weather, the lecture takes place in the park.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">7. Bei diesem Projekt müssen wir besonders vorsichtig sein. With this project, we must be especially careful.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">8. Bei Sonnenaufgang ist die Stadt noch sehr ruhig. At sunrise, the city is still very quiet.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">9. Bei Fehlern im System informieren Sie bitte die IT-Abteilung. In case of errors in the system, please inform the IT department.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">10. Bei der Untersuchung stellte der Arzt eine Besserung fest. During the examination, the doctor noted an improvement.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-10" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">10</span>
+                        2. Gegen (+ Akkusativ)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Verwendung: Widerstand oder Heilmittel (against / for).
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">1. Dieses Medikament hilft sehr gut gegen Kopfschmerzen. This medication helps very well against headaches.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">2. Wir müssen etwas gegen den Pflegenotstand tun. We must do something about (against) the nursing shortage.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">3. Ingwer ist ein bekanntes Hausmittel gegen Übelkeit. Ginger is a well-known home remedy for (against) nausea.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">4. Das Auto ist gegen einen Baum gefahren. The car drove against a tree.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">5. Ich habe nichts gegen Ihre Meinung. I have nothing against your opinion.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">6. Wir treffen uns morgen gegen acht Uhr. We are meeting tomorrow around eight o'clock.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">7. Gegen diese Infektion brauchen Sie ein Antibiotikum. For (against) this infection, you need an antibiotic.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">8. Die Mannschaft spielt heute gegen einen starken Gegner. The team is playing against a strong opponent today.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">9. Gegen Langeweile lese ich gerne Fachbücher. Against boredom, I like to read textbooks.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">10. Es gibt kein Gesetz gegen gute Laune. There is no law against a good mood.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-11" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">11</span>
+                        3. Trotz (+ Genitiv)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Verwendung: Ein Gegensatz (despite / in spite of).
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">1. Trotz der Müdigkeit lernte sie die ganze Nacht. Despite the tiredness, she studied all night.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">2. Trotz des Regens gingen wir im Krankenhauspark spazieren. Despite the rain, we went for a walk in the hospital park.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">3. Er bestand die Prüfung trotz seiner großen Nervosität. He passed the exam despite his great nervousness.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">4. Trotz des hohen Preises ist das neue Lehrbuch sehr beliebt. Despite the high price, the new textbook is very popular.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">5. Trotz der Schwierigkeiten haben wir das Ziel erreicht. Despite the difficulties, we achieved the goal.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">6. Trotz meiner Erkältung muss ich heute in die Uni gehen. Despite my cold, I have to go to the university today.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">7. Trotz des Lärms konnte der Patient gut schlafen. Despite the noise, the patient was able to sleep well.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">8. Trotz der kurzen Zeit war das Video sehr professionell. Despite the short time, the video was very professional.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">9. Trotz aller Bemühungen gab es keine Einigung. Despite all efforts, there was no agreement.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">10. Trotz des Fehlers war das Gesamtergebnis gut. Despite the error, the overall result was good.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-12" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">12</span>
+                        4. Zu (+ Dativ)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Verwendung: Zweck, Ziel oder Anlass (for / to).
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">1. Zur Vorbereitung auf die Prüfung lesen wir diesen Text. To prepare (for preparation) for the exam, we are reading this text.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">2. Zum Frühstück trinke ich meistens nur einen Kaffee. For breakfast, I usually only drink a coffee.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">3. Zur Information schicke ich Ihnen die Unterlagen per E-Mail. For (your) information, I am sending you the documents by email.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">4. Zum besseren Verständnis erkläre ich es noch einmal. For better understanding, I will explain it once more.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">5. Zum Glück ist der Patient wieder gesund. Fortunately (To luck), the patient is healthy again.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">6. Zur Entspannung mache ich nach der Arbeit gerne Yoga. To relax (For relaxation), I like to do yoga after work.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">7. Wir gratulieren dir herzlich zum Geburtstag. We congratulate you warmly on (to) your birthday.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">8. Zum ersten Mal habe ich ein Video in Adobe Premiere geschnitten. For the first time, I edited a video in Adobe Premiere.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">9. Zur Unterstützung der Heilung braucht der Körper Ruhe. To support (For the support of) healing, the body needs rest.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">10. Zum Schluss möchte ich mich bei Ihnen bedanken. Finally (To the end), I would like to thank you.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-13" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">13</span>
+                        Hier sind die Lösungen, Simulationen und schrittweisen Übersetzungen für die Aufgaben aus den neuen Bildern, Zeile für Zeile übersetzt und ohne Sprechernamen oder Aufgabennummern:
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Was Führungskräfte für ihre Gesundheit tun (Bild 214)
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text aus dem Buch: Was Führungskräfte für ihre Gesundheit tun What executives do for their health
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was machen Führungskräfte in Deutschland, um gesund und fit zu bleiben? Geben Sie die Umfrageergebnisse wieder. What do executives in Germany do to stay healthy and fit? Report the survey results.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Das tun Führungskräfte für ihre Gesundheit This is what executives do for their health
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">90 % rauchen nicht 90% do not smoke</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">65 % essen weniger Fleisch 65% eat less meat</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">64 % treiben regelmäßig Sport (z. B. Laufen, Radfahren) 64% exercise regularly (e.g., running, cycling)</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">31 % machen ab und zu ein Mittagsschläfchen 31% take a midday nap every now and then</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">27 % nehmen Nahrungsergänzungsmittel (z. B. Vitaminpillen) 27% take dietary supplements (e.g., vitamin pills)</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">27 % wenden Entspannungstechniken (z. B. Meditation) an 27% use relaxation techniques (e.g., meditation)</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">11 % besuchen regelmäßig die Sauna 11% visit the sauna regularly</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">8 % leben vegetarisch 8% live vegetarian</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Simulation (Bericht über die Umfrageergebnisse):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Eine aktuelle Umfrage hat ergeben, dass Gesundheit für Führungskräfte in Deutschland sehr wichtig ist. A recent survey has shown that health is very important for executives in Germany.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nach den Ergebnissen der Umfrage rauchen 90 Prozent der Führungskräfte nicht. According to the results of the survey, 90 percent of the executives do not smoke.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Um gesund und fit zu bleiben, essen 65 Prozent von ihnen weniger Fleisch und 64 Prozent treiben regelmäßig Sport, wie zum Beispiel Laufen oder Radfahren. To stay healthy and fit, 65 percent of them eat less meat and 64 percent exercise regularly, such as running or cycling.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Interessant finde ich, dass immerhin 31 Prozent ab und zu ein Mittagsschläfchen machen, um sich zu erholen. I find it interesting that at least 31 percent take a midday nap every now and then to recover.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Überrascht hat mich, dass nur 8 Prozent komplett vegetarisch leben. It surprised me that only 8 percent live completely vegetarian.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-14" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">14</span>
+                        Transkription Hörtext: Gesund und fit im Alltag (Bild 215)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir sind vom Radiosender „Berlin 5“ und machen eine Umfrage zum Thema „Gesund und fit im Alltag“. We are from the radio station "Berlin 5" and are doing a survey on the topic "Healthy and fit in everyday life".</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Uns interessiert, was die Berliner Bürger für ihre Gesundheit und für ihre Fitness tun. We are interested in what the citizens of Berlin do for their health and for their fitness.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie heißen Sie, wenn ich fragen darf? What is your name, if I may ask?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Anika. Anika.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was machen Sie beruflich, Anika? What do you do for a living, Anika?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich bin Studentin. Ich sitze eigentlich den ganzen Tag in der Uni, meistens in Lehrveranstaltungen oder in der Bibliothek. I am a student. I actually sit in the university all day, mostly in courses or in the library.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich glaube, ich mache für meine Gesundheit nicht so viel. I believe I don't do that much for my health.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Aber ich rauche nicht, das ist natürlich sehr gesund. But I don't smoke, that is of course very healthy.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Und ich gehe freitags und samstags aus, dann tanze ich manchmal, das macht Spaß und ist auch gut für die Fitness. And I go out on Fridays and Saturdays, then I dance sometimes, that is fun and is also good for fitness.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ansonsten beschäftige ich mich nicht sehr intensiv mit dem Thema. Otherwise, I do not deal very intensively with the topic.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich frage gleich mal die nächste Person. I'll ask the next person right away.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Können Sie sich kurz vorstellen und uns sagen, was Sie für Ihre Gesundheit tun? Can you introduce yourself briefly and tell us what you do for your health?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich bin Eva und ich arbeite als Assistentin in einer großen Firma. I am Eva and I work as an assistant in a large company.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Manchmal muss ich sehr viel arbeiten, dann fühle mich gestresst. Ich mache deshalb Yoga. Sometimes I have to work a lot, then I feel stressed. I therefore do yoga.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie oft machen Sie Yoga? How often do you do yoga?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Zweimal in der Woche und am Wochenende. Das hilft mir, mich zu entspannen. Twice a week and on the weekend. That helps me to relax.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es baut Stress ab und es tut mir gut. Ich ernähre mich auch gesund und esse kein Fleisch. It reduces stress and it is good for me. I also eat healthily and do not eat meat.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Und Sie? And you?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich heiße Christian. Ich mache gerade ein Praktikum beim Fernsehen. My name is Christian. I am currently doing an internship at a television station.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Um fit zu bleiben, benutze ich eine App, die mir genau sagt, wie viel ich mich bewegt habe und wie viel ich mich noch bewegen muss. To stay fit, I use an app that tells me exactly how much I have moved and how much I still need to move.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Meistens bin ich tagsüber so viel gelaufen, dass ich mein Ziel von 60 Minuten erreicht habe. Usually, I have walked so much during the day that I have reached my goal of 60 minutes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">So eine App finde ich sehr nützlich. I find such an app very useful.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Achten Sie auch auf Ihre Ernährung? Do you also pay attention to your diet?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nein, ich habe im Moment nicht so viel Zeit. No, I don't have that much time at the moment.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich esse zwischendurch mal eine Pizza, abends kaufe ich mir oft ein Fertiggericht zum Aufwärmen in der Mikrowelle. I eat a pizza in between, in the evening I often buy a ready meal to warm up in the microwave.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Damit setze ich mich vor den Fernseher und ruhe mich aus. With that, I sit down in front of the TV and rest.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Und Sie? And you?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich heiße Lucie, ich arbeite bei einer Bank als Beraterin. My name is Lucie, I work at a bank as a consultant.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich sitze viel, z. B. am Computer oder in Meetings, deshalb laufe ich jeden Morgen 40 Minuten. I sit a lot, e.g. at the computer or in meetings, therefore I run for 40 minutes every morning.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich wohne direkt am Park, das ist praktisch. I live right by the park, that is practical.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich achte außerdem sehr auf meine Ernährung. Ich esse weniger Fleisch als früher. I also pay close attention to my diet. I eat less meat than I used to.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Und samstags gehe ich eine Stunde ins Fitnessstudio. And on Saturdays I go to the gym for an hour.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-15" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">15</span>
+                        Diskussion: Gesundheit und Fitness (Bild 216)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text aus dem Buch:
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Diskutieren Sie in kleinen Gruppen und präsentieren Sie danach Ihre Ergebnisse. Discuss in small groups and present your results afterwards.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was machen Sie für Ihre Gesundheit und Fitness? What do you do for your health and fitness?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Benutzen Sie ein Fitnessarmband oder eine Gesundheits-App? Do you use a fitness tracker or a health app?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Messen Sie manchmal Ihren Puls oder Ihren Blutdruck? Do you sometimes measure your pulse or your blood pressure?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Kontrollieren Sie, ob Sie sich ausreichend bewegen? Do you check whether you are moving enough?</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Simulation (Diskussion):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was machst du regelmäßig für deine Gesundheit und Fitness? What do you do regularly for your health and fitness?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich schwimme regelmäßig. Das tut mir gut und hilft mir, mich nach der Arbeit zu entspannen. I swim regularly. That is good for me and helps me to relax after work.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das klingt super. Benutzt du eigentlich ein Fitnessarmband oder eine Gesundheits-App? That sounds great. Do you actually use a fitness tracker or a health app?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich benutze eine App auf meinem Handy. Wenn ich mich viel bewege, fühle ich mich wohl, und die App kontrolliert meine Schritte. Yes, I use an app on my phone. When I move a lot, I feel good, and the app tracks my steps.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Misst du auch manchmal deinen Puls oder Blutdruck? Do you also sometimes measure your pulse or blood pressure?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe das schon ausprobiert, aber das hat mir nicht geholfen. Damit habe ich mich nicht besser gefühlt. I have already tried that, but it didn't help me. I didn't feel any better with it.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich kann Radfahren sehr empfehlen. Damit habe ich sehr gute Erfahrungen gemacht und es hält den Blutdruck natürlich stabil. I can highly recommend cycling. I have had very good experiences with it and it keeps blood pressure stable naturally.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-16" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">16</span>
+                        Präsentation: Fitnessarmbänder und Gesundheits-Apps (Bild 217)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Simulation (Die Präsentation):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Guten Tag zusammen. Ich möchte Ihnen heute das Thema „Fitnessarmbänder und Gesundheits-Apps“ vorstellen. Good day everyone. I would like to present the topic "Fitness trackers and health apps" to you today.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Zuerst spreche ich über die Nützlichkeit, dann über meine persönlichen Erfahrungen, danach über die Situation in meinem Heimatland und zum Schluss über Vor- und Nachteile. First I will talk about the usefulness, then about my personal experiences, after that about the situation in my home country, and finally about advantages and disadvantages.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie nützlich sind solche Apps? Ich denke, sie sind sehr hilfreich, um uns im Alltag zu mehr Bewegung zu motivieren. How useful are such apps? I think they are very helpful to motivate us to move more in everyday life.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Meine persönlichen Erfahrungen sind sehr positiv. Ich nutze einen Schrittzähler und laufe dadurch viel öfter zu Fuß, anstatt den Bus zu nehmen. My personal experiences are very positive. I use a pedometer and as a result I walk much more often instead of taking the bus.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Werden solche Armbänder auch in meinem Heimatland verwendet? Ja, absolut. Besonders bei jungen Leuten und Sportlern liegen Smartwatches total im Trend. Are such bracelets also used in my home country? Yes, absolutely. Especially among young people and athletes, smartwatches are totally on trend.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Welche Vor- und Nachteile bieten die Armbänder? Ein großer Vorteil ist die Motivation und die einfache Kontrolle der Gesundheit. What advantages and disadvantages do the bracelets offer? A big advantage is the motivation and the simple monitoring of health.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ein Nachteil ist jedoch der Datenschutz, da viele sensible Informationen gespeichert werden. Eine Alternative wäre, einfach ohne App draußen in der Natur Sport zu machen. A disadvantage, however, is data protection, since a lot of sensitive information is stored. An alternative would be to simply do sports outside in nature without an app.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Damit bin ich am Ende meiner Präsentation. Vielen Dank für Ihre Aufmerksamkeit! With that I am at the end of my presentation. Thank you very much for your attention!</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-17" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">17</span>
+                        Der Tagesablauf von Peter & Reflexivpronomen (Bild 218)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Der Tagesablauf von Peter (Lückentext mit Lösungen) The daily routine of Peter
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Um 7.00 Uhr stehe ich auf. Nach dem Aufstehen halte ich mich mit Joggen fit. At 7:00 AM I get up. After getting up, I keep myself fit by jogging.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich ziehe mir meinen Trainingsanzug und meine Sportschuhe an und laufe 30 Minuten durch den Park. I put on my tracksuit and my sports shoes and run through the park for 30 minutes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Erst danach dusche ich mich und frühstücke. Only after that do I shower and have breakfast.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Um 8.30 Uhr setze ich mich auf mein Fahrrad und fahre ins Büro. At 8:30 AM I sit on my bicycle and ride to the office.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Am Vormittag beschäftige ich mich mit Datenanalysen. In the morning I busy myself with data analyses.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Bei dieser Tätigkeit muss ich mich sehr konzentrieren. During this activity I have to concentrate very much.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Zum Mittagessen kaufe ich mir meist einen Salat oder ich esse in der Kantine eine Suppe. For lunch I usually buy myself a salad or I eat a soup in the canteen.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nachmittags informiere ich mich über die neuen Verkaufszahlen oder ich treffe mich mit Geschäftspartnern. In the afternoon I inform myself about the new sales figures or I meet with business partners.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Auf die Termine bereite ich mich intensiv vor. I prepare myself intensively for the appointments.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nach einem anstrengenden Tag ruhe ich mich etwas aus und sehe mir die Wirtschaftsnachrichten im Fernsehen an. After an exhausting day I rest a bit and watch the business news on television.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Fragen und Antworten (Simulation mit Lösungen) Questions and Answers
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Fühlt sich Frau Müller oft gestresst? Does Mrs. Müller often feel stressed?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, sie fühlt sich oft gestresst. Yes, she often feels stressed.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Beschäftigt ihr euch mit gesunder Ernährung? Do you (plural) busy yourselves with healthy nutrition?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, wir beschäftigen uns mit gesunder Ernährung. Yes, we busy yourselves with healthy nutrition.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Langweilst du dich manchmal im Büro? Do you sometimes get bored in the office?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nein, ich langweile mich nie im Büro. No, I never get bored in the office.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Willst du dir neue Sportschuhe kaufen? Do you want to buy yourself new sports shoes?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich will mir neue Sportschuhe kaufen. Yes, I want to buy myself new sports shoes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Kannst du dich beim Yoga entspannen? Can you relax during yoga?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich kann mich beim Yoga wunderbar entspannen. Yes, I can relax wonderfully during yoga.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Gewöhnst du dich langsam an den neuen Job? Are you slowly getting used to the new job?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich gewöhne mich langsam an den neuen Job. Yes, I am slowly getting used to the new job.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wollen Sie sich setzen? Do you want to sit down?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, danke, ich will mich gerne setzen. Yes, thank you, I would like to sit down.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Unterhalten Sie sich mit den Kollegen über das Thema Gesundheit? Do you converse with the colleagues about the topic of health?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, wir unterhalten uns oft über das Thema Gesundheit. Yes, we often converse about the topic of health.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-18" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">18</span>
+                        Interview: Mittagsruhe & Power-Nap (Bild 219)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Simulation (Interview: Mittagsruhe):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wann beginnt in deinem Heimatland ein normaler Büro-Arbeitstag und wann endet er? When does a normal office workday begin in your home country and when does it end?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ein normaler Arbeitstag beginnt bei uns meistens um 9 Uhr und endet um 17 Uhr. Die Hauptverkehrszeiten sind morgens um 8 Uhr und nachmittags um 17:30 Uhr. A normal workday for us usually begins at 9 AM and ends at 5 PM. The rush hours are in the morning at 8 AM and in the afternoon at 5:30 PM.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Zu welcher Tageszeit fühlst du dich müde oder unkonzentriert? At what time of day do you feel tired or unfocused?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Meistens fühle ich mich direkt nach dem Mittagessen, so gegen 14 Uhr, sehr müde. Mostly I feel very tired right after lunch, around 2 PM.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Machst du mittags ein Schläfchen oder eine Ruhepause? Do you take a nap or a rest break at noon?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich versuche eine kurze Ruhepause von etwa 15 Minuten zu machen. Yes, I try to take a short rest break of about 15 minutes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Gibt es in deinem Heimatland traditionell eine Mittagsruhe? Is there traditionally a midday rest in your home country?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, bei uns ist die Siesta nach dem Mittagessen sehr traditionell und viele Geschäfte schließen in dieser Zeit. Yes, for us the siesta after lunch is very traditional and many shops close during this time.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Power-Nap: Das Schläfchen zwischendurch (Text mit Lösungen) Power-Nap: The little sleep in between
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Um uns wohl zu fühlen und leistungsfähig zu sein, benötigen wir ausreichend Schlaf. In order to feel well and to be capable of performing, we need sufficient sleep.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Doch viele Menschen schlafen zu wenig. But many people sleep too little.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das kann unter anderem daran liegen, dass sie abends nicht einschlafen können oder einfach zu spät ins Bett gehen. That can be due, among other things, to the fact that they cannot fall asleep in the evening or simply go to bed too late.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Doch spätestens am nächsten Tag bekommt man die Rechnung: Sie fühlen sich mittags müde und unkonzentriert. But at the latest the next day you get the bill: They feel tired and unfocused at noon.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Dieses sogenannte Mittagstief haben übrigens auch Menschen, die nachts volle acht Stunden schlafen, nur weniger stark. By the way, this so-called midday slump is also experienced by people who sleep a full eight hours at night, just less strongly.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wenn das Mittagstief kommt, hat man zwei Möglichkeiten: Man rettet sich mit viel Kaffee oder Tee über den Tag oder man macht ein kleines Mittagsschläfchen und stellt mit einem Power-Nap von rund zehn Minuten die Konzentrationsfähigkeit wieder her. When the midday slump comes, one has two possibilities: One saves oneself through the day with a lot of coffee or tea, or one takes a little midday nap and restores the ability to concentrate with a power nap of around ten minutes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Aus wissenschaftlicher Sicht ist der Power-Nap die gesündere Alternative, denn er wirkt sich insgesamt positiv auf die Gesundheit aus. From a scientific point of view, the power nap is the healthier alternative, because it has an overall positive effect on health.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Neben der Verbesserung der Konzentrationsfähigkeit hilft er zum Beispiel auch beim Stressabbau und stärkt das Herz-Kreislauf-System. In addition to improving the ability to concentrate, it also helps, for example, with stress reduction and strengthens the cardiovascular system.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Doch wie sieht es in den deutschen Büros aus? Darf man da überhaupt schlafen? But what does it look like in German offices? Is one even allowed to sleep there?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Prinzipiell ist ein Power-Nap am Arbeitsplatz nicht verboten. In principle, a power nap at the workplace is not forbidden.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das Problem liegt an einer anderen Stelle: Schlafen im Büro hat in Deutschland keinen guten Ruf. The problem lies elsewhere: Sleeping in the office does not have a good reputation in Germany.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wer öfter mal kurz an seinem Schreibtisch einschläft, gilt schnell als faul oder schwach. Whoever falls asleep briefly at their desk more often is quickly considered lazy or weak.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Für Mitarbeiter in deutschen Firmen scheint es noch immer ein größeres Problem zu sein, wenn Kollegen zehn Minuten schlafen, als wenn sie zehn Minuten zum Rauchen verschwinden. For employees in German companies, it still seems to be a bigger problem if colleagues sleep for ten minutes than if they disappear for ten minutes to smoke.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In anderen Ländern geht man mit dem Schlafbedürfnis während der Arbeitszeit ganz anders um. In other countries, the need for sleep during working hours is handled completely differently.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In Japan zum Beispiel hat der kurze Mittagsschlaf ein hohes Ansehen. In Japan, for example, the short midday nap has a high prestige.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er gilt als Zeichen dafür, dass Mitarbeiter sich bei ihrer Arbeit sehr angestrengt haben. It is considered a sign that employees have exerted themselves very much in their work.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Auch in den USA wird das Power-Napping immer mehr in den Unternehmensalltag integriert, z. B. durch die Einrichtung spezieller Schlafräume. In the USA, too, power napping is increasingly integrated into everyday corporate life, e.g., through the establishment of special sleeping rooms.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In Deutschland ist man trotz einiger Ausnahmen von solchen Entwicklungen noch weit entfernt. In Germany, despite a few exceptions, one is still far removed from such developments.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-19" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">19</span>
+                        Experteninterview: Power-Nap (Bild 220)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text aus dem Buch: Experteninterview Expert interview
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Formulieren Sie zu zweit Antworten auf die Expertenfragen. Spielen Sie danach das Interview. Formulate answers to the expert questions in pairs. Play the interview afterwards.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Warum schlafen viele Menschen zu wenig? Why do many people sleep too little?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">abends nicht einschlafen können / zu spät ins Bett gehen not being able to fall asleep in the evening / going to bed too late</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was kann man machen, wenn das Mittagstief kommt? What can one do when the midday slump comes?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich mit viel Kaffee oder Tee über den Tag retten / ein kleines Mittagsschläfchen machen save oneself through the day with a lot of coffee or tea / take a little midday nap</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Warum ist der Power-Nap gesünder? Why is the power nap healthier?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">die Konzentrationsfähigkeit verbessern / Stress abbauen / das Herz-Kreislauf-System stärken improve the ability to concentrate / reduce stress / strengthen the cardiovascular system</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Darf man in Deutschland am Arbeitsplatz schlafen? Is one allowed to sleep at the workplace in Germany?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">nicht verboten sein / einen schlechten Ruf haben / schlafende Kollegen als faul gelten not be forbidden / have a bad reputation / sleeping colleagues are considered lazy</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie ist das in anderen Ländern mit dem Mittagsschlaf? How is that in other countries with the midday sleep?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">z. B. in Japan ein hohes Ansehen haben / als Zeichen für große Anstrengung gelten e.g., have a high prestige in Japan / be considered a sign of great effort</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Simulation (Das Interview):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Warum schlafen viele Menschen eigentlich zu wenig? Why do many people actually sleep too little?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Viele Menschen schlafen zu wenig, weil sie abends nicht einschlafen können oder einfach zu spät ins Bett gehen. Many people sleep too little because they cannot fall asleep in the evening or simply go to bed too late.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was kann man machen, wenn das Mittagstief kommt? What can one do when the midday slump comes?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Man kann sich mit viel Kaffee oder Tee über den Tag retten, oder man macht ein kleines Mittagsschläfchen. One can save oneself through the day with a lot of coffee or tea, or one takes a little midday nap.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Warum ist der Power-Nap gesünder als Kaffee? Why is the power nap healthier than coffee?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er ist gesünder, weil er die Konzentrationsfähigkeit verbessert, Stress abbaut und das Herz-Kreislauf-System stärkt. It is healthier because it improves the ability to concentrate, reduces stress and strengthens the cardiovascular system.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Darf man in Deutschland am Arbeitsplatz schlafen? Is one allowed to sleep at the workplace in Germany?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Prinzipiell ist es nicht verboten, aber es hat einen schlechten Ruf, da schlafende Kollegen oft als faul gelten. In principle it is not forbidden, but it has a bad reputation, as sleeping colleagues are often considered lazy.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie ist das in anderen Ländern mit dem Mittagsschlaf? How is that in other countries with the midday sleep?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In anderen Ländern ist das anders. Zum Beispiel hat der Mittagsschlaf in Japan ein hohes Ansehen und gilt als Zeichen für große Anstrengung. In other countries that is different. For example, the midday sleep has a high prestige in Japan and is considered a sign of great effort.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-20" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">20</span>
+                        Bürokrankheiten und was Sie dagegen tun können (Bild 221)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text aus dem Buch: Bürokrankheiten und was Sie dagegen tun können Office diseases and what you can do about them
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Formulieren Sie Ratschläge und spielen Sie einen Dialog. Nutzen Sie verschiedene Strukturen: Du solltest ... / Du müsstest ... / Es wäre gut, wenn ... / Ich würde ... Formulate advice and act out a dialogue. Use different structures: You should ... / You would have to ... / It would be good if ... / I would ...</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Simulation (Ratschläge bei Beschwerden):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe oft Schmerzen im Schulterbereich. I often have pain in the shoulder area.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du solltest langes Sitzen vermeiden. Es wäre auch gut, wenn du öfter eine Pause machen würdest. You should avoid sitting for long periods. It would also be good if you took a break more often.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe Schmerzen in den Armen, Händen oder Fingern. Was kann ich tun? I have pain in my arms, hands, or fingers. What can I do?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du müsstest mit einer ergonomischen Maus und Tastatur arbeiten. Ich würde dir auch raten, die Hände regelmäßig zu bewegen und die Maus mit beiden Händen zu bedienen. You would have to work with an ergonomic mouse and keyboard. I would also advise you to move your hands regularly and to operate the mouse with both hands.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe in letzter Zeit oft Probleme mit den Augen. I have often had problems with my eyes lately.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du solltest nicht immer auf den Bildschirm sehen. Es wäre gut, wenn du manchmal Augenübungen machen würdest. You should not always look at the screen. It would be good if you did eye exercises sometimes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich leide unter Kopfschmerzen und Konzentrationsproblemen. I suffer from headaches and concentration problems.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du müsstest für gute Beleuchtung am Arbeitsplatz sorgen und regelmäßig das Fenster öffnen. Ich würde auch einfache und effektive Entspannungsübungen oder ein kurzes Mittagsschläfchen machen. You would have to ensure good lighting at the workplace and open the window regularly. I would also do simple and effective relaxation exercises or take a short midday nap.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich bin oft nervös und fühle mich gestresst. I am often nervous and feel stressed.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du solltest dir ein gutes Hobby suchen und regelmäßig Sport treiben. Außerdem wäre es gut, wenn du lernen würdest, Nein zu sagen. You should look for a good hobby and do sports regularly. Furthermore, it would be good if you learned to say no.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe Probleme mit Herz und Kreislauf. Was rätst du mir? I have problems with my heart and circulation. What do you advise me?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du müsstest dich viel bewegen. Ich würde an deiner Stelle auch auf eine gesunde Ernährung achten. You would have to move a lot. In your place, I would also pay attention to a healthy diet.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Haben Sie noch andere Tipps? Do you have any other tips?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich würde empfehlen, viel Wasser zu trinken und abends einen kleinen Spaziergang an der frischen Luft zu machen. Yes, I would recommend drinking a lot of water and taking a short walk in the fresh air in the evening.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-21" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">21</span>
+                        Schriftlicher Ausdruck: Ihre Meinung bitte! (Bild 222)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text aus dem Buch: Schriftlicher Ausdruck: Ihre Meinung bitte! Written expression: Your opinion please!
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Lesen Sie den Text und antworten Sie. Schreiben Sie etwa 80 Wörter. Read the text and answer. Write about 80 words.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie haben im Fernsehen eine Talkshow zum Thema Mittagsschlaf gesehen. Im Online-Gästebuch der Sendung lesen Sie die folgende Meldung. You saw a talk show on television about the topic of midday sleep. In the online guestbook of the broadcast, you read the following message.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Daniela aus Köln schrieb: Daniela from Cologne wrote:</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Meiner Meinung nach sollte man den Mittagsschlaf im Büro fördern. In my opinion, one should promote the midday sleep in the office.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der Mittagsschlaf ist gesünder als die vielen Tassen Kaffee, die Mitarbeiter normalerweise trinken, um wach zu bleiben. The midday sleep is healthier than the many cups of coffee that employees normally drink to stay awake.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nach einem Power-Nap kann man sich z. B. viel besser konzentrieren. After a power nap, for example, one can concentrate much better.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Simulation (Forumsbeitrag / Antwort auf Daniela):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Hallo Daniela, Hello Daniela,</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ich habe deinen Beitrag gelesen und bin absolut deiner Meinung! I read your post and absolutely agree with your opinion!</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ein kurzer Mittagsschlaf im Büro ist eine hervorragende Idee. A short midday sleep in the office is an excellent idea.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich merke selbst oft, dass ich nach dem Mittagessen sehr müde werde und meine Konzentration stark nachlässt. I often notice myself that I become very tired after lunch and my concentration drops sharply.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Anstatt ungesunde Mengen an Kaffee zu trinken, würde ein Power-Nap von zehn bis fünfzehn Minuten völlig ausreichen, um wieder fit zu werden. Instead of drinking unhealthy amounts of coffee, a power nap of ten to fifteen minutes would be completely sufficient to get fit again.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es ist schade, dass das in vielen deutschen Firmen noch einen schlechten Ruf hat. It is a pity that this still has a bad reputation in many German companies.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich hoffe, die Unternehmenskultur ändert sich hier bald. I hope the corporate culture changes here soon.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Viele Grüße Many greetings</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-22" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">22</span>
+                        Hausmittel: Medikamente aus Omas Apotheke (Bild 223)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text aus dem Buch: Hausmittel Home remedies
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Medikamente aus Omas Apotheke Medicines from Grandma's pharmacy</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Haben Sie schon einmal bei einer Erkältung Kräutertee getrunken und gehofft, dass er Ihnen hilft? Have you ever drunk herbal tea for a cold and hoped that it helps you?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Traditionelle Rezepte sind in Deutschland so beliebt wie noch nie. Traditional recipes are more popular in Germany than ever before.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Doch nicht nur in Deutschland werden Rezepte und Tipps zur Gesundheit von Generation zu Generation weitergegeben. But not only in Germany are recipes and health tips passed down from generation to generation.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Auf der ganzen Welt gibt es eine Vielzahl von traditionellen Rezepten, die bei Krankheiten helfen sollen. All over the world there is a multitude of traditional recipes that are supposed to help with illnesses.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Hier sind einige Beispiele. Here are some examples.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Zwiebel Onion
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Traditionell wird in Deutschland bei Erkältungskrankheiten eine Zwiebel zur Linderung der Beschwerden eingesetzt. Traditionally, an onion is used in Germany for colds to alleviate the symptoms.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Zwiebeln enthalten Öle, die eine antibakterielle und entzündungshemmende Wirkung haben. Onions contain oils that have an antibacterial and anti-inflammatory effect.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Bei der Behandlung wird die Zwiebel klein gehackt und in einem Tuch auf die Ohren oder den Hals gelegt. During treatment, the onion is chopped small and placed in a cloth on the ears or the throat.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Man kann die geschnittene Zwiebel auch mit Wasserdampf erwärmen und die Dämpfe einatmen. One can also heat the cut onion with steam and inhale the vapors.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Bei Insektenstichen soll der Saft der Zwiebel ebenfalls helfen. For insect bites, the juice of the onion is also supposed to help.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Zwiebel wird einfach aufgeschnitten und unmittelbar nach dem Insektenstich auf die betroffene Stelle gedrückt. The onion is simply cut open and pressed onto the affected area immediately after the insect bite.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Stichstelle wird dadurch direkt desinfiziert. The bite area is thereby directly disinfected.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Ingwer Ginger
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In China wird bei Kopfschmerzen und Erkältungen oft zu Ingwer gegriffen. In China, ginger is often resorted to for headaches and colds.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ingwer enthält zahlreiche Mineralien, Vitamine und ätherische Öle. Ginger contains numerous minerals, vitamins, and essential oils.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es dient in der traditionellen chinesischen Medizin vor allem als Mittel gegen Kopfschmerzen und Migräne. It serves in traditional Chinese medicine primarily as a remedy for headaches and migraines.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Als Tee wird Ingwer auch bei Magenproblemen und gegen Übelkeit verwendet. As a tea, ginger is also used for stomach problems and against nausea.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Lilienknolle Lily bulb
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Lilienknolle ist reich an Lipiden, Karotinen, Vitamin B und C und wird in China gerne als Kraftsuppe zur Stärkung des Immunsystems serviert. The lily bulb is rich in lipids, carotenes, vitamin B and C and is often served in China as a power soup to strengthen the immune system.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Da die Lilienknolle der Haut Hitze entziehen kann, ist sie auch ein Mittel gegen Sonnenbrand. Since the lily bulb can withdraw heat from the skin, it is also a remedy for sunburn.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Zistrose Cistus (Rock rose)
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Im gesamten Mittelmeerraum gilt die Zistrose als wirksames Heilmittel bei gesundheitlichen Problemen. In the entire Mediterranean region, the cistus is considered an eff</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Kapitel 6. Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mainScrollArea = document.getElementById('main-scroll-area');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    // Cache sectionTop calculations to avoid forced reflow
+                    // Actually reading offsetTop is cheap if no layout changed,
+                    // but the throttling will prevent freezing anyway.
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, span.font-semibold, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons, tooltips, or english translations)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i' || el.classList.contains('english-text')) {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.parentElement.classList.contains('english-text') ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free public MyMemory Translation API
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        
+                        // Minor cleanup of the API response
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                             translation = "[No trans]"; // Indicate if it couldn't find a diff word
+                        }
+                        
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+        });
+    </script>
+</body>
+</html>

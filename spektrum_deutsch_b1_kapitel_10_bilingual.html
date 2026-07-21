@@ -1,0 +1,1259 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 10: Medien und Aktuelles - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-c { border-left: 4px solid #ec4899; background-color: #fdf2f8; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        .translatable-word {
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .translatable-word:hover {
+            background-color: #ccfbf1;
+            color: #0f766e;
+            border-radius: 2px;
+        }
+
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            user-select: none;
+            -webkit-user-select: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    
+        .english-text {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Spektrum Deutsch
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 10: Medien und Aktuelles</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li class="pt-2 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Aufgaben & Hörtexte</li>
+                <li><a href="#aufgabe-8" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-video w-5 text-center mr-2 text-gray-400"></i> Aufgabe 8: Audiovisuelle Medien</a></li>
+                <li><a href="#aufgabe-3" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-headphones w-5 text-center mr-2 text-gray-400"></i> Aufgabe 3: Hörtext Lesen</a></li>
+                <li><a href="#aufgabe-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-book-reader w-5 text-center mr-2 text-gray-400"></i> Aufgabe 2: Lesen und Leser</a></li>
+                <li><a href="#aufgabe-5" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-microphone w-5 text-center mr-2 text-gray-400"></i> Aufgabe 5: Radiointerview</a></li>
+                <li><a href="#aufgabe-6" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-chart-pie w-5 text-center mr-2 text-gray-400"></i> Aufgabe 6: Lesen in Österreich</a></li>
+                <li><a href="#aufgabe-7" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-envelope w-5 text-center mr-2 text-gray-400"></i> Aufgabe 7: E-Mail an Freunde</a></li>
+                <li><a href="#aufgabe-1" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-users w-5 text-center mr-2 text-gray-400"></i> Aufgabe 1: Klassenspaziergang</a></li>
+                <li><a href="#aufgabe-11" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> Aufgabe 11: Gruppendiskussion</a></li>
+                <li><a href="#aufgabe-12" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-newspaper w-5 text-center mr-2 text-gray-400"></i> Aufgabe 12: Nachrichtenredakteure</a></li>
+                <li><a href="#aufgabe-13" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-microphone-lines w-5 text-center mr-2 text-gray-400"></i> Aufgabe 13: Interview Nachrichten</a></li>
+                <li><a href="#aufgabe-14" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-radio w-5 text-center mr-2 text-gray-400"></i> Aufgabe 14: Hörtext Nachrichten</a></li>
+                <li><a href="#aufgabe-9" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-film w-5 text-center mr-2 text-gray-400"></i> Aufgabe 9: Filmauswahl</a></li>
+                <li><a href="#aufgabe-17" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-person-chalkboard w-5 text-center mr-2 text-gray-400"></i> Aufgabe 17: Präsentation</a></li>
+                <li><a href="#aufgabe-18" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-regular fa-message w-5 text-center mr-2 text-gray-400"></i> Aufgabe 18: Forumsbeitrag</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 10: Medien und Aktuelles</h1>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-4xl mx-auto space-y-12 pb-20">
+                
+                <!-- Title Block -->
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Vollständig, mit Lösungen (Verbatim)</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 10: Medien und Aktuelles</h1>
+                    <p class="text-xl text-gray-600">Medien, Sprache, Kommunikationsformen und Passiv</p>
+                </div>
+
+                <!-- Aufgabe 8 -->
+                <section id="aufgabe-8" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-t-4 border-t-brand-500 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 8 – Audiovisuelle Medien: Berufsfelder</h2>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-brand-700 mb-2">→ Lösung (vollständiger Text):</h3>
+                            <p class="text-sm text-gray-700 mb-6 leading-relaxed">
+                                Audiovisuelle Medien sprechen die visuelle und auditive Wahrnehmung an. Sie dienen nicht nur zur Unterhaltung und Information der Menschen, sondern stellen auch einen bedeutenden Wirtschaftsfaktor dar. Mit rund 829 000 Beschäftigten gehören audiovisuelle Medien (z. B. Fernsehen, Kino, Videos, Computerspiele) zu den wichtigsten Wirtschaftszweigen in Deutschland.
+                            </p>
+
+                            <h4 class="font-bold text-gray-800 mb-3 text-sm">b) Berufe in Film und Fernsehen. Lesen Sie die Tätigkeitsbeschreibung und ergänzen Sie die Berufe.</h4>
+                            <ul class="space-y-3 text-sm text-gray-700 mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <li><strong>Filmregisseur</strong> leitet eine komplette Filmproduktion künstlerisch/kreativ.</li>
+                                <li><strong>Schauspieler</strong> stellt mit Sprache, Mimik und Gestik eine bestimmte Person dar.</li>
+                                <li><strong>Visagist(in)/Maskenbildner(in)</strong> verändert/verschönert das Aussehen von Menschen, die vor der Kamera stehen.</li>
+                                <li><strong>Kostümbildner(in)</strong> erarbeitet zusammen mit dem Szenenbildner und dem Regisseur die passende Kleidung für eine Film- oder Fernsehproduktion.</li>
+                                <li><strong>Mediengestalter(in) Bild und Ton</strong> plant und produziert Bild- und Tonaufnahmen für Studioproduktionen und Liveübertragungen.</li>
+                                <li><strong>Kameramann/-frau</strong> ist verantwortlich für die Bildgestaltung bei Filmen oder Liveübertragungen.</li>
+                                <li><strong>Reporter(in)</strong> berichtet über aktuelle Ereignisse.</li>
+                                <li><strong>Drehbuchautor(in)/Storyliner(in)</strong> schreibt die Texte für Filme oder Serien.</li>
+                                <li><strong>Produzent(in)</strong> schafft die Bedingungen für die Produktion eines Films/einer Sendung (Finanzierung, Personal, Organisation).</li>
+                            </ul>
+
+                            <h4 class="font-bold text-gray-800 mb-2 text-sm">c) Berichten Sie. Arbeiten Sie in kleinen Gruppen.</h4>
+                            <p class="text-sm text-gray-600 mb-4">Stellen Sie sich vor, Sie müssten sich für einen Beruf aus Aufgabe b) entscheiden. Welchen Beruf würden Sie wählen? Warum? Welche Schauspielerinnen/Schauspieler, Regisseurinnen/Regisseure sind in Ihrem Heimatland beliebt? Wer ist zurzeit Ihre Lieblingsschauspielerin/Ihr Lieblingsschauspieler?</p>
+                            
+                            <div class="mb-4">
+                                <h5 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Redemittel:</h5>
+                                <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                    <li>Ich interessiere mich für .../ Ich glaube, ich bin gut in ...</li>
+                                    <li>Mich fasziniert .../Ich kann ziemlich gut .../Ich wollte schon immer ...</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-brand-50 p-4 rounded-lg border border-brand-100">
+                                <h5 class="text-sm font-bold text-brand-800 mb-3">→ Lösung / Simulierte Diskussion (8c):</h5>
+                                <div class="dialogue-a text-sm">
+                                    <strong class="text-brand-700">Person A:</strong> „Ich würde mich für den Beruf des Filmregisseurs entscheiden. Mich fasziniert die kreative Arbeit, eine ganze Geschichte visuell zu erzählen. Ich wollte schon immer Filme machen.“
+                                </div>
+                                <div class="dialogue-b text-sm">
+                                    <strong class="text-amber-600">Person B:</strong> „Ich glaube, ich bin gut im Organisieren und habe keine Angst vor Verantwortung. Deshalb würde ich Produzent werden. Die Finanzierung und das Personal zu managen, finde ich spannend.“
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 3 -->
+                <section id="aufgabe-3" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 3 – Transkription Hörtext</h2>
+                            <span class="text-brand-500"><i class="fa-solid fa-headphones text-xl"></i></span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-gray-800 mb-4 text-lg">Wer liest denn heute noch Bücher?</h3>
+                            
+                            <div class="space-y-4 text-sm mb-8">
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Liebe Hörerinnen und Hörer, herzlich willkommen zu unserer Sendung „Zeitgeist“. Heute geht es um das Thema Lesen. Dazu haben wir zwei Gäste vom Fach eingeladen: Ingrid Kuhn vom Stadtbücherei und Susanne Baumgart vom Buchladen „Leseratte“. Beginnen wir gleich mit einer negativen Meldung: Unsere Zeit im Alltag wird immer knapper, das heißt, es bleibt auch zum Lesen weniger Zeit. Eine Folge davon ist, dass immer weniger Menschen in Deutschland mehrmals in der Woche ein Buch in die Hand nehmen, Tendenz weiter fallend. Das sind jedenfalls die Ergebnisse einer aktuellen Studie. Können Sie das bestätigen, Frau Baumgart? Gibt es tatsächlich weniger Leser?
+                                </div>
+                                <div class="dialogue-b">
+                                    <strong class="text-amber-600">S. Baumgart:</strong> Ich kann zumindest bestätigen, dass es immer weniger Interesse gibt, Bücher in einem Buchladen zu kaufen. Das kann daran liegen, dass es insgesamt weniger Leser gibt, das wäre eine mögliche Erklärung. Den Hauptgrund sehe ich aber darin, dass sich der Onlinebuchhandel negativ auf die Verkaufszahlen der Buchläden auswirkt. Ich habe nun, nach 40 Jahren, beschlossen, unseren kleinen Buchladen zu schließen. Wir hatten eine schöne Zeit, aber jetzt können wir nicht mehr auf dem Markt bestehen.
+                                </div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Diese negative Entwicklung ist aber nicht neu, oder?
+                                </div>
+                                <div class="dialogue-b">
+                                    <strong class="text-amber-600">S. Baumgart:</strong> Nein, die Entwicklung ist nicht neu. Wir haben seit Jahren sinkende Verkaufszahlen. Die Kunden kommen nicht mehr so oft in die Läden, um sich beraten zu lassen. Viele lesen jetzt Buchempfehlungen im Internet und kaufen dort auch ein.
+                                </div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Wie wirkt sich die Entwicklung auf die Bibliotheken aus? Werden noch viele Bücher ausgeliehen?
+                                </div>
+                                <div class="dialogue-a">
+                                    <strong class="text-brand-700">I. Kuhn:</strong> Na ja, auch wir merken, dass das Buch schon mal bessere Jahre hatte. Aber wir haben rechtzeitig auf die Veränderungen reagiert. Sie haben das bestimmt auch bei einem Ihrer letzten Bibliotheksbesuche gemerkt ...
+                                </div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Oh, mein letzter Bibliotheksbesuch ist schon ein paar Jahre her. Im Studium, glaube ich.
+                                </div>
+                                <div class="dialogue-a">
+                                    <strong class="text-brand-700">I. Kuhn:</strong> Dann kommen Sie sicher auch schon bald vorbei, um sich Bibliotheken zu verändern. Mit der klassischen Bibliothek von früher sind moderne Bibliotheken von heute nicht mehr vergleichbar.
+                                </div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Was hat sich verändert?
+                                </div>
+                                <div class="dialogue-a">
+                                    <strong class="text-brand-700">I. Kuhn:</strong> Bibliotheken sind Treffpunkte geworden. Es kommen Menschen, die ruhige öffentliche Orte suchen, um sich auszutauschen oder gemeinsam zu lernen. Auch das Angebot ist anders: Es gibt weniger Bücher, dafür mehr Digitales. Und wir haben unseren Kundenkontakt intensiviert. Wir führen zum Beispiel Umfragen durch und orientieren uns beim Angebot viel mehr an den Wünschen der Kunden.
+                                </div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Ich denke, auch E-Books spielen bei der Entwicklung eine sehr große Rolle.
+                                </div>
+                                <div class="dialogue-a">
+                                    <strong class="text-brand-700">I. Kuhn:</strong> Für die Bibliotheken ist es selbstverständlich, E-Book-Reader auszuleihen oder die Möglichkeit anzubieten, E-Books herunterzuladen.
+                                </div>
+                                <div class="dialogue-b">
+                                    <strong class="text-amber-600">S. Baumgart:</strong> Für den Buchhandel sind E-Book-Reader oder Tablets meiner Meinung nach kein unlösbares Problem. Viele Leser entscheiden sich doch noch für das Buch, weil sie es mögen, das Buch in der Hand zu halten und darin zu blättern. Ich denke auch, dass oft beides benutzt wird. Einige Sachen, zum Beispiel Zeitungsartikel, liest man auf dem Tablet, aber den Roman kauft man als Buch.
+                                </div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Gibt es einen Unterschied zwischen Jung und Alt? Lesen junge Leute weniger?
+                                </div>
+                                <div class="dialogue-b">
+                                    <strong class="text-amber-600">S. Baumgart:</strong> Ich glaube, es gibt einen Unterschied zwischen Lesern und Nichtlesern im Alter nicht gern. Vielleicht gibt es auch einen Rückgang bei der Anzahl der jungen Leser, das kann ich aber nicht einschätzen.
+                                </div>
+                                <div class="dialogue-a">
+                                    <strong class="text-brand-700">I. Kuhn:</strong> Ich denke, wir sollten der jungen Generation vermitteln, dass Lesen Spaß macht. Das ist das Wichtigste. Egal, ob auf dem Tablet, dem E-Book-Reader oder in einem Buch.
+                                </div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Ich persönlich bevorzuge immer noch das Buch.
+                                </div>
+                                <div class="dialogue-b">
+                                    <strong class="text-amber-600">S. Baumgart:</strong> Ich auch. Ein Buch in der Hand zu haben und Seite für Seite umzublättern, das ist doch einfach faszinierend. Also, liebe Zuhörerinnen und Zuhörer, nehmen Sie doch mal wieder ein interessantes Buch in die Hand und lesen Sie es nach Herzenslust. Das macht Spaß und es bildet. Probieren Sie es heute Abend einfach mal wieder aus.
+                                </div>
+                            </div>
+
+                            <div class="bg-indigo-50 p-4 rounded border border-indigo-100">
+                                <h4 class="font-bold text-indigo-800 text-sm mb-2">→ Lösungen (Kontrollfragen 1a):</h4>
+                                <p class="text-sm text-indigo-900">
+                                    1. Moderator | 2. Frau Baumgart | 3. — | 4. Moderator | 5. Frau Kuhn | 6. Frau Baumgart | 7. Frau Kuhn | 8. Frau Baumgart
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 2 -->
+                <section id="aufgabe-2" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 2 – Lesen und Leser</h2>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-gray-800 mb-2 text-md">a) Berichten Sie mündlich oder schriftlich.</h3>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                <div>
+                                    <ul class="space-y-3 text-sm text-gray-700">
+                                        <li><strong>1. Wann lesen Sie?</strong> beim Frühstück • in der Straßenbahn/im Zug • während der Arbeitszeit • in der Mittagspause • vor dem Einschlafen • am Wochenende • im Urlaub ...</li>
+                                        <li><strong>2. Welche Medien nutzen Sie?</strong> Buch • Zeitung/Zeitschrift • Tablet • E-Book-Reader • PC • Smartphone</li>
+                                        <li><strong>3. Was lesen Sie gern?</strong> Romane, Gedichte • längere Zeitungsartikel • Fachartikel • aktuelle Nachrichten • Börsenberichte • Gebrauchsanweisungen • Produktempfehlungen ...</li>
+                                        <li><strong>4. Welches Buch lesen Sie gerade?</strong></li>
+                                        <li><strong>5. Wie beurteilen Sie sich selbst?</strong> Sind Sie ein schneller oder ein langsamer Leser?</li>
+                                        <li><strong>6. Wird Ihrer Meinung nach in Ihrem Heimatland viel/gern gelesen?</strong></li>
+                                    </ul>
+                                </div>
+                                <div class="bg-brand-50 p-4 rounded border border-brand-100 text-sm">
+                                    <h4 class="font-bold text-brand-800 mb-3">→ Lösung / Beispielantworten (2a):</h4>
+                                    <div class="space-y-2 text-brand-900">
+                                        <p><strong>Wann lesen Sie?</strong> „Ich lese meistens am Wochenende oder vor dem Einschlafen.“</p>
+                                        <p><strong>Welche Medien nutzen Sie?</strong> „Ich nutze hauptsächlich mein Smartphone für Nachrichten und meinen E-Book-Reader für Romane.“</p>
+                                        <p><strong>Was lesen Sie gern?</strong> „Ich lese gern längere Zeitungsartikel und Romane.“</p>
+                                        <p><strong>Welches Buch lesen Sie gerade?</strong> „Gerade lese ich 'Der Schwarm' von Frank Schätzing.“</p>
+                                        <p><strong>Schneller oder langsamer Leser?</strong> „Ich bin ein eher langsamer Leser, weil ich mir die Szenen gerne genau vorstelle.“</p>
+                                        <p><strong>Heimatland?</strong> „In meinem Heimatland wird meiner Meinung nach weniger gelesen als in Deutschland, da das Internet und soziale Medien viel Zeit beanspruchen.“</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-6 border-gray-100">
+
+                            <h3 class="font-bold text-gray-800 mb-2 text-md">b) Leser im Vergleich. Beschreiben Sie die folgende Grafik.</h3>
+                            
+                            <div class="bg-gray-50 p-4 rounded mb-4">
+                                <h5 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Redemittel:</h5>
+                                <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                    <li>Auf dem ersten Platz liegt .../ Dahinter folgt .../... belegt Platz ...</li>
+                                    <li>In ... lesen ... Prozent der Menschen täglich/einmal am Tag/wöchentlich/einmal in der Woche/einmal im Monat Bücher.</li>
+                                    <li>Mich hat überrascht, dass ...</li>
+                                    <li>Mein Heimatland liegt auf Platz .../würde wahrscheinlich auf Platz ... liegen.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white border border-gray-200 p-4 rounded shadow-sm text-sm mb-8">
+                                <h4 class="font-bold text-gray-800 mb-2">Grafik-Text: Jeder vierte Deutsche liest täglich Bücher</h4>
+                                <p class="text-gray-600 mb-2 italic">Anteil der Befragten, die täglich, wöchentlich oder monatlich Bücher lesen (Legende: Gelb = täglich oder annähernd täglich; Hellgelb = mindestens einmal wöchentlich; Grau = mindestens einmal im Monat)</p>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li>China: 36 % (täglich), 34 % (wöchentlich), 16 % (monatlich)</li>
+                                    <li>Mexiko: 22 %, 30 %, 24 %</li>
+                                    <li>Italien: 30 %, 26 %, 19 %</li>
+                                    <li>Spanien: 32 %, 25 %, 16 %</li>
+                                    <li>Großbritannien: 32 %, 26 %, 16 %</li>
+                                    <li>USA: 30 %, 25 %, 16 %</li>
+                                    <li>Deutschland: 25 %, 25 %, 18 %</li>
+                                    <li>Frankreich: 27 %, 21 %, 19 %</li>
+                                    <li>Südkorea: 13 %, 24 %, 22 %</li>
+                                    <li>Gesamt: 30 %, 29 %, 17 %</li>
+                                </ul>
+                                <p class="text-xs text-gray-400 mt-2">Quelle: Statista, 2017</p>
+                            </div>
+
+                            <h3 class="font-bold text-gray-800 mb-2 text-md">c) Ergänzen Sie in der Beschreibung der Grafik die Präpositionen.</h3>
+                            <p class="text-sm text-gray-700 mb-4 leading-relaxed">
+                                In einem internationalen Vergleich hat sich gezeigt, dass die meisten Freunde des Lesens (1) China leben. (2) einer Umfrage lesen 36 Prozent der Chinesen jeden Tag Bücher, 34 Prozent lesen einmal (3) der Woche. Auch (4) Mexiko, Italien, Spanien, Großbritannien und den USA wird mehr gelesen als (5) Deutschland. Deutschland liegt (6) der Umfrage (7) dem Durchschnitt.
+                            </p>
+                            
+                            <div class="bg-brand-50 p-4 rounded border border-brand-100 text-sm">
+                                <h4 class="font-bold text-brand-800 mb-2">→ Lösungen (Präpositionen 2c):</h4>
+                                <ul class="list-none text-brand-900 space-y-1">
+                                    <li>(1) <strong>in</strong> (in China leben)</li>
+                                    <li>(2) <strong>Laut</strong> (Laut einer Umfrage) oder In</li>
+                                    <li>(3) <strong>in</strong> (einmal in der Woche)</li>
+                                    <li>(4) <strong>in</strong> (Auch in Mexiko...)</li>
+                                    <li>(5) <strong>in</strong> (als in Deutschland)</li>
+                                    <li>(6) <strong>in</strong> (in der Umfrage)</li>
+                                    <li>(7) <strong>unter</strong> (unter dem Durchschnitt – da Deutschland mit 25% unter dem Gesamtschnitt von 30% liegt)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 5 -->
+                <section id="aufgabe-5" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 5 – Radiointerview</h2>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-gray-800 mb-4 text-md">a) Spielen Sie ein Interview und geben Sie den Inhalt des Hörtextes in Aufgabe 3 wieder. Orientieren Sie sich an den vorgegebenen Redemitteln. Wechseln Sie sich bei den Fragen und Antworten ab.</h3>
+                            
+                            <div class="space-y-6 text-sm">
+                                <div>
+                                    <p class="font-semibold text-gray-800">1. Nur noch 12 Millionen Leser, sagt eine aktuelle Studie, nehmen in Deutschland mehrmals in der Woche ein Buch in die Hand, Tendenz fallend. Gibt es tatsächlich weniger Leser?</p>
+                                    <p class="text-gray-500 italic mt-1">Stichworte: weniger Interesse – in einem Buchladen zu kaufen • durch Online-Buchhandel – Verkaufszahlen sinken • viele Menschen – Buchempfehlungen im Internet lesen und dort einkaufen</p>
+                                    <div class="bg-brand-50 p-3 rounded mt-2 border border-brand-100">
+                                        <strong class="text-brand-700">→ Antwort:</strong> Ja, man kann bestätigen, dass es weniger Interesse gibt, in einem Buchladen zu kaufen. Durch den Online-Buchhandel sind die Verkaufszahlen gesunken. Viele Menschen lesen Buchempfehlungen im Internet und kaufen dort ein.
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-gray-800">2. Wie wirkt sich das auf die Bibliotheken aus? Leiht noch jemand Bücher aus?</p>
+                                    <p class="text-gray-500 italic mt-1">Stichworte: die Bibliotheken – sich verändern • zu Treffpunkten werden • mehr digitale Angebote • den Kundenkontakt intensivieren • E-Book-Reader ausleihen und E-Books herunterladen können</p>
+                                    <div class="bg-brand-50 p-3 rounded mt-2 border border-brand-100">
+                                        <strong class="text-brand-700">→ Antwort:</strong> Die Bibliotheken haben sich verändert. Sie sind zu Treffpunkten geworden und bieten mehr digitale Angebote an. Außerdem hat man den Kundenkontakt intensiviert und man kann jetzt E-Book-Reader ausleihen oder E-Books herunterladen.
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-gray-800">3. Gibt es einen Unterschied zwischen Jung und Alt? Lesen junge Leute weniger?</p>
+                                    <p class="text-gray-500 italic mt-1">Stichworte: Unterschied zwischen Lesern und Nichtlesern • vielleicht – die Anzahl der jungen Leser – zurückgehen</p>
+                                    <div class="bg-brand-50 p-3 rounded mt-2 border border-brand-100">
+                                        <strong class="text-brand-700">→ Antwort:</strong> Es gibt einen Unterschied zwischen Lesern und Nichtlesern. Vielleicht geht die Anzahl der jungen Leser zurück, das kann man aber nicht genau einschätzen.
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-gray-800">4. Bevorzugen Sie gedruckte Bücher oder E-Books?</p>
+                                    <p class="text-gray-500 italic mt-1">Stichworte: schön finden – ein Buch in der Hand haben • Seite für Seite umblättern – faszinierend sein</p>
+                                    <div class="bg-brand-50 p-3 rounded mt-2 border border-brand-100">
+                                        <strong class="text-brand-700">→ Antwort:</strong> Ich persönlich bevorzuge gedruckte Bücher. Ich finde es schön, ein Buch in der Hand zu haben. Seite für Seite umzublättern, ist für mich faszinierend.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-6 border-gray-100">
+
+                            <h3 class="font-bold text-gray-800 mb-2 text-md">b) Wie ist die Situation in Ihrem Heimatland? Wählen Sie einige Fragen aus Aufgabe a) aus und beantworten Sie sie. Verwenden Sie die vorgegebenen Redemittel oder antworten Sie frei.</h3>
+                            <div class="bg-gray-50 p-4 rounded">
+                                <h5 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Redemittel:</h5>
+                                <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                    <li>Ich kann bestätigen, dass ...</li>
+                                    <li>Meiner Meinung nach ...</li>
+                                    <li>Ich glaube, .../Ich denke, ...</li>
+                                    <li>Ich persönlich bevorzuge ...</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 6 & 7 Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Aufgabe 6 -->
+                    <section id="aufgabe-6" class="scroll-mt-12">
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 h-full p-6">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">Aufgabe 6 – Lesen in Österreich</h2>
+                            <p class="text-sm text-gray-600 mb-4">Geben Sie die Ergebnisse einer Umfrage in Österreich mündlich oder schriftlich wieder. Berichten Sie darüber, was Sie selbst sehr wichtig bzw. unwichtig finden.</p>
+                            
+                            <div class="bg-gray-50 border border-gray-200 p-4 rounded shadow-sm text-sm mb-4">
+                                <h4 class="font-bold text-gray-800 mb-2">Grafik-Text: Was Österreichern beim Lesen wichtig ist</h4>
+                                <p class="text-gray-600 mb-2 italic">Beim Lesen finde ich es sehr wichtig bzw. ganz unwichtig, ...</p>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li>dass das Buch spannend ist: 50 % (sehr wichtig), 1 % (ganz unwichtig)</li>
+                                    <li>dass ich dabei völlig abschalten kann: 33 %, 6 %</li>
+                                    <li>dass es mich zum Nachdenken anregt: 28 %, 7 %</li>
+                                    <li>dass es mich emotional berührt: 23 %, 12 %</li>
+                                    <li>dass mir die handelnden Personen sympathisch sind: 22 %, 12 %</li>
+                                    <li>dass ich dabei lachen kann: 22 %, 12 %</li>
+                                    <li>dass ich dabei etwas Neues lerne: 21 %, 16 %</li>
+                                </ul>
+                                <p class="text-xs text-gray-400 mt-2">Quelle: Statista, 2016</p>
+                            </div>
+
+                            <div class="bg-brand-50 p-4 rounded border border-brand-100 text-sm">
+                                <h4 class="font-bold text-brand-800 mb-2">→ Lösung / Beschreibung (6):</h4>
+                                <p class="text-brand-900 leading-relaxed">
+                                    Die Grafik zeigt, was Österreichern beim Lesen wichtig ist. Am wichtigsten ist für 50 % der Befragten, dass das Buch spannend ist. Das finden nur 1 % ganz unwichtig. Auf Platz zwei liegt für 33 %, dass man dabei völlig abschalten kann. Eher unwichtig (16 %) finden die Befragten, dass sie dabei etwas Neues lernen. Ich persönlich finde es auch sehr wichtig, dass ein Buch spannend ist, aber für mich ist auch wichtig, dass es mich zum Nachdenken anregt.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Aufgabe 7 -->
+                    <section id="aufgabe-7" class="scroll-mt-12">
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 h-full p-6">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">Aufgabe 7 – E-Mail an eine Freundin/einen Freund</h2>
+                            <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                                Heute Abend liest die Krimiautorin Franka Lange in der Stadtbibliothek aus ihrem neuen Roman „Das Geheimnis der Insel“. Eine Freundin/Ein Freund hat Sie gefragt, ob Sie mit ihr/ihm zu dieser Lesung gehen. Schreiben Sie eine E-Mail und formulieren Sie eine Zusage oder eine Absage. Berichten Sie kurz, was Sie gerne lesen und warum Sie die Lesung interessiert bzw. nicht interessiert. Schreiben Sie etwa 80 Wörter.
+                            </p>
+
+                            <div class="bg-slate-800 text-white p-5 rounded-lg text-sm font-serif shadow-inner mt-4">
+                                <h4 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-xs"><i class="fa-solid fa-envelope-open mr-1"></i> → Lösung / Beispiel-E-Mail (7):</h4>
+                                <p class="text-gray-300 font-sans mb-4 border-b border-gray-600 pb-2">Betreff: Lesung heute Abend</p>
+                                <p>Liebe Julia,</p>
+                                <p class="mt-2">vielen Dank für deine Einladung! Ich komme sehr gerne mit zur Lesung von Franka Lange. Ich lese nämlich total gern Krimis und Thriller, besonders wenn sie spannend sind. Der Titel „Das Geheimnis der Insel“ klingt schon sehr mysteriös und interessant. Ich bin gespannt, was die Autorin dazu erzählt.</p>
+                                <p class="mt-2">Wann wollen wir uns treffen? Sollen wir uns um 18:00 Uhr vor der Stadtbibliothek treffen?</p>
+                                <p class="mt-4">Bis später,<br>[Dein Name]</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Aufgabe 1 -->
+                <section id="aufgabe-1" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-t-4 border-t-brand-600 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 1 – Klassenspaziergang: Mediennutzung</h2>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-gray-800 mb-4 text-md">a) Wählen Sie vier Fragen aus und sprechen Sie mit möglichst vielen Kursteilnehmern.</h3>
+                            
+                            <ul class="grid grid-cols-1 gap-4 text-sm text-gray-700 mb-8 list-none">
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">1.</span> Wie viele Minuten sehen Sie täglich fern?</li>
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">2.</span> Auf welche Weise nutzen Sie TV-Angebote? Internet-TV • Streaming-Angebote • Mediatheken • auf klassische Weise</li>
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">3.</span> Welche Sendungen/Serien sehen Sie gern?</li>
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">4.</span> Sind Sie eine Leseratte/ein Bücherwurm (ein Mensch, der gern und viel liest)?</li>
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">5.</span> Welche Sendungen hören Sie im Radio?</li>
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">6.</span> Lesen Sie Zeitung? Wenn ja, welche Rubriken? (Politik, Wirtschaft, Sport, Aus aller Welt, Kultur und Kunst, Lokales ...) Mich interessiert vor allem .../ Ich überfliege alle Rubriken.</li>
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">7.</span> Wie viele Minuten kommunizieren Sie in sozialen Netzwerken oder per SMS am Tag? Schwer zu sagen ... Das kommt darauf an ... Ich denke, ungefähr ...</li>
+                                <li class="flex items-start"><span class="text-brand-500 font-bold mr-2">8.</span> Welche sozialen Netzwerke nutzen Sie?</li>
+                            </ul>
+
+                            <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-4">→ Lösung / Simulierte Antworten (Klassenspaziergang):</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Wie viele Minuten sehen Sie täglich fern?</strong><br>
+                                    <span class="text-brand-700">A: „Ich sehe täglich etwa 60 bis 90 Minuten fern. Meistens abends nach der Arbeit.“</span>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Auf welche Weise nutzen Sie TV-Angebote?</strong><br>
+                                    <span class="text-brand-700">A: „Ich nutze hauptsächlich Streaming-Angebote wie Netflix und Amazon Prime. Aber ich schaue auch manchmal Sendungen in den Mediatheken der öffentlich-rechtlichen Sender. Klassisches Fernsehen schaue ich kaum noch.“</span>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Welche Sendungen/Serien sehen Sie gern?</strong><br>
+                                    <span class="text-brand-700">A: „Ich sehe gern Dokumentationen und Nachrichtensendungen. Bei Serien mag ich besonders Krimis wie 'Tatort' oder internationale Serien wie 'House of Cards'.“</span>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Sind Sie eine Leseratte/ein Bücherwurm?</strong><br>
+                                    <span class="text-brand-700">A: „Nein, ich bin leider keine Leseratte. Ich lese nur ab und zu mal ein Buch, wenn ich Urlaub habe. Im Alltag fehlt mir dafür die Zeit.“</span>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Welche Sendungen hören Sie im Radio?</strong><br>
+                                    <span class="text-brand-700">A: „Ich höre morgens im Auto Radio, meistens Nachrichtensender wie Deutschlandfunk oder lokale Radiosender mit Musik und Nachrichten.“</span>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Lesen Sie Zeitung? Welche Rubriken?</strong><br>
+                                    <span class="text-brand-700">A: „Ja, ich lese online Zeitung. Mich interessiert vor allem Politik und Wirtschaft. Sport und Lokales überfliege ich nur.“</span>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Wie viele Minuten kommunizieren Sie in sozialen Netzwerken?</strong><br>
+                                    <span class="text-brand-700">A: „Schwer zu sagen ... Das kommt darauf an, aber ich denke, ungefähr 45 bis 60 Minuten pro Tag. Manchmal mehr, manchmal weniger.“</span>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <strong class="text-gray-800">F: Welche sozialen Netzwerke nutzen Sie?</strong><br>
+                                    <span class="text-brand-700">A: „Ich nutze hauptsächlich WhatsApp für die Kommunikation mit Freunden und Familie. Außerdem habe ich Instagram und LinkedIn Accounts.“</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 11 -->
+                <section id="aufgabe-11" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Aufgabe 11 – Gruppendiskussion</h2>
+                        <p class="text-sm text-gray-600 mb-6">Bilden Sie kleine Gruppen und sprechen Sie über die folgenden Fragen.</p>
+                        
+                        <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-4">→ Lösung / Simulierte Gruppendiskussion:</h4>
+                        
+                        <div class="space-y-6 text-sm">
+                            <div>
+                                <h5 class="font-bold text-gray-800 mb-2">1. Kennen Sie jemanden, der bei einer Zeitung arbeitet?</h5>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> „Ja, ich kenne eine Journalistin, die für eine lokale Tageszeitung arbeitet. Sie berichtet hauptsächlich über Politik und Kultur in unserer Region.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> „Ich habe einen Cousin, der als Sportjournalist tätig ist. Er reist viel zu verschiedenen Sportevents und schreibt Berichte über Fußballspiele.“</div>
+                                <div class="dialogue-c"><strong class="text-pink-600">Person C:</strong> „Nein, ich persönlich kenne niemanden, der im Journalismus arbeitet, aber ich finde den Beruf sehr interessant.“</div>
+                            </div>
+
+                            <div>
+                                <h5 class="font-bold text-gray-800 mb-2">2. Haben Sie selbst schon etwas (z. B. einen Artikel, ein Gedicht oder ein Buch) veröffentlicht?</h5>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> „Ja, ich habe während meines Studiums mehrere Artikel für die Studentenzeitung geschrieben. Das war eine tolle Erfahrung.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> „Ich habe vor ein paar Jahren einen Blog gestartet, in dem ich über meine Reisen berichte. Das ist zwar kein professionelles Veröffentlichen, aber immerhin.“</div>
+                                <div class="dialogue-c"><strong class="text-pink-600">Person C:</strong> „Nein, ich habe noch nichts Veröffentlichtes, aber ich würde gerne mal einen Artikel schreiben.“</div>
+                            </div>
+
+                            <div>
+                                <h5 class="font-bold text-gray-800 mb-2 leading-relaxed">3. Finden Sie die Arbeit einer Journalistin/eines Journalisten attraktiv? Warum (nicht)? (wenig/viel verdienen • Stress haben • Deadlines einhalten müssen • Spaß an der Arbeit haben • kreativ sein • auf dem aktuellen Stand der Dinge sein • objektive Berichte erstellen • ...)</h5>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> „Ich finde den Job sehr attraktiv, weil man kreativ sein kann und immer auf dem aktuellen Stand der Dinge ist. Man lernt ständig neue Menschen kennen und erlebt spannende Dinge.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> „Ehrlich gesagt finde ich den Beruf eher stressig. Man muss ständig Deadlines einhalten und hat viel Druck. Außerdem verdient man nicht so viel, besonders am Anfang.“</div>
+                                <div class="dialogue-c"><strong class="text-pink-600">Person C:</strong> „Ich sehe sowohl positive als auch negative Aspekte. Einerseits ist es interessant, objektive Berichte zu erstellen und die Leute zu informieren. Andererseits ist der Stressfaktor sehr hoch.“</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 12 -->
+                <section id="aufgabe-12" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 12 – Nachrichtenredakteure</h2>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-gray-800 mb-4 text-md">a) Lesen und hören Sie die folgende Berufsbeschreibung.</h3>
+                            
+                            <div class="bg-gray-50 p-5 rounded-lg border-l-4 border-gray-400 mb-6 text-sm text-gray-700 leading-relaxed">
+                                <p class="mb-3">Nachrichtenredakteure führen ein stressiges und aufregendes Leben. Wer sich um eine Stelle in einer Nachrichtenredaktion bewerben will, muss ein Studium im journalistischen Bereich abgeschlossen haben.</p>
+                                <p class="mb-3">Die Arbeit von Nachrichtenredakteuren besteht hauptsächlich darin, Material aus Agenturnachrichten auszuwählen und zu bearbeiten. Auch das Verfassen eigener Beiträge gehört zu den Tätigkeiten der Redakteure. Um die Aufgaben so gut wie möglich zu bewältigen, ist es wichtig, stets auf dem aktuellen Stand zu sein, andere Nachrichten zu verfolgen und zu vergleichen.</p>
+                                <p class="mb-3">Zusätzlich müssen Nachrichtenredakteure darauf achten, dass ihre Beiträge keine persönliche Meinung und keine Falschmeldungen enthalten, denn sie sollen über das aktuelle Geschehen neutral und wahrheitsgemäß informieren.</p>
+                                <p class="mb-3">Gute Redakteure haben Freude an der Textarbeit und sehr gute Rechtschreib- und Grammatikkenntnisse. Sie können schnell Entscheidungen treffen und besitzen viel Eigeninitiative. Weil in diesem Beruf Stress und Arbeitsdruck sehr hoch sind, das Einkommen aber eher gering ausfällt, brauchen Nachrichtenredakteure neben den genannten Fähigkeiten eine große Portion Idealismus.</p>
+                                <p class="text-xs text-gray-500 italic mt-4">Frankfurt: Skulptur vor dem Büro der Deutschen Presse-Agentur (dpa)</p>
+                            </div>
+
+                            <div class="bg-brand-50 p-5 rounded-lg border border-brand-100 text-sm mb-8">
+                                <h4 class="font-bold text-brand-800 mb-3">→ Lösung / Zusammenfassung (12):</h4>
+                                <p class="text-brand-900 mb-2">Der Text beschreibt den Beruf des Nachrichtenredakteurs. Nachrichtenredakteure haben ein stressiges und aufregendes Leben. Für diesen Beruf benötigt man ein abgeschlossenes Studium im journalistischen Bereich.</p>
+                                
+                                <strong class="text-brand-800 block mt-3 mb-1">Die Hauptaufgaben bestehen darin:</strong>
+                                <ul class="list-disc pl-5 text-brand-900 space-y-1 mb-3">
+                                    <li>Material aus Agenturnachrichten auszuwählen und zu bearbeiten</li>
+                                    <li>Eigene Beiträge zu verfassen</li>
+                                    <li>Stets auf dem aktuellen Stand zu sein</li>
+                                    <li>Andere Nachrichten zu verfolgen und zu vergleichen</li>
+                                    <li>Neutral und wahrheitsgemäß zu informieren</li>
+                                    <li>Keine persönlichen Meinungen oder Falschmeldungen zu verbreiten</li>
+                                </ul>
+
+                                <strong class="text-brand-800 block mt-3 mb-1">Wichtige Fähigkeiten:</strong>
+                                <ul class="list-disc pl-5 text-brand-900 space-y-1">
+                                    <li>Freude an der Textarbeit</li>
+                                    <li>Sehr gute Rechtschreib- und Grammatikkenntnisse</li>
+                                    <li>Schnelle Entscheidungsfähigkeit</li>
+                                    <li>Viel Eigeninitiative</li>
+                                    <li>Idealismus (weil das Einkommen eher gering ist)</li>
+                                </ul>
+                            </div>
+
+                            <h3 class="font-bold text-gray-800 mb-2 text-md">d) Sagen Sie Ihre Meinung. Was finden Sie persönlich attraktiv am Job der Nachrichtenredakteurin/des Nachrichtenredakteurs? Was sind Ihrer Meinung nach die größten Nachteile?</h3>
+                            
+                            <div class="bg-gray-50 p-4 rounded mb-4">
+                                <h5 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Redemittel:</h5>
+                                <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                    <li>Als größten Vorteil/Nachteil sehe ich, dass ...</li>
+                                    <li>Ich finde es positiv/negativ, dass ...</li>
+                                    <li>Das (weniger) Gute/Interessante an dieser Arbeit ist meiner Meinung nach, dass ...</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-indigo-50 p-4 rounded border border-indigo-100 text-sm">
+                                <h4 class="font-bold text-indigo-800 mb-3">→ Lösung (12d):</h4>
+                                <p class="text-indigo-900 mb-3">
+                                    <strong>Frage – Was finden Sie attraktiv?</strong> „Als größten Vorteil sehe ich, dass man immer gut informiert ist und mitten im Geschehen steht. Ich finde es positiv, dass man die Möglichkeit hat, die Öffentlichkeit zu informieren und somit einen wichtigen Beitrag zur Demokratie zu leisten. Das Interessante an dieser Arbeit ist meiner Meinung nach, dass kein Tag wie der andere ist und man ständig neue Themen bearbeitet.“
+                                </p>
+                                <p class="text-indigo-900">
+                                    <strong>Frage – Was sind die größten Nachteile?</strong> „Als größten Nachteil sehe ich den hohen Stressfaktor und den Zeitdruck. Man muss ständig Deadlines einhalten und schnell arbeiten. Das weniger Gute an diesem Beruf ist meiner Meinung nach, dass das Einkommen im Verhältnis zum Stress eher gering ist. Außerdem muss man oft unregelmäßig arbeiten, auch nachts und am Wochenende.“
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 13 -->
+                <section id="aufgabe-13" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Aufgabe 13 – Interview: Nachrichten</h2>
+                        <p class="text-sm text-gray-600 mb-6">Interviewen Sie zwei Kursteilnehmer und berichten Sie anschließend über die Ergebnisse.</p>
+                        
+                        <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-4">→ Lösung / Simulierte Antworten (13):</h4>
+                        
+                        <div class="space-y-6 text-sm">
+                            <div>
+                                <h5 class="font-bold text-gray-800 mb-2 leading-relaxed">1. Worüber möchten Sie in den Nachrichten informiert werden? Weltgeschehen • politische Entwicklungen in Ihrem Heimatland • Neues aus der Wirtschaft oder der Wissenschaft • Verbrechen • Leben von Prominenten • Wetter • Sportwettkämpfe ...</h5>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> „Ich möchte hauptsächlich über politische Entwicklungen in meinem Heimatland und über das Weltgeschehen informiert werden. Auch Nachrichten aus der Wissenschaft interessieren mich sehr.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> „Für mich sind Wirtschaftsnachrichten und politische Entwicklungen am wichtigsten. Aber ich interessiere mich auch für Verbrechen und aktuelle Sportwettkämpfe.“</div>
+                            </div>
+
+                            <div>
+                                <h5 class="font-bold text-gray-800 mb-2">2. Wie informieren Sie sich über aktuelle Politik?</h5>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> „Ich informiere mich hauptsächlich online über Nachrichtenportale und soziale Medien. Abends schaue ich auch manchmal die Tagesschau.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> „Ich lese morgens die Zeitung und höre Radio. Außerdem habe ich Nachrichten-Apps auf meinem Smartphone.“</div>
+                            </div>
+
+                            <div>
+                                <h5 class="font-bold text-gray-800 mb-2">3. Haben Sie eine Lieblingsnachrichtensendung oder gibt es eine Nachrichtensprecherin/einen Nachrichtensprecher, die/den Sie besonders mögen?</h5>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> „Ja, ich schaue gerne die Tagesschau um 20 Uhr, weil sie kompakt und übersichtlich ist. Ich mag auch den Nachrichtensprecher, weil er sehr ruhig und professionell wirkt.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> „Ich habe keine bestimmte Lieblingssendung, aber ich finde die heute-Nachrichten ganz gut.“</div>
+                            </div>
+
+                            <div>
+                                <h5 class="font-bold text-gray-800 mb-2">4. Welche Themen beherrschen in Ihrem Heimatland die Nachrichtensendungen?</h5>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> „In meinem Heimatland dominieren politische Nachrichten, besonders über die Regierung und Korruption. Auch Wirtschaft und Arbeitslosigkeit sind große Themen.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> „Bei uns geht es in den Nachrichten viel um Sport, besonders Fußball, und um Prominente. Aber auch politische Themen werden behandelt.“</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 14 -->
+                <section id="aufgabe-14" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 14 – Transkription Hörtext: Nachrichten</h2>
+                            <span class="text-brand-500"><i class="fa-solid fa-radio text-xl"></i></span>
+                        </div>
+                        <div class="p-6">
+                            
+                            <div class="space-y-6 text-sm text-gray-700 leading-relaxed mb-8">
+                                <div>
+                                    <h4 class="font-bold text-indigo-700 mb-1 border-b pb-1">Politik</h4>
+                                    <p>Ab heute findet in Brüssel ein Treffen der europäischen Regierungschefs und Außenminister statt. Bei den Gesprächen geht es hauptsächlich um Strategien für eine gemeinsame europäische Außenpolitik. Nach den Anschlägen in Paris möchte man die Zusammenarbeit bei der Terrorismusbekämpfung und der Verbesserung der Sicherheit in Europa machen. Auch die Kommunikation zwischen den einzelnen europäischen Ländern und den europäischen Behörden steht zur Diskussion. Konkrete Ergebnisse werden am Abend erwartet.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-green-700 mb-1 border-b pb-1">Landwirtschaft</h4>
+                                    <p>Bioprodukte werden immer beliebter. Doch bisher galten in Europa 64 verschiedene Regeln für die Produktion und den Handel mit Biolebensmitteln. Nach mehr als drei Jahren Diskussion hat man die Regeln nun vereinheitlicht. Unter anderem werden zweimal jährlich Kontrollen durchgeführt werden. Außerdem wird man eine europäische Datenbank für Bioprodukte aufbauen.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-blue-700 mb-1 border-b pb-1">Wissenschaft</h4>
+                                    <p>Schon seit Jahren versuchen Forscher herauszufinden, ob Kaffee gesund oder ungesund für den Menschen ist. Jetzt ist ein internationales Forscherteam zu dem Ergebnis gekommen, dass regelmäßiges Kaffeetrinken gesundheitliche Vorteile bringt und das Leben verlängern kann. Kaffeetrinker leiden den Untersuchungen zufolge weniger an schweren Krankheiten wie Krebs oder Herzproblemen. An der Studie waren mehr als eine Million Menschen beteiligt.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-red-700 mb-1 border-b pb-1">Verkehr</h4>
+                                    <p>Am Sonntag wird die Nord-Süd-Verbindung von Österreich nach Italien zwischen 6.00 und 10.00 Uhr gesperrt. Sowohl auf der Brenner-Autobahn A22 als auch auf der Staatsstraße zwischen Freienfeld und Sterzing dürfen dann keine Autos fahren. Grund für die Sperrung ist ein Protest gegen die Einführung einer Bombe aus dem Zweiten Weltkrieg. Der Bahnverkehr wird ebenfalls unterbrochen.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-purple-700 mb-1 border-b pb-1">Kultur</h4>
+                                    <p>An diesem Wochenende geht die „documenta“ zu Ende. Die „documenta“ findet alle fünf Jahre statt und zeigt aktuelle Werke von Künstlern aus der ganzen Welt. Zum ersten Mal seit vielen Jahren findet sie an zwei Städten gezeigt: in Kassel und in Athen. Das Interesse der Zuschauer war in beiden Städten groß. Ein Highlight der Kunstschau war der Büchertempel der Künstlerin Marta Minujín, die den griechischen ...</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-brand-50 p-5 rounded-lg border border-brand-100 text-sm">
+                                <h4 class="font-bold text-brand-800 mb-3">→ Lösung / Zusammenfassung (14):</h4>
+                                <ul class="space-y-3 text-brand-900">
+                                    <li><strong>Politik:</strong> EU-Treffen in Brüssel über gemeinsame Außenpolitik, Terrorismusbekämpfung nach Paris-Anschlägen, Verbesserung der Sicherheit in Europa.</li>
+                                    <li><strong>Landwirtschaft:</strong> Vereinheitlichung der Bio-Regeln in Europa (vorher 64 verschiedene Regeln), zweimal jährliche Kontrollen, Aufbau einer europäischen Datenbank für Bioprodukte.</li>
+                                    <li><strong>Wissenschaft:</strong> Internationale Studie mit über einer Million Teilnehmern zeigt: Regelmäßiges Kaffeetrinken hat gesundheitliche Vorteile, verlängert das Leben, reduziert schwere Krankheiten wie Krebs und Herzprobleme.</li>
+                                    <li><strong>Verkehr:</strong> Sperrung der Nord-Süd-Verbindung Österreich–Italien am Sonntag (6–10 Uhr), betroffen: Brenner-Autobahn A22 und Staatsstraße Freienfeld–Sterzing, Grund: Protest gegen Bombenentschärfung aus dem Zweiten Weltkrieg, auch Bahnverkehr unterbrochen.</li>
+                                    <li><strong>Kultur:</strong> Documenta geht zu Ende, findet alle fünf Jahre statt, zeigt aktuelle Kunst weltweit, zum ersten Mal an zwei Städten: Kassel und Athen, Highlight: Büchertempel der Künstlerin Marta Minujín.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 9 -->
+                <section id="aufgabe-9" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Aufgabe 9 – Filmauswahl</h2>
+                        <h3 class="font-bold text-gray-800 mb-4 text-md">a) Lesen Sie zuerst die Kurzbeschreibungen.</h3>
+                        
+                        <div class="grid grid-cols-1 gap-6 mb-8 text-sm text-gray-700">
+                            <div class="border border-gray-200 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-lg text-indigo-700 mb-1">Berlin Falling</h4>
+                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-3">Genre: Actionfilm</p>
+                                <p class="mb-2">Der ehemalige Elitesoldat Frank ist vom Krieg traumatisiert. Er trinkt zu viel Alkohol und lebt allein in Brandenburg. Seit der Scheidung von seiner Frau Claudia hat er keinen Kontakt mehr zu Tochter Lilly.</p>
+                                <p class="mb-2">Als Frank seine Tochter wiedersehen darf, fährt er mit dem Auto nach Berlin. An einer Tankstelle trifft er den netten Andreas, der eine Mithilfegelegenheit sucht. Während der Fahrt muss Frank erkennen, dass Andreas bewaffnet ist und einen Anschlag plant. Kann er die Tat noch verhindern?</p>
+                                <p>Der erste Kinofilm von Ken Duken, der Regie führt und die Hauptrolle spielt, ist ein actionreicher Film mit überzeugenden Schauspielern.</p>
+                            </div>
+                            
+                            <div class="border border-gray-200 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-lg text-indigo-700 mb-1">Toni Erdmann</h4>
+                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-3">Genre: Tragikomödie</p>
+                                <p class="mb-2">Nach dem Tod seines Hundes beschließt der 65 Jahre alte Musiklehrer Winfried spontan, seine Tochter zu besuchen. Ines ist Unternehmensberaterin und arbeitet gerade in Rumänien an einem großen Outsourcing-Projekt. In einer albernen Verkleidung überrascht der Vater seine Tochter in der Lobby ihrer Firma. Ines ist nicht begeistert, bald kommt es zum Streit. Aber statt Bukarest zu verlassen, verwandelt sich Winfried in Toni Erdmann.</p>
+                                <p class="mb-2">Der seltsame Toni mit falschen Zähnen, schlechtem Anzug und Perücke behauptet, Personalcoach zu sein und bringt die karrierebewusste Ines nur für ihren Kollegen in einige peinliche Situationen. Doch langsam verbessert sich das Verhältnis zwischen Vater und Tochter.</p>
+                                <p>Der Film von Regisseurin Maren Ade mit Peter Simonischek und Sandra Hüller in den Hauptrollen erhielt zahlreiche internationale Preise, darunter den Europäischen Filmpreis und eine Oscar-Nominierung.</p>
+                            </div>
+
+                            <div class="border border-gray-200 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-lg text-indigo-700 mb-1">Mein Blind Date mit dem Leben</h4>
+                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-3">Genre: Romanverfilmung</p>
+                                <p class="mb-2">Er hat die Abiturprüfungen bestanden und möchte nun endlich den Traumberuf finden. Doch ganz so leicht ist das für den jungen Saliya nicht, denn er ist fast blind. Bei einem Vorstellungsgespräch in einem Luxushotel in München verschweigt er sein Handicap und bekommt die Stelle.</p>
+                                <p class="mb-2">Bold erkennt sein Freund Max, was mit ihm los ist, und hilft ihm. Max gibt ihm Tipps, schwierige Situationen zu bewältigen. Nachts übt Saliya die einfachsten Handlungen im Hotel, bis er sie „blind“ beherrscht. Doch als er sich in Laura verliebt, gerät alles durcheinander.</p>
+                                <p>Der Film mit Kostja Ullmann in der Hauptrolle basiert auf dem autobiografischen Bestseller von Saliya Kahawatte.</p>
+                            </div>
+
+                            <div class="border border-gray-200 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h4 class="font-bold text-lg text-indigo-700 mb-1">Neo Rauch – Gefährten und Begleiter</h4>
+                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-3">Genre: Künstlerporträt, Dokumentarfilm</p>
+                                <p class="mb-2">Der Leipziger Maler Neo Rauch gilt als erfolgreichster Maler seiner Generation. Seine Bilder werden von Sammlern in der ganzen Welt gekauft. Doch was ist das Besondere an dem Künstler und seinen Werken?</p>
+                                <p class="mb-2">Die Dokumentarfilmerin Nicola Graef versucht, diese Frage zu beantworten.</p>
+                                <p class="mb-2">In vielen Interviews sprechen Sammler, Wegbegleiter und seine Frau Rosa Loy über das Leben des Malers und die Person Neo Rauch. Auch der Künstler selbst kommt zu Wort.</p>
+                                <p>Er spricht unter anderem über seine Kindheit in der DDR und den frühen Tod seiner Eltern. Für Kunstkenner und Neo-Rauch-Fans ist dieser Film ein Muss.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="font-bold text-gray-800 mb-2 text-md">b) Worum geht es in den Filmen? Bilden Sie Sätze. Nicht alle Vorgaben passen.</h3>
+                        <div class="bg-gray-50 p-4 rounded mb-6 text-sm">
+                            <h5 class="font-bold text-gray-700 mb-2">Strukturen (Präpositionen):</h5>
+                            <ul class="list-disc pl-5 mb-4 text-gray-600">
+                                <li>Im Film geht es um das Leben eines Künstlers. (um + Akkusativ)</li>
+                                <li>Der Film handelt von dem Leben eines Künstlers. (von + Dativ)</li>
+                            </ul>
+                            <h5 class="font-bold text-gray-700 mb-2">Vorgaben:</h5>
+                            <ul class="list-disc pl-5 text-gray-600 grid grid-cols-1 gap-1">
+                                <li>das Leben und die Werke eines Malers</li>
+                                <li>eine Freundschaft, die Liebe und die Schwierigkeiten im Leben</li>
+                                <li>die Verhinderung eines Anschlags</li>
+                                <li>eine Autofahrt nach Berlin</li>
+                                <li>wie man ein großer Künstler wird</li>
+                                <li>ein Vater-Tochter-Konflikt</li>
+                                <li>eine Frau, die Karriere machen möchte</li>
+                                <li>wie man als Blinder in Deutschland lebt</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-brand-50 p-5 rounded-lg border border-brand-100 text-sm mb-8">
+                            <h4 class="font-bold text-brand-800 mb-4">→ Lösungen (9b):</h4>
+                            <div class="grid grid-cols-1 gap-6 text-brand-900">
+                                <div>
+                                    <strong class="block mb-1">Berlin Falling:</strong>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>In Berlin Falling geht es um die Verhinderung eines Anschlags.</li>
+                                        <li>Der Film handelt von einer Autofahrt nach Berlin.</li>
+                                        <li>Es geht darum, wie ein traumatisierter Ex-Soldat versucht, die Tat zu verhindern.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong class="block mb-1">Toni Erdmann:</strong>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>In Toni Erdmann geht es um einen Vater-Tochter-Konflikt.</li>
+                                        <li>Der Film handelt von einem Musiklehrer, der seine Tochter überrascht.</li>
+                                        <li>Es geht darum, wie sich das Verhältnis zwischen Vater und Tochter verbessert.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong class="block mb-1">Mein Blind Date mit dem Leben:</strong>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>In dem Film geht es darum, wie man als Blinder in Deutschland lebt.</li>
+                                        <li>Der Film handelt von einem jungen Mann, der fast blind ist und im Hotel arbeitet.</li>
+                                        <li>Es geht um eine Freundschaft, die Liebe und die Schwierigkeiten im Leben.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong class="block mb-1">Neo Rauch:</strong>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>In Neo Rauch geht es um das Leben und die Werke eines Malers.</li>
+                                        <li>Der Film handelt davon, wie man ein großer Künstler wird.</li>
+                                        <li>Es geht um den erfolgreichsten Maler seiner Generation.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="font-bold text-gray-800 mb-2 text-md">c) Welchen interessanten Film/Welche interessante Serie haben Sie in letzter Zeit gesehen? Worum ging/geht es? Berichten Sie.</h3>
+                        <div class="bg-indigo-50 p-4 rounded border border-indigo-100 text-sm mb-8">
+                            <h4 class="font-bold text-indigo-800 mb-3">→ Lösung / Beispielantworten (9c):</h4>
+                            <p class="text-indigo-900 mb-2"><strong>Antwort A:</strong> „Ich habe vor kurzem die Serie 'Dark' gesehen. Es geht um eine Familie in einer deutschen Kleinstadt, wo Kinder verschwinden. Die Serie handelt von Zeitreisen und Geheimnissen. Es ist eine sehr spannende Mystery-Serie.“</p>
+                            <p class="text-indigo-900"><strong>Antwort B:</strong> „Ich habe den Film 'Das Leben der Anderen' gesehen. In dem Film geht es um die Überwachung in der DDR. Der Film handelt von einem Stasi-Mitarbeiter, der ein Ehepaar observiert. Es ist ein sehr bewegendes Drama.“</p>
+                        </div>
+
+                        <h3 class="font-bold text-gray-800 mb-2 text-md">d) Sie gehen heute Abend als Gruppe ins Kino. Sie müssen sich für einen Film aus Aufgabe a) entscheiden. Diskutieren Sie in kleinen Gruppen und treffen Sie eine Auswahl.</h3>
+                        <div class="bg-gray-50 p-4 rounded mb-4">
+                            <h5 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Redemittel:</h5>
+                            <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                <li>Ich würde gerne/am liebsten (das Künstlerporträt) sehen.</li>
+                                <li>Meine erste Wahl wäre der Film ...</li>
+                                <li>Ich mag (Actionfilme), deshalb würde ich gerne in ... gehen.</li>
+                                <li>Was sagst du/sagt ihr dazu?/Was ist deine/eure erste Wahl?</li>
+                            </ul>
+                        </div>
+                        <div class="bg-brand-50 p-4 rounded border border-brand-100 text-sm mb-8">
+                            <h4 class="font-bold text-brand-800 mb-3">→ Lösung / Simulierte Diskussion (9d):</h4>
+                            <div class="space-y-2">
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> „Ich würde gerne/am liebsten 'Toni Erdmann' sehen. Ich mag Tragikomödien sehr gern und der Film hat ja auch viele Preise gewonnen.“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> „Meine erste Wahl wäre der Film 'Berlin Falling'. Ich mag Actionfilme, deshalb würde ich gerne den sehen. Außerdem finde ich es spannend, wenn es um die Verhinderung eines Anschlags geht.“</div>
+                                <div class="dialogue-c"><strong class="text-pink-600">Person C:</strong> „Ich fände 'Mein Blind Date mit dem Leben' interessant. Die Geschichte von einem fast blinden Menschen, der im Luxushotel arbeitet, klingt sehr inspirierend. Was sagt ihr dazu?“</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> „Hmm, ich bin nicht so der Actionfilm-Fan. Toni Erdmann wäre wirklich meine erste Wahl. Was ist deine erste Wahl, B?“</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> „Also wenn ihr keine Actionfilme wollt, dann könnte ich mir auch Toni Erdmann ansehen. Der scheint ja wirklich gut zu sein.“</div>
+                                <div class="dialogue-c"><strong class="text-pink-600">Person C:</strong> „Super, dann einigen wir uns auf Toni Erdmann!“</div>
+                            </div>
+                        </div>
+
+                        <h3 class="font-bold text-gray-800 mb-2 text-md">e) Eine Absage schreiben. Es ist 19.00 Uhr. Um 20.00 Uhr beginnt der Film. Sie wollten heute Abend aber eigentlich etwas anderes machen. Schreiben Sie eine kurze Nachricht an Ihre Freunde. Entschuldigen Sie sich, dass Sie heute Abend nicht mit ins Kino gehen, und nennen Sie einen Grund.</h3>
+                        <div class="bg-gray-50 p-4 rounded mb-4">
+                            <h5 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Redemittel:</h5>
+                            <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                <li>Leider kann ich .../Tut mir sehr leid, aber ich kann ...</li>
+                                <li>Ich habe (total/völlig) vergessen,/Ich habe jetzt erst bemerkt, dass ich ...</li>
+                                <li>Ich wünsche euch viel Spaß!</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="bg-slate-800 text-white p-5 rounded-lg text-sm font-serif shadow-inner">
+                                <h4 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-xs"><i class="fa-solid fa-comment-sms mr-1"></i> → Lösung / Beispiel-Nachricht (9e):</h4>
+                                <p>Hallo zusammen,</p>
+                                <p class="mt-2">leider kann ich heute Abend doch nicht mit ins Kino kommen. Tut mir sehr leid, aber ich habe völlig vergessen, dass ich heute einen wichtigen Termin bei der Bank habe, der sich nicht verschieben lässt. Ich habe jetzt erst bemerkt, dass die Bank nur bis 19 Uhr geöffnet hat.</p>
+                                <p class="mt-2">Ich wünsche euch viel Spaß beim Film! Berichtet mir morgen, wie er war.</p>
+                                <p class="mt-4">Liebe Grüße<br>[Name]</p>
+                            </div>
+                            <div class="bg-slate-700 text-white p-5 rounded-lg text-sm font-serif shadow-inner">
+                                <h4 class="text-yellow-400 font-bold mb-3 uppercase tracking-wider text-xs"><i class="fa-solid fa-comment-sms mr-1"></i> Alternative:</h4>
+                                <p>Hey Leute,</p>
+                                <p class="mt-2">ich muss mich leider für heute Abend absagen. Ich habe total vergessen, dass meine Eltern heute unerwartet zu Besuch kommen. Sie stehen schon vor der Tür!</p>
+                                <p class="mt-2">Vielleicht können wir uns ja ein anderes Mal einen Film ansehen. Ich wünsche euch viel Spaß!</p>
+                                <p class="mt-4">Bis bald<br>[Name]</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Aufgabe 17 -->
+                <section id="aufgabe-17" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-t-4 border-t-brand-600 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 17 – Präsentation: Soziale Netzwerke als Nachrichtenquelle</h2>
+                            <span class="text-brand-500"><i class="fa-solid fa-person-chalkboard text-xl"></i></span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">Für viele Menschen in Deutschland sind die sozialen Netzwerke mittlerweile eine wichtigere Nachrichtenquelle als Zeitungen. Präsentieren Sie das Thema jetzt Ihren Zuhörern. Dazu stehen Ihnen fünf Folien zur Verfügung. Orientieren Sie sich bei Ihrer Präsentation an den Anweisungen auf der linken Seite. Rechts können Sie Ihre Ideen notieren.</p>
+                            
+                            <ul class="list-decimal pl-5 text-sm text-gray-700 space-y-2 mb-8 bg-gray-50 p-5 rounded border border-gray-200">
+                                <li>Stellen Sie Ihr Thema vor. Erklären Sie den Inhalt und die Struktur Ihrer Präsentation. → Soziale Netzwerke werden als Informations- und Nachrichtenquelle immer beliebter.</li>
+                                <li>Berichten Sie von Ihrer Situation oder einem Erlebnis im Zusammenhang mit dem Thema. → Meine persönlichen Erfahrungen</li>
+                                <li>Berichten Sie von der Situation in Ihrem Heimatland und geben Sie Beispiele. → Die Rolle von sozialen Netzwerken in meinem Heimatland</li>
+                                <li>Nennen Sie Vor- und Nachteile und äußern Sie Ihre Meinung zum Thema. → Soziale Netzwerke als Informationsquelle: Vor- und Nachteile und meine Meinung</li>
+                                <li>Beenden Sie Ihre Präsentation und bedanken Sie sich bei den Zuhörern. → Abschluss und Dank</li>
+                            </ul>
+
+                            <div class="bg-brand-50 p-6 rounded-lg border border-brand-100">
+                                <h4 class="font-bold text-brand-800 mb-4 uppercase tracking-wider text-sm"><i class="fa-solid fa-microphone-lines mr-2"></i>→ Lösung / Vollständige simulierte Präsentation (17):</h4>
+                                
+                                <div class="space-y-4 text-sm text-brand-900">
+                                    <p><strong>Folie 1 (Einführung):</strong> Guten Tag, liebe Zuhörer! Mein Thema heute ist 'Soziale Netzwerke als Nachrichtenquelle'. Ich werde Ihnen zuerst erklären, warum soziale Netzwerke immer beliebter werden. Dann berichte ich von meinen persönlichen Erfahrungen. Anschließend spreche ich über die Situation in meinem Heimatland. Danach nenne ich die Vor- und Nachteile und sage meine Meinung. Zum Schluss fasse ich zusammen und bedanke mich bei Ihnen.</p>
+                                    
+                                    <p><strong>Folie 2 (Persönliche Erfahrungen):</strong> Ich persönlich informiere mich täglich über Facebook und Twitter über aktuelle Nachrichten. Morgens als Erstes schaue ich auf mein Handy und lese die News. Letztens habe ich von einem wichtigen politischen Ereignis zuerst auf Twitter erfahren, bevor es in den traditionellen Medien kam. Das war für mich ein Aha-Erlebnis.</p>
+                                    
+                                    <p><strong>Folie 3 (Situation im Heimatland):</strong> In meinem Heimatland nutzen besonders junge Menschen soziale Netzwerke als Nachrichtenquelle. Über 70% der 18-30-Jährigen informieren sich über Facebook, Instagram oder WhatsApp über aktuelle Ereignisse. Traditionelle Zeitungen werden immer weniger gelesen. Ein Beispiel: Während der letzten Wahlen haben viele Bürger ihre Informationen hauptsächlich von sozialen Medien bekommen.</p>
+                                    
+                                    <p><strong>Folie 4 (Vor- und Nachteile + Meinung):</strong> Vorteile: Schnelle Verbreitung von Informationen, kostenlose Nutzung, vielfältige Perspektiven, Interaktivität – man kann kommentieren und diskutieren. Nachteile: Gefahr von Falschmeldungen (Fake News), Manipulationsgefahr, oberflächliche Information, Filterblasen – man bekommt nur noch bestimmte Meinungen gezeigt. Meine Meinung: Soziale Netzwerke sind eine wichtige Ergänzung zu traditionellen Medien, aber sie sollten diese nicht vollständig ersetzen. Man muss lernen, Quellen kritisch zu prüfen.</p>
+                                    
+                                    <p><strong>Folie 5 (Abschluss):</strong> Zusammenfassend lässt sich sagen, dass soziale Netzwerke als Nachrichtenquelle immer wichtiger werden, aber auch Risiken bergen. Wir sollten sie bewusst und kritisch nutzen. Vielen Dank für Ihre Aufmerksamkeit! Haben Sie Fragen?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 18 -->
+                <section id="aufgabe-18" class="scroll-mt-12">
+                    <div class="bg-gray-800 text-white rounded-2xl shadow-xl overflow-hidden mt-8">
+                        <div class="px-8 py-6 border-b border-gray-700">
+                            <h2 class="text-2xl font-bold flex items-center"><i class="fa-regular fa-message text-brand-400 mr-3"></i> Aufgabe 18 – Forumsbeitrag</h2>
+                        </div>
+                        <div class="p-8">
+                            <p class="text-sm text-gray-300 mb-4 leading-relaxed">
+                                Sie lesen folgende Nachricht: <br><br>
+                                <em class="bg-gray-700 p-3 block rounded border-l-4 border-gray-400">Insgesamt scheint das Interesse an Nachrichten in Deutschland zu sinken. Umfragen zufolge ist die Gruppe der über 55-Jährigen mit 81 Prozent sehr stark an Nachrichten interessiert, in der Altersgruppe zwischen 18 und 24 Jahren zeigen nur noch 54 Prozent Interesse an aktuellen Ereignissen.</em>
+                            </p>
+                            <p class="text-sm text-gray-300 mb-6">Schreiben Sie in einem Diskussionsforum Ihre Meinung dazu (etwa 80 Wörter).</p>
+                            
+                            <div class="bg-white text-gray-800 p-6 rounded-lg text-sm font-sans shadow-inner">
+                                <h4 class="text-brand-600 font-bold mb-4 uppercase tracking-wider text-xs border-b pb-2"><i class="fa-solid fa-pen-to-square mr-1"></i> → Lösung / Beispiel-Forumsbeitrag (18):</h4>
+                                <p class="text-gray-500 font-bold mb-3">Betreff: Sinkendes Interesse an Nachrichten bei jungen Menschen</p>
+                                
+                                <p>Hallo zusammen,</p>
+                                <p class="mt-2">die Zahlen finde ich sehr bedenklich! Dass nur noch 54% der 18-24-Jährigen Interesse an Nachrichten haben, zeigt ein ernstes Problem. Ich glaube, das liegt an mehreren Faktoren:</p>
+                                <p class="mt-2">Erstens konsumieren junge Menschen Medien anders – sie wollen kurze, schnelle Informationen auf dem Handy, keine langen Artikel. Zweitens fühlen sie sich von der Flut an Informationen überfordert. Drittens vertrauen viele traditionelle Medien nicht mehr.</p>
+                                <p class="mt-2">Aber ich finde auch: Es kommt darauf an, WIE Nachrichten präsentiert werden. Auf Instagram oder TikTok können Nachrichten auch für junge Leute spannend sein, wenn sie gut aufbereitet sind.</p>
+                                <p class="mt-2">Was meint ihr? Liegt es an den Medien oder an den jungen Leuten selbst?</p>
+                                <p class="mt-4">Liebe Grüße</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Kapitel 10. Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mainScrollArea = document.getElementById('main-scroll-area');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-c, .dialogue-moderator, strong, em');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons or tooltips)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i') {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free MyMemory Translation API (no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                            translation = "[No trans]";
+                        }
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+    
+        });
+    </script>
+</body>
+</html>

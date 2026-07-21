@@ -1,0 +1,1153 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 12: Ideen, Erfindungen & Kreativität - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        .translatable-word {
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .translatable-word:hover {
+            background-color: #ccfbf1;
+            color: #0f766e;
+            border-radius: 2px;
+        }
+
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            user-select: none;
+            -webkit-user-select: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    
+        .english-text {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-lightbulb text-brand-500 mr-2"></i>Spektrum Deutsch
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 12: Ideen, Erfindungen & Kreativität</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li><a href="#interview" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> Interview: Kreativität</a></li>
+                <li><a href="#transkription" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-headphones w-5 text-center mr-2 text-gray-400"></i> Hörtext: Erfinder</a></li>
+                <li><a href="#raetsel" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-puzzle-piece w-5 text-center mr-2 text-gray-400"></i> Rätsel: Erfindungen</a></li>
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Grammatik & Struktur</li>
+                <li><a href="#erfinderinnen" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Erfinderinnen (Prät/Perfekt)</a></li>
+                <li><a href="#praepositionen" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Präpositionen (Genitiv)</a></li>
+                <li><a href="#indem" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Modalsätze mit "indem"</a></li>
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Forschung & Tipps</li>
+                <li><a href="#kreativitaet" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Richtig oder Falsch?</a></li>
+                <li><a href="#forschungsgeld" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Geld für die Forschung</a></li>
+                <li><a href="#projekt" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Ein Projekt fördern</a></li>
+                <li><a href="#tipps" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Tipps zur Förderung</a></li>
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Kommunikation & Literatur</li>
+                <li><a href="#umfrage" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Umfrage: Die besten Ideen</a></li>
+                <li><a href="#emails-telefon" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-envelope w-5 text-center mr-2 text-gray-400"></i> E-Mails & Telefon</a></li>
+                <li><a href="#kurzgeschichte" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-book w-5 text-center mr-2 text-gray-400"></i> W. Kaminer Kurzgeschichte</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 12: Ideen, Erfindungen & Kreativität</h1>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Navigation am Desktop verfügbar.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-4xl mx-auto space-y-12 pb-20">
+                
+                <!-- Title Block -->
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Extrahierte Texte (Verbatim) & Lösungen</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 12: Ideen, Erfindungen & Kreativität</h1>
+                    <p class="text-xl text-gray-600">Pläne, Visionen, Berufsaussichten und Abschlussthemen</p>
+                </div>
+
+                <section id="interview" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">2 Interview: Ideen und Kreativität</h2>
+                            <p class="text-sm text-gray-600 mt-1">Interviewen Sie zwei Kursteilnehmer und berichten Sie anschließend über die Ergebnisse.</p>
+                        </div>
+                        <div class="p-6">
+                            <ul class="list-decimal pl-5 space-y-2 text-sm text-gray-700 mb-6 font-medium">
+                                <li>Sind Sie künstlerisch kreativ? Wenn ja, wie? Ich schreibe, male, komponiere, mache Videos, fotografiere ...</li>
+                                <li>Brauchen Sie kreative Lösungen an Ihrem Arbeitsplatz/in Ihrem Studium/bei Ihrem Hobby? Wenn ja, nennen Sie ein Beispiel.</li>
+                                <li>Welche Produktideen haben Sie in den letzten Jahren überzeugt? Nennen Sie ein Beispiel.</li>
+                                <li>Nennen Sie ein oder zwei berühmte Erfinder, Forscher oder Künstler aus Ihrem Heimatland.</li>
+                            </ul>
+
+                            <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-4 border-t pt-4">Integrierte Musterantworten (Goethe B1/B2)</h4>
+                            <div class="space-y-4 text-sm">
+                                <div class="bg-brand-50 p-4 rounded border border-brand-100">
+                                    <p class="font-bold text-brand-900 mb-1">1. Sind Sie künstlerisch kreativ?</p>
+                                    <p class="text-gray-800">"Ja, ich bin künstlerisch kreativ. Ich fotografiere sehr gerne, besonders Landschaften und Architektur. Außerdem schreibe ich manchmal Gedichte auf Deutsch und Arabisch. Das macht mir viel Spaß und hilft mir, meine Gedanken auszudrücken."</p>
+                                </div>
+                                <div class="bg-brand-50 p-4 rounded border border-brand-100">
+                                    <p class="font-bold text-brand-900 mb-1">2. Brauchen Sie kreative Lösungen?</p>
+                                    <p class="text-gray-800">"Ja, in meinem Studium brauche ich oft kreative Lösungen. Zum Beispiel muss ich bei Präsentationen kreativ sein, um die Zuhörer zu interessieren. Auch bei der Problemlösung in Gruppenarbeiten ist Kreativität wichtig."</p>
+                                </div>
+                                <div class="bg-brand-50 p-4 rounded border border-brand-100">
+                                    <p class="font-bold text-brand-900 mb-1">3. Welche Produktideen haben Sie überzeugt?</p>
+                                    <p class="text-gray-800">"Mich hat das Smartphone sehr überzeugt. Es kombiniert viele Funktionen in einem Gerät: Telefon, Kamera, Computer, Navigation. Das hat mein Leben wirklich erleichtert. Auch die Entwicklung von Elektroautos finde ich beeindruckend."</p>
+                                </div>
+                                <div class="bg-brand-50 p-4 rounded border border-brand-100">
+                                    <p class="font-bold text-brand-900 mb-1">4. Berühmte Erfinder aus Ihrem Heimatland:</p>
+                                    <p class="text-gray-800">"Aus Ägypten kenne ich einige berühmte Wissenschaftler. Zum Beispiel Ahmed Zewail, der 1999 den Nobelpreis für Chemie bekommen hat. Er hat die Femtochemie entwickelt. Auch Mustafa El-Sayed ist ein bekannter Chemiker."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="transkription" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <div class="flex items-center justify-between mb-6 border-b pb-4">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center"><i class="fa-solid fa-headphones text-brand-500 mr-3"></i> 3 Transkription Hörtext</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 525 (27)</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-6">Erfindungen und Erfinder</h3>
+
+                        <div class="space-y-4 mb-8">
+                            <div class="dialogue-moderator text-sm">
+                                <strong class="text-indigo-700">Moderator:</strong> Guten Morgen, liebe Zuhörerinnen und Zuhörer. Willkommen bei unserer Sendung „Neues für den Alltag". Heute geht es um Ideen und Erfindungen. Ein unglaublich spannendes und interessantes Thema, denn viele Erfindungen erleichtern unseren Alltag und verbessern unsere Lebensqualität. Mein Gast ist Dr. Hans Knaupp vom Bundesministerium für Wirtschaft und Technologie. Guten Morgen, Dr. Knaupp.
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300 text-sm">
+                                <strong class="text-gray-800">Dr. Knaupp:</strong> Guten Morgen.
+                            </div>
+                            <div class="dialogue-moderator text-sm">
+                                <strong class="text-indigo-700">Moderatorin:</strong> Wenn man an Erfinder denkt, dann denkt man vielleicht an Thomas Alva Edison und die Glühbirne oder Rudolf Diesel und den Dieselmotor. Und man denkt auch an Berühmtheit und Reichtum. Gibt es heute noch diese Einzelerfinder, die unseren Alltag mit ihren einzigartigen Ideen revolutionieren?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300 text-sm">
+                                <strong class="text-gray-800">Dr. Knaupp:</strong> Zunächst muss ich ein paar Worte zur Vergangenheit sagen: Die wenigsten Erfinder sind heute noch namentlich bekannt, die meisten sind in Vergessenheit geraten. Es gibt sogar einige Erfinder, deren Namen schon früher niemand kannte oder die offiziell nicht anerkannt wurden. Nehmen wir zum Beispiel die Gebrüder Wright, die 1903 zum ersten Mal mit einem selbst konstruierten Motorflugzeug geflogen sind und als Pioniere der motorisierten Fliegerei gelten. Heute vermuten wir, dass der Motorenschlosser Gustav Weißkopf bereits 1901 motorisiert geflogen ist. Von dieser Premiere gibt es aber keine Fotos. Oder nehmen wir die Glühbirne, die Sie vorhin angesprochen haben. Thomas Alva Edison wurde damit berühmt. Es gibt aber auch den Uhrmacher Heinrich Göbel, der von sich behauptete, dass er die Glühbirne schon 1854 entwickelt hat, also 25 Jahre vor Edison. Natürlich war Edison ein großer Erfinder, das ist ganz klar, aber ob das gerade bei der Glühbirne der Fall war, ist nicht zweifelsfrei bewiesen. Es existieren noch mehr Erfinder, deren Namen früher niemand kannte oder die offiziell nicht anerkannt wurden. Nehmen wir zum Beispiel Philipp Reis, der schon 1861 einen Apparat erfunden hat, mit dem man telefonieren konnte. Er war einfach zu arm, um die Technik seines Telefons zu verbessern. Den Kampf um das Telefonpatent hat dann im Jahr 1876 Graham Bell gewonnen, der seinen Patentantrag zwei Stunden vor Elisha Gray eingereicht hat.
+                            </div>
+                            <div class="dialogue-moderator text-sm">
+                                <strong class="text-indigo-700">Moderatorin:</strong> Wäre heute so etwas auch noch möglich, wo jeder Vorgang mit diversen Medien dokumentiert werden kann?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300 text-sm">
+                                <strong class="text-gray-800">Dr. Knaupp:</strong> Na ja, dass jemand ein gelungenes technisches Experiment durchführt und niemand davon erfährt, das ist heute sicherlich nicht mehr möglich. Aber heute ist die Konkurrenz viel größer als früher. Der Markt ist gesättigt, es gibt alles, was man braucht. Man kann schon sagen, dass es im 21. Jahrhundert viel schwerer ist, etwas wirklich Neues zu erfinden. Das wird deutlich, wenn man sich zum Beispiel die Zahlen des Deutschen Patent- und Markenamtes ansieht: 2016 wurden 67.898 Patente angemeldet, aber erteilt wurden in diesem Jahr nur 15.652. Und selbst wenn man ein Patent erhält, bedeutet das noch nicht, dass die Idee auch erfolgreich in die Praxis umgesetzt wird. Eine Innovation erfolgreich auf den Markt zu bringen, das ist wirklich nicht einfach. Meistens sind es große Firmen, die im Team Innovationen entwickeln und diese dann mit viel Geld und Personal auf dem Markt einführen. Trotzdem wollen wir auch den Einzelerfindern helfen. Das Bundesministerium für Wirtschaft und Technologie unterstützt mit der Förderinitiative „Schutz von Ideen für die gewerbliche Nutzung" zum Beispiel Erfinderklubs an Hochschulen und einzelne Erfinder in Deutschland. Es gibt auch eine unabhängige Vereinigung von Erfindern, das ist der „Deutsche Erfinderverband". Er besteht aus rund 500 Mitgliedern, das sind Berufstätige, Arbeitslose, Hausfrauen und Hausmänner, Rentner, aber auch professionelle Erfinder.
+                            </div>
+                            <div class="dialogue-moderator text-sm">
+                                <strong class="text-indigo-700">Moderatorin:</strong> Wodurch unterscheiden sich Erfinder von anderen Menschen? Muss man als Erfinder vielleicht ein bisschen verrückt sein?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300 text-sm">
+                                <strong class="text-gray-800">Dr. Knaupp:</strong> Verrückt sicher nicht, aber man braucht schon ein bisschen Fantasie und Kreativität – und Ausdauer. Ohne Ausdauer und eine gewisse Hartnäckigkeit gibt es keinen Erfolg.
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+                            <h4 class="font-bold text-indigo-900 mb-3 text-lg">Zusammenfassung: Was erfahren Sie über Erfinder und Erfindungen?</h4>
+                            <p class="text-sm text-gray-800 mb-2 italic">Im Hörtext erfahre ich viele interessante Informationen über Erfinder und Erfindungen:</p>
+                            
+                            <h5 class="font-bold text-indigo-700 mt-4 mb-1 text-sm">Vergessene Erfinder:</h5>
+                            <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                <li>Viele Erfinder sind in Vergessenheit geraten oder wurden nicht anerkannt.</li>
+                                <li><strong>Gustav Weißkopf</strong> soll bereits 1901 motorisiert geflogen sein, zwei Jahre vor den Gebrüdern Wright (1903).</li>
+                                <li><strong>Heinrich Göbel</strong> behauptete, die Glühbirne schon 1854 entwickelt zu haben, 25 Jahre vor Edison.</li>
+                                <li><strong>Philipp Reis</strong> erfand 1861 ein Telefon, war aber zu arm, um es zu verbessern. Graham Bell gewann 1876 das Patent, weil er seinen Antrag zwei Stunden vor Elisha Gray einreichte.</li>
+                            </ul>
+
+                            <h5 class="font-bold text-indigo-700 mt-4 mb-1 text-sm">Situation heute:</h5>
+                            <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                <li>Im 21. Jahrhundert ist es viel schwerer, etwas wirklich Neues zu erfinden. Der Markt ist gesättigt.</li>
+                                <li>2016 wurden 67.898 Patente angemeldet, aber nur 15.652 erteilt.</li>
+                                <li>Meistens sind es große Firmen, die Innovationen im Team entwickeln.</li>
+                                <li>Einzelerfinder brauchen viel Ausdauer und Hartnäckigkeit.</li>
+                            </ul>
+
+                            <div class="grid grid-cols-1 gap-4 mt-4">
+                                <div>
+                                    <h5 class="font-bold text-indigo-700 mb-1 text-sm">Unterstützung für Erfinder:</h5>
+                                    <ul class="list-disc pl-5 text-sm text-gray-700">
+                                        <li>Das Bundesministerium unterstützt Erfinderklubs an Hochschulen.</li>
+                                        <li>Der „Deutsche Erfinderverband" hat rund 500 Mitglieder (Berufstätige, Arbeitslose, Rentner, professionelle Erfinder).</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-indigo-700 mb-1 text-sm">Eigenschaften von Erfindern:</h5>
+                                    <ul class="list-disc pl-5 text-sm text-gray-700">
+                                        <li>Man braucht Fantasie, Kreativität und vor allem Ausdauer.</li>
+                                        <li>Ohne Hartnäckigkeit gibt es keinen Erfolg.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="raetsel" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-800">1 Rätsel: Erfindungen</h2>
+                                <p class="text-sm text-gray-600 mt-1">Wie heißt das Lösungswort? Ergänzen Sie die Nomen in großen Buchstaben.</p>
+                            </div>
+                            <span class="text-xs text-gray-400 font-mono">Seite 526</span>
+                        </div>
+                        <div class="p-6">
+                            <ol class="list-decimal pl-5 space-y-4 text-sm text-gray-700">
+                                <li>
+                                    Seit dem Jahr 1516 gilt die Vorschrift, dass dieses Getränk nur aus Gerste, Hopfen und Malz bestehen darf.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ BIER</span>
+                                </li>
+                                <li>
+                                    1821 meldete Christian Buschmann ein Patent für ein Musikinstrument an, das man mit dem Mund spielt.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ MUNDHARMONIKA</span>
+                                </li>
+                                <li>
+                                    1881 erfand Werner von Siemens ein öffentliches Verkehrsmittel, das noch heute in Städten fährt.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ STRAßENBAHN</span>
+                                </li>
+                                <li>
+                                    Das Gerät überträgt Töne/Sprache an einen anderen Ort. Es wurde 1861 von Philipp Reis entwickelt.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ TELEFON</span>
+                                </li>
+                                <li>
+                                    Die Theorie wurde von Albert Einstein 1915 entwickelt und 100 Jahre später mithilfe von Gravitationswellen bewiesen.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ RELATIVITÄTSTHEORIE</span>
+                                </li>
+                                <li>
+                                    1903 erfand der Glastechniker Reinhold Burger ein Gefäß, in dem man Getränke warm halten kann.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ THERMOSKANNE</span>
+                                </li>
+                                <li>
+                                    1929 revolutionierte Adolf Rambold das Teetrinken. Man brauchte nur noch heißes Wasser und einen ...<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ TEEBEUTEL</span>
+                                </li>
+                                <li>
+                                    Das Medikament wurde 1879 von Felix Hoffmann entwickelt und wird noch heute als Schmerzmittel verkauft.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ ASPIRIN</span>
+                                </li>
+                                <li>
+                                    1886 wurde das Verkehrsmittel von Karl Benz und Gottlieb Daimler erfunden.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ AUTOMOBIL</span>
+                                </li>
+                                <li>
+                                    Anfang der 1930er-Jahre entwickelte Manfred von Ardenne ein Gerät, mit dem man Bilder drahtlos übertragen kann.<br>
+                                    <span class="text-brand-600 font-bold tracking-widest mt-1 inline-block">→ FERNSEHER</span>
+                                </li>
+                            </ol>
+                            <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+                                <p class="text-sm text-yellow-800 uppercase tracking-widest">Lösungswort:</p>
+                                <p class="text-2xl font-black text-yellow-600 tracking-[0.5em]">THEORIE</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="erfinderinnen" class="scroll-mt-12">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">4 Gruppenarbeit: Erfinderinnen und ihre Erfindungen</h2>
+                        <span class="text-xs text-gray-400 font-mono">Seite 527 (246)</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <!-- Käthe Paulus -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-l-4 border-l-pink-400">
+                            <h3 class="font-bold text-gray-800 mb-3">Käthe Paulus und der faltbare Fallschirm</h3>
+                            <ul class="space-y-3 text-sm text-gray-700">
+                                <li>diese Erfindung → schon viele Menschen → das Leben → gerettet (Perfekt)<br>
+                                    <strong class="text-pink-700">Diese Erfindung hat schon vielen Menschen das Leben gerettet.</strong></li>
+                                <li>das Prinzip des Fallschirms → es → schon → seit 1783 → geben (Präteritum)<br>
+                                    <strong class="text-pink-700">Das Prinzip des Fallschirms gab es schon seit 1783.</strong></li>
+                                <li>Ende des 19. Jahrhunderts → Käthe Paulus → einen Fallschirm → entwickeln → den → man → falten können (Präteritum)<br>
+                                    <strong class="text-pink-700">Ende des 19. Jahrhunderts entwickelte Käthe Paulus einen Fallschirm, den man falten konnte.</strong></li>
+                                <li>mit dem Verfahren → der Fallschirm → kleiner werden → und → man → ihn → auf dem Rücken → tragen können (Präteritum)<br>
+                                    <strong class="text-pink-700">Mit dem Verfahren wurde der Fallschirm kleiner und man konnte ihn auf dem Rücken tragen.</strong></li>
+                            </ul>
+                        </div>
+
+                        <!-- Mary Anderson -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-l-4 border-l-blue-400">
+                            <h3 class="font-bold text-gray-800 mb-3">Mary Anderson und der Scheibenwischer</h3>
+                            <ul class="space-y-3 text-sm text-gray-700">
+                                <li>1903 → Mary Anderson → ein Patent → für einen Wischer → anmelden (Präteritum)<br>
+                                    <strong class="text-blue-700">1903 meldete Mary Anderson ein Patent für einen Wischer an.</strong></li>
+                                <li>den Wischer → Zugführer → im Zug → benötigen können (Präteritum), um → die Frontscheibe der Bahn → von außen → zu putzen<br>
+                                    <strong class="text-blue-700">Die Zugführer benötigten den Wischer im Zug, um die Frontscheibe der Bahn von außen zu putzen.</strong></li>
+                                <li>Geld → sie → mit ihrem Scheibenwischer → nicht → verdienen → denn → niemand → an den Erfolg des Wischers → glauben (Präteritum)<br>
+                                    <strong class="text-blue-700">Mit ihrem Scheibenwischer verdiente sie kein Geld, denn niemand glaubte an den Erfolg des Wischers.</strong></li>
+                                <li>das Patent von Mary Anderson → 1920 → enden → bevor → der Boom des Automobils → beginnen (Präteritum)<br>
+                                    <strong class="text-blue-700">Das Patent von Mary Anderson endete 1920, bevor der Boom des Automobils begann.</strong></li>
+                            </ul>
+                        </div>
+
+                        <!-- Nicole Cliquot -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-l-4 border-l-amber-400">
+                            <h3 class="font-bold text-gray-800 mb-3">Nicole Cliquot und der Schaumwein</h3>
+                            <ul class="space-y-3 text-sm text-gray-700">
+                                <li>viele Menschen → besondere Anlässe → mit einem Glas Champagner → feiern (Präsens)<br>
+                                    <strong class="text-amber-700">Viele Menschen feiern besondere Anlässe mit einem Glas Champagner.</strong></li>
+                                <li>nur Schaumweine aus der französischen Region Champagne → sich → nennen dürfen (Präsens)<br>
+                                    <strong class="text-amber-700">Nur Schaumweine aus der französischen Region Champagne dürfen sich Champagner nennen.</strong></li>
+                                <li>Nicole Cliquot → Anfang des 19. Jahrhunderts → ein spezielles Rüttelverfahren → einführen → das → die Hefreste → aus den Flaschen → entfernen (Präteritum)<br>
+                                    <strong class="text-amber-700">Nicole Cliquot führte Anfang des 19. Jahrhunderts ein spezielles Rüttelverfahren ein, das die Hefreste aus den Flaschen entfernte.</strong></li>
+                                <li>mit diesem Verfahren → der Champagner → klarer als andere Schaumweine → werden (Präteritum)<br>
+                                    <strong class="text-amber-700">Mit diesem Verfahren wurde der Champagner klarer als andere Schaumweine.</strong></li>
+                            </ul>
+                        </div>
+
+                        <!-- Herta Heuwer -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-l-4 border-l-red-500">
+                            <h3 class="font-bold text-gray-800 mb-3">Herta Heuwer und die Currywurst</h3>
+                            <ul class="space-y-3 text-sm text-gray-700">
+                                <li>der Schriftsteller Uwe Timm → einen Roman über „Die Entdeckung der Currywurst" → schreiben → in dem → die Currywurst → in Hamburg → erfunden werden (Präteritum)<br>
+                                    <strong class="text-red-700">Der Schriftsteller Uwe Timm schrieb einen Roman über „Die Entdeckung der Currywurst", in dem die Currywurst in Hamburg erfunden wurde.</strong></li>
+                                <li>in Wirklichkeit → die Berlinerin Herta Heuwer → das Patent für die Currywurst-Sauce → bekommen (Präteritum)<br>
+                                    <strong class="text-red-700">In Wirklichkeit bekam die Berlinerin Herta Heuwer das Patent für die Currywurst-Sauce.</strong></li>
+                                <li>sie → 1949 → in ihrer Berliner Imbissbude → stehen → und → aus Langeweile → eine neue Sauce aus Tomatenmark, Wasser und exotischen Gewürzen → mischen (Präteritum)<br>
+                                    <strong class="text-red-700">Sie stand 1949 in ihrer Berliner Imbissbude und mischte aus Langeweile eine neue Sauce aus Tomatenmark, Wasser und exotischen Gewürzen.</strong></li>
+                                <li>im Berliner Currywurst-Museum → die Besucher → über die Geschichte der Currywurst → sich informieren können (Präsens)<br>
+                                    <strong class="text-red-700">Im Berliner Currywurst-Museum können die Besucher sich über die Geschichte der Currywurst informieren.</strong></li>
+                            </ul>
+                        </div>
+
+                        <!-- Marga Faulstich -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-l-4 border-l-teal-400">
+                            <h3 class="font-bold text-gray-800 mb-3">Marga Faulstich und die Brillengläser</h3>
+                            <ul class="space-y-3 text-sm text-gray-700">
+                                <li>früher → die Menschen → die → nicht gut → sehen können → dicke und schwere Brillengläser tragen müssen (Präteritum)<br>
+                                    <strong class="text-teal-700">Früher mussten die Menschen, die nicht gut sehen konnten, dicke und schwere Brillengläser tragen.</strong></li>
+                                <li>die deutsche Chemikerin Marga Faulstich → viele Menschen → helfen können (Präteritum)<br>
+                                    <strong class="text-teal-700">Die deutsche Chemikerin Marga Faulstich konnte vielen Menschen helfen.</strong></li>
+                                <li>sie → mit ihren Kollegen von der Firma Schott → das Leichtgewichtbrillenglas → erfinden (Präteritum)<br>
+                                    <strong class="text-teal-700">Sie erfand mit ihren Kollegen von der Firma Schott das Leichtgewichtbrillenglas.</strong></li>
+                                <li>nach dem Krieg → sie → im Aufbau eines neuen Forschungszentrums der Glasindustrie → in Lauscha → mitwirken (Präteritum)<br>
+                                    <strong class="text-teal-700">Nach dem Krieg wirkte sie im Aufbau eines neuen Forschungszentrums der Glasindustrie in Lauscha mit.</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="praepositionen" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                            <h2 class="text-xl font-bold text-gray-800">5 Strukturen: Präpositionen</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 528 (247)</span>
+                        </div>
+                        
+                        <div class="p-6 border-b border-gray-100">
+                            <h4 class="font-bold text-brand-700 mb-2 text-sm">5a Lesen Sie die Sätze und ergänzen Sie den Kasus.</h4>
+                            <ul class="list-none space-y-2 text-sm text-gray-700 mb-6">
+                                <li>Mit diesem Verfahren war der Champagner klarer als andere Schaumweine. <strong class="text-gray-900 bg-gray-100 px-2 py-0.5 rounded">→ mit + Dativ</strong></li>
+                                <li>Das ist ein Wein für besondere Anlässe. <strong class="text-gray-900 bg-gray-100 px-2 py-0.5 rounded">→ für + Akkusativ</strong></li>
+                                <li>Firmen investieren viel, um ein Produkt auf den Markt zu bringen. <strong class="text-gray-900 bg-gray-100 px-2 py-0.5 rounded">→ auf + Akkusativ</strong></li>
+                                <li>Für neue Produkte ist es schwer, sich auf dem Markt durchzusetzen. <strong class="text-gray-900 bg-gray-100 px-2 py-0.5 rounded">→ auf + Dativ</strong></li>
+                                <li>Trotz finanzieller Unterstützung ist es nicht immer möglich, ein Forschungsprojekt erfolgreich abzuschließen. <strong class="text-gray-900 bg-gray-100 px-2 py-0.5 rounded">→ trotz + Genitiv</strong></li>
+                            </ul>
+
+                            <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mb-6">
+                                <h4 class="font-bold text-yellow-800 mb-1 text-sm">5b Hinweis:</h4>
+                                <p class="text-sm text-yellow-900">Präpositionen bestimmen den Kasus der nachfolgenden Nomen oder Pronomen. Die Nomen oder Pronomen können im Dativ, Akkusativ oder Genitiv stehen. Die wichtigsten Präpositionen mit dem Genitiv sind: <strong>außerhalb, innerhalb, laut, mithilfe, statt/anstatt, trotz, während, wegen/aufgrund</strong>.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <h4 class="font-bold text-brand-700 mb-3 text-sm">5c Ergänzen Sie die Präpositionalgruppe im Genitiv.</h4>
+                            <p class="text-sm text-gray-500 mb-4 italic">Beispiel: Die Forschungslabore befinden sich außerhalb <span class="underline">der Stadt</span>. (die Stadt)</p>
+                            <ol class="list-decimal pl-5 space-y-2 text-sm text-gray-700 mb-8">
+                                <li>Außerhalb <strong>der Arbeitszeit</strong> wurde das Labor von einer Sicherheitsfirma bewacht. (die Arbeitszeit)</li>
+                                <li>Innerhalb <strong>des Labors</strong> muss man Schutzkleidung tragen. (das Labor)</li>
+                                <li>Der Prototyp musste innerhalb <strong>einer bestimmten Zeit</strong> fertiggestellt werden. (eine bestimmte Zeit)</li>
+                                <li>Laut <strong>einer Pressemitteilung</strong> sind die Patentanmeldungen im Bereich der Computertechnik um 2,9 Prozent gestiegen. (eine Pressemitteilung)</li>
+                                <li>Laut <strong>einer Statistik</strong> gibt es mehr Patentanmeldungen als Patenterteilungen. (eine Statistik)</li>
+                                <li>Mithilfe <strong>eines Verfahrens</strong> schmeckt der Champagner besser als andere Schaumweine. (ein Verfahren)</li>
+                                <li>Statt/Anstatt <strong>finanzieller Mittel</strong> gab es vom Vorstand nur lobende Worte für die Forschungsarbeit. (finanzielle Mittel)</li>
+                                <li>Trotz <strong>des Nutzens</strong> für die Zugfahrer wollte niemand an den Erfolg des Scheibenwischers glauben. (der Nutzen)</li>
+                                <li>Während <strong>des Experiments</strong> kam es auch zu Fehlversuchen. (das Experiment)</li>
+                                <li>Aufgrund <strong>einer reduzierten Größe</strong> konnte man den Fallschirm auf dem Rücken tragen. (eine reduzierte Größe)</li>
+                                <li>Wegen <strong>der hohen Kosten</strong> ist es für Einzelerfinder oft nicht möglich, ihre Ideen zu realisieren. (die hohen Kosten)</li>
+                            </ol>
+
+                            <h4 class="font-bold text-brand-700 mb-3 text-sm">5d Ergänzen Sie die passende Präposition mit dem Genitiv.</h4>
+                            <ol class="list-decimal pl-5 space-y-2 text-sm text-gray-700">
+                                <li><strong>Während</strong> der Besprechungen diskutierten wir auch über das neue Forschungsprojekt.</li>
+                                <li><strong>Aufgrund</strong> (oder Wegen) der guten Resultate wurde die Finanzierung des Projekts gestrichen. <em>(Hinweis: Inhaltlich oft "Wegen fehlender..." aber grammatikalisch passend)</em></li>
+                                <li><strong>Innerhalb</strong> der Förderinitiative „Schutz von Ideen für die gewerbliche Nutzung" können auch einzelne Erfinder ihre Ideen realisieren.</li>
+                                <li><strong>Wegen</strong> (oder Aufgrund) des schlechten Wetters kann das Fallschirmspringen heute nicht stattfinden.</li>
+                                <li>Viele Wissenschaftler beschäftigen sich auch <strong>außerhalb</strong> ihrer Arbeitszeit mit ihren Forschungsthemen.</li>
+                                <li><strong>Laut</strong> einer Studie geben kleine und mittlere Unternehmen zu wenig Geld für Innovationen aus.</li>
+                                <li>Die Chefin möchte <strong>innerhalb</strong> eines Monats erste Ergebnisse sehen.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="kreativitaet" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                            <h2 class="text-xl font-bold text-gray-800">6 Kreativität</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 528</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-gray-600 mb-6">6a Was denken Sie? Sind die Aussagen richtig oder falsch? Diskutieren Sie in kleinen Gruppen.</p>
+                            
+                            <div class="space-y-4">
+                                <div class="border border-gray-100 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <p class="font-bold text-sm text-gray-800 mb-1">1. Es gibt kreative und unkreative Menschen.</p>
+                                    <p class="text-sm text-gray-600"><span class="text-amber-600 font-bold">→ Teilweise richtig.</span> Jeder Mensch hat kreatives Potenzial, aber es ist unterschiedlich ausgeprägt. Manche Menschen sind kreativer als andere, aber jeder kann seine Kreativität trainieren.</p>
+                                </div>
+                                <div class="border border-gray-100 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <p class="font-bold text-sm text-gray-800 mb-1">2. Um kreativ zu sein, sollte man immer einen gleichen Tagesablauf haben.</p>
+                                    <p class="text-sm text-gray-600"><span class="text-red-600 font-bold">→ Falsch.</span> Kreativität entsteht oft durch Abwechslung und neue Erfahrungen. Ein zu strikter Tagesablauf kann die Kreativität sogar hemmen.</p>
+                                </div>
+                                <div class="border border-gray-100 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <p class="font-bold text-sm text-gray-800 mb-1">3. Das Erlernen einer Fremdsprache stimuliert die Wahrnehmung und das Denken.</p>
+                                    <p class="text-sm text-gray-600"><span class="text-green-600 font-bold">→ Richtig.</span> Eine Fremdsprache zu lernen öffnet den Geist für neue Perspektiven und Denkweisen. Das fördert nachweislich die Kreativität.</p>
+                                </div>
+                                <div class="border border-gray-100 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <p class="font-bold text-sm text-gray-800 mb-1">4. Reisen kann die Kreativität fördern.</p>
+                                    <p class="text-sm text-gray-600"><span class="text-green-600 font-bold">→ Richtig.</span> Reisen bringt neue Eindrücke, Kulturen und Erfahrungen. Das erweitert den Horizont und inspiriert zu neuen Ideen.</p>
+                                </div>
+                                <div class="border border-gray-100 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <p class="font-bold text-sm text-gray-800 mb-1">5. Eine zu starke Konzentration auf ein Problem kann zur Blockade führen.</p>
+                                    <p class="text-sm text-gray-600"><span class="text-green-600 font-bold">→ Richtig.</span> Wenn man zu sehr auf ein Problem fokussiert ist, kann das zu einer Denkblockade führen. Oft kommen die besten Ideen, wenn man entspannt ist oder etwas anderes macht.</p>
+                                </div>
+                                <div class="border border-gray-100 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <p class="font-bold text-sm text-gray-800 mb-1">6. Neue Ideen und Entdeckungen sind meistens Teamleistungen.</p>
+                                    <p class="text-sm text-gray-600"><span class="text-green-600 font-bold">→ Richtig.</span> Heutzutage werden die meisten Innovationen im Team entwickelt. Verschiedene Perspektiven und Kompetenzen ergänzen sich und führen zu besseren Ergebnissen.</p>
+                                </div>
+                                <div class="border border-gray-100 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <p class="font-bold text-sm text-gray-800 mb-1">7. Man braucht nur wenig Erfahrung, um im eigenen Fachgebiet etwas Neues entwickeln zu können.</p>
+                                    <p class="text-sm text-gray-600"><span class="text-red-600 font-bold">→ Falsch.</span> Um etwas wirklich Neues zu entwickeln, braucht man fundiertes Fachwissen und Erfahrung. Nur so kann man die Grenzen des Möglichen erweitern.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="forschungsgeld" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <div class="flex items-center justify-between mb-4 border-b pb-2">
+                            <h2 class="text-2xl font-bold text-gray-800">12 Geld für die Forschung</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 529 (251)</span>
+                        </div>
+                        
+                        <p class="text-gray-700 leading-relaxed mb-4 text-sm">
+                            <strong>Forschungsförderung</strong><br>
+                            Die Ausgaben für Forschung und Entwicklung sind in Deutschland auf rund 85 Milliarden Euro gestiegen. Ungefähr zwei Drittel des Geldes stammen aus der Privatwirtschaft, rund ein Drittel sind staatlich finanzierte Forschungsprojekte. Nur die USA, China und Japan geben mehr Geld für die Forschung aus.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mb-4 text-sm">
+                            Im Bereich von Forschung und Entwicklung sind rund 600 000 Menschen beschäftigt. Viele deutsche Forscher können weltweit anerkannte wissenschaftliche Publikationen vorweisen. Trotz wissenschaftlicher Erfolge ist die Anzahl deutscher Patentanmeldungen beim Europäischen Patentamt leider mit drei Prozent zurückgegangen. Es gehört auch keine deutsche Firma mehr zur Top Fünf der Patentanmelder. Die innovative deutsche Firma Siemens liegt auf Platz sechs.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mb-6 text-sm">
+                            Die Politik hat die hohe Bedeutung von Forschung und Innovation für den Standort Deutschland erkannt. Allerdings setzt der Staat bei seiner finanziellen Förderung andere Schwerpunkte als die Geldgeber aus der Wirtschaft. Staatliche Förderung erhalten vor allem zukunftsrelevante Gebiete wie Gesundheit, Luft- und Raumfahrt, Digitalisierung, nachhaltiges Wirtschaften und Energie, innovative Arbeitswelt, intelligente Mobilität sowie zivile Sicherheit. Die privaten Forschungsgelder gehen eher in Bereiche, die für die deutsche Wirtschaft eine große Rolle spielen, wie Fahrzeugbau, Elektrotechnik, Chemie und Maschinenbau.
+                        </p>
+
+                        <div class="bg-brand-50 p-6 rounded-xl border border-brand-100 mb-8">
+                            <h4 class="font-bold text-brand-900 mb-3 text-sm">12b Zusammenfassung: Die wichtigsten Informationen des Textes</h4>
+                            
+                            <ul class="list-none space-y-3 text-sm text-gray-800">
+                                <li><strong class="text-brand-700">Finanzierung:</strong> Die Ausgaben für Forschung betragen rund 85 Milliarden Euro. Zwei Drittel kommen aus der Privatwirtschaft, ein Drittel vom Staat. Nur USA, China und Japan investieren mehr.</li>
+                                <li><strong class="text-brand-700">Beschäftigung:</strong> Rund 600.000 Menschen arbeiten in Forschung und Entwicklung. Es gibt viele anerkannte wissenschaftliche Publikationen.</li>
+                                <li><strong class="text-brand-700">Probleme:</strong> Die Anzahl deutscher Patentanmeldungen ist um 3% zurückgegangen. Keine deutsche Firma mehr in den Top 5 (Siemens auf Platz 6).</li>
+                                <li><strong class="text-brand-700">Förderschwerpunkte Staat:</strong> Gesundheit, Luft- und Raumfahrt, Digitalisierung, nachhaltiges Wirtschaften, Energie, innovative Arbeitswelt, intelligente Mobilität, zivile Sicherheit.</li>
+                                <li><strong class="text-brand-700">Förderschwerpunkte Privat:</strong> Fahrzeugbau, Elektrotechnik, Chemie, Maschinenbau (wirtschaftlich wichtige Bereiche).</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t pt-6">
+                            <h4 class="font-bold text-gray-800 mb-3 text-sm">12c Was passt zusammen? Ordnen Sie zu.</h4>
+                            <div class="grid grid-cols-1 gap-x-8 gap-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+                                <div class="flex justify-between items-center border-b border-gray-200 py-1"><span>Grundlegende Forschung</span> <strong class="text-brand-600">→ fördern (b)</strong></div>
+                                <div class="flex justify-between items-center border-b border-gray-200 py-1"><span>Geld für die Forschung</span> <strong class="text-brand-600">→ ausgeben (c)</strong></div>
+                                <div class="flex justify-between items-center border-b border-gray-200 py-1"><span>wissenschaftliche Publikationen</span> <strong class="text-brand-600">→ veröffentlichen (d)</strong></div>
+                                <div class="flex justify-between items-center border-b border-gray-200 py-1"><span>ein Patent</span> <strong class="text-brand-600">→ anmelden (e)</strong></div>
+                                <div class="flex justify-between items-center border-b border-gray-200 py-1"><span>finanzielle Förderung</span> <strong class="text-brand-600">→ erhalten (f) / bereitstellen (a)</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="projekt" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                            <h2 class="text-xl font-bold text-gray-800">13 Gruppenarbeit: Ein Forschungsprojekt fördern</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 530</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-gray-600 mb-4">Sie arbeiten für eine Stiftung, die in diesem Jahr zehn Millionen Euro für die Forschung in Ihrer Stadt zur Verfügung stellen kann. Wie viel Geld geben Sie wem? Diskutieren Sie und präsentieren Sie am Ende Ihre Entscheidung.</p>
+                            
+                            <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100 text-sm text-gray-800">
+                                <h4 class="font-bold text-indigo-900 mb-3">Musterpräsentation: Unsere Entscheidung (10 Mio. €)</h4>
+                                <ul class="space-y-4">
+                                    <li>
+                                        <strong class="block text-indigo-800">1. Universitätsklinik (Rheumatherapien) - 2 Millionen Euro:</strong>
+                                        Ich würde der Universitätsklinik zwei Millionen Euro geben. Ich halte das für ein sehr wichtiges Projekt, da viele Menschen unter Rheuma leiden und neue Therapien ihre Lebensqualität deutlich verbessern könnten.
+                                    </li>
+                                    <li>
+                                        <strong class="block text-indigo-800">2. Internetkriminalität (Technische Hochschule) - 3 Millionen Euro:</strong>
+                                        Das ist ein aktuelles und dringendes Problem. Hackerangriffe verursachen Milliardenschäden. Bessere Abwehrmechanismen sind enorm wichtig.
+                                    </li>
+                                    <li>
+                                        <strong class="block text-indigo-800">3. Mars-Erforschung (Institut für Physik) - 1,5 Millionen Euro:</strong>
+                                        Die Erforschung des Mars ist wissenschaftlich sehr wertvoll. Das Projekt ist teuer, aber wir können als lokale Stiftung nicht mehr als diesen Beitrag leisten.
+                                    </li>
+                                    <li>
+                                        <strong class="block text-indigo-800">4. Dopingtests (Privates Unternehmen) - 1,5 Millionen Euro:</strong>
+                                        Neue Dopingtests sind im Sport sehr wichtig für Fairness und Gesundheit.
+                                    </li>
+                                    <li>
+                                        <strong class="block text-indigo-800">5. Wahlkampfstrategien (Forschungsgruppe) - 1 Million Euro:</strong>
+                                        Die Untersuchung von Wahlkampfstrategien ist für die Demokratie wichtig, damit Bürger verstehen, wie Kampagnen funktionieren.
+                                    </li>
+                                    <li>
+                                        <strong class="block text-indigo-800">6. Unser eigenes Projekt (Luftqualität) - 1 Million Euro:</strong>
+                                        Eine Million Euro würden wir für ein eigenes Projekt verwenden: Forschung zur Verbesserung der Luftqualität in Städten. Das ist ein dringendes Umweltproblem vor Ort.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tipps" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <div class="flex items-center justify-between mb-4 border-b pb-2">
+                            <h2 class="text-2xl font-bold text-gray-800">Tipps zur Förderung der Kreativität</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 531</span>
+                        </div>
+                        
+                        <p class="text-gray-700 leading-relaxed mb-4 text-sm">
+                            Bisher waren Wissenschaftler der Meinung, dass es zwei verschiedene Gruppen von Menschen gibt: die Kreativen und die Unkreativen, die Erfinder und die Büromenschen. In neuen Untersuchungen kommen Forscher jedoch zu anderen Ergebnissen.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mb-4 text-sm">
+                            Jedes Gehirn verfügt über die Fähigkeit, kreativ zu sein, sagen die Experten. Man muss die Kreativität nur zum Leben erwecken. Man muss sie trainieren, zum Beispiel, indem man ab und zu etwas Ungewöhnliches tut. Man könnte einen anderen Weg zur Arbeit fahren, eine Zeitung lesen, die man sonst nicht liest, oder in einem Restaurant ein exotisches, besonders gewürztes Gericht probieren. Auch Reisen, ein längerer Auslandsaufenthalt oder das Erlernen einer Fremdsprache regen die Kreativität an. Das Denken an. Außerdem empfehlen die Forscher Entspannung und regelmäßige Pausen. Zu starke Konzentration auf ein Problem kann zur Blockade führen. Meistens kommen die guten Ideen erst dann, wenn man „loslässt".
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mb-4 text-sm">
+                            Eine besondere Bedeutung für Innovationen hat der Austausch mit anderen, denn neue Ideen und Entdeckungen entstehen nur selten in einem einsamen Kopf. In der Regel ist es eine Teamleistung, die aus einer positiven Gruppendynamik erwächst.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mb-6 text-sm">
+                            Der wichtigsten Voraussetzung der Kreativitätsförderung gehört aber das Erkennen der eigenen Talente und Fähigkeiten. Das bedeutet harte Arbeit. Um im eigenen Fachgebiet etwas Neues entwickeln zu können, muss man rund zehn Jahre auf diesem Gebiet tätig gewesen sein. Erfahrung und Fachkenntnis bilden demzufolge die Basis für jede neue Entwicklung.
+                        </p>
+
+                        <div class="bg-green-50 p-6 rounded-xl border border-green-100">
+                            <h4 class="font-bold text-green-900 mb-3 text-sm">Zusammenfassung: Was erfahren Sie über die Förderung der Kreativität?</h4>
+                            <div class="grid grid-cols-1 gap-4 text-sm text-gray-800">
+                                <div>
+                                    <strong class="block text-green-800 mb-1">Trainingsmethoden:</strong>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Ungewöhnliches tun (Anderen Weg zur Arbeit fahren)</li>
+                                        <li>Neue Medien lesen (Eine andere Zeitung)</li>
+                                        <li>Neues Essen probieren (Exotische Gerichte)</li>
+                                        <li>Reisen (Auslandsaufenthalt erweitert den Horizont)</li>
+                                        <li>Fremdsprache lernen</li>
+                                        <li>Entspannung & Loslassen (Gegen Blockaden)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong class="block text-green-800 mb-1">Teamarbeit & Voraussetzungen:</strong>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Neue Ideen entstehen selten allein. Der Austausch im Team ist wichtig.</li>
+                                        <li>Man muss seine eigenen Talente erkennen.</li>
+                                        <li>Es erfordert harte Arbeit und Erfahrung (oft ca. 10 Jahre im Fachgebiet).</li>
+                                        <li>Fachkenntnis bildet die Basis für Neues.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="indem" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                            <h2 class="text-xl font-bold text-gray-800">8 Strukturen: Modale Nebensätze mit "indem"</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 532</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mb-6">
+                                <h4 class="font-bold text-yellow-800 mb-1 text-sm">Hinweis:</h4>
+                                <p class="text-sm text-yellow-900">Nebensätze mit <strong>indem</strong> beantworten die Frage <em>Wie?</em> und nennen eine bestimmte Art und Weise. Das konjugierte Verb steht im Nebensatz an letzter Stelle.<br>
+                                <em>Beispiel: Das funktioniert zum Beispiel, <strong>indem man ab und zu etwas Ungewöhnliches tut.</strong></em></p>
+                            </div>
+
+                            <h4 class="font-bold text-brand-700 mb-3 text-sm">8b Formulieren Sie Sätze mit "indem".</h4>
+                            <ol class="list-decimal pl-5 space-y-3 text-sm text-gray-700">
+                                <li>einen anderen Weg zur Arbeit fahren<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann seine Kreativität fördern, indem man einen anderen Weg zur Arbeit fährt.</span></li>
+                                <li>eine Zeitung lesen, die man sonst nicht liest<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann neue Perspektiven gewinnen, indem man eine Zeitung liest, die man sonst nicht liest.</span></li>
+                                <li>ein exotisches Gericht essen<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann seinen Horizont erweitern, indem man ein exotisches Gericht isst.</span></li>
+                                <li>viel reisen<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann die Kreativität steigern, indem man viel reist.</span></li>
+                                <li>sich längere Zeit im Ausland aufhalten<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann interkulturelle Kompetenz entwickeln, indem man sich längere Zeit im Ausland aufhält.</span></li>
+                                <li>eine Fremdsprache lernen<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann das Denken anregen, indem man eine Fremdsprache lernt.</span></li>
+                                <li>regelmäßig Pausen machen<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann Blockaden vermeiden, indem man regelmäßig Pausen macht.</span></li>
+                                <li>sich nicht zu sehr auf ein Problem konzentrieren<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann bessere Ideen entwickeln, indem man sich nicht zu sehr auf ein Problem konzentriert.</span></li>
+                                <li>mit anderen Ideen austauschen<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann Innovationen fördern, indem man sich mit anderen über Ideen austauscht.</span></li>
+                                <li>seine eigenen Talente erkennen und trainieren<br>
+                                    <span class="font-semibold text-brand-600 block mt-0.5">→ Man kann kreativ erfolgreich sein, indem man seine eigenen Talente erkennt und trainiert.</span></li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="umfrage" class="scroll-mt-12">
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-800 mb-2">9 Wann und wo haben Sie die besten Ideen?</h2>
+                            <p class="text-sm text-gray-600 mb-4">Erstellen Sie eine Übersicht in kleinen Gruppen und vergleichen Sie Ihre Ergebnisse mit anderen Kursteilnehmern und den Umfrageergebnissen in Deutschland.</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm">
+                                <h4 class="font-bold text-brand-700 mb-2">Unsere Umfrageergebnisse:</h4>
+                                <ul class="space-y-1 mb-4 text-gray-700">
+                                    <li class="flex justify-between border-b border-gray-200 py-1"><span>Unter der Dusche/im Bad</span> <strong>30%</strong></li>
+                                    <li class="flex justify-between border-b border-gray-200 py-1"><span>Im Bett/auf dem Sofa</span> <strong>25%</strong></li>
+                                    <li class="flex justify-between border-b border-gray-200 py-1"><span>Beim Joggen/Spazieren</span> <strong>20%</strong></li>
+                                    <li class="flex justify-between border-b border-gray-200 py-1"><span>Beim Kochen</span> <strong>10%</strong></li>
+                                    <li class="flex justify-between border-b border-gray-200 py-1"><span>Am Arbeitsplatz</span> <strong>5%</strong></li>
+                                </ul>
+                                <p class="text-gray-700 italic">"Unsere Ergebnisse decken sich mit denen in Deutschland (Dusche 13,5%, Bett 12,1%). Das zeigt: Kreativität entsteht oft in entspannten Momenten, nicht am Schreibtisch!"</p>
+                            </div>
+                        </div>
+
+                        <div id="emails-telefon" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-800 mb-2">11 Telefongespräche</h2>
+                            <p class="text-sm text-gray-600 mb-4">Spielen Sie zwei Telefongespräche (Absage & Terminvereinbarung).</p>
+                            
+                            <div class="space-y-4 text-sm">
+                                <div>
+                                    <h4 class="font-bold text-gray-700 border-b pb-1 mb-2">Gespräch 1: Absage</h4>
+                                    <div class="dialogue-a text-xs py-2 px-3"><strong class="text-brand-700">Sie:</strong> Guten Tag, Frau Schnelle, hier ist [Name]. Es tut mir sehr leid, aber ich muss die Besprechung heute um 18.00 Uhr leider absagen. Ein guter Freund liegt im Krankenhaus.</div>
+                                    <div class="dialogue-b text-xs py-2 px-3"><strong class="text-amber-600">Chefin:</strong> Oh, das ist schade. Können wir verschieben?</div>
+                                    <div class="dialogue-a text-xs py-2 px-3"><strong class="text-brand-700">Sie:</strong> Ja, wäre morgen Vormittag um 10.00 Uhr möglich?</div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-bold text-gray-700 border-b pb-1 mb-2">Gespräch 2: Terminvereinbarung</h4>
+                                    <div class="dialogue-a text-xs py-2 px-3"><strong class="text-brand-700">Sie:</strong> Hallo [Kollegin], hast du einen Moment Zeit? Ich würde gerne mit dir über neue Projektideen sprechen. Hast du nächste Woche Zeit?</div>
+                                    <div class="dialogue-b text-xs py-2 px-3"><strong class="text-amber-600">Kollegin:</strong> Gerne! Wann passt es dir?</div>
+                                    <div class="dialogue-a text-xs py-2 px-3"><strong class="text-brand-700">Sie:</strong> Wie wäre es am Mittwoch um 15.00 Uhr in der Cafeteria?</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="scroll-mt-12">
+                    <div class="bg-gray-800 text-white rounded-2xl shadow-xl overflow-hidden mt-8">
+                        <div class="px-8 py-6 border-b border-gray-700">
+                            <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-envelope-open-text text-brand-400 mr-3"></i> 10 Zwei E-Mails</h2>
+                            <p class="text-gray-300 mt-2 text-sm">Schreiben Sie berufliche E-Mails (Absage an die Chefin & Einladung an Kollegen).</p>
+                        </div>
+                        
+                        <div class="p-8 grid grid-cols-1 gap-8">
+                            <div>
+                                <h3 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-sm">E-Mail 1: Absage an Chefin</h3>
+                                <div class="bg-white text-gray-800 p-5 rounded-lg text-sm font-serif shadow-inner">
+                                    <p class="font-bold border-b pb-2 mb-2 text-gray-500 font-sans">Betreff: Absage der Besprechung heute Abend</p>
+                                    <p>Sehr geehrte Frau Schnelle,</p>
+                                    <p class="mt-2">vielen Dank für die Einladung zur Besprechung des neuen Forschungsprojekts heute Abend um 18.00 Uhr.</p>
+                                    <p class="mt-2">Leider muss ich kurzfristig absagen. Ein guter Freund von mir liegt im Krankenhaus und ich möchte ihn heute Abend unbedingt besuchen. Das ist mir sehr wichtig.</p>
+                                    <p class="mt-2">Könnten wir die Besprechung vielleicht auf morgen Vormittag verschieben? Ich wäre ab 9.00 Uhr verfügbar. Alternativ könnte ich auch morgen Nachmittag ab 14.00 Uhr.</p>
+                                    <p class="mt-2">Es tut mir sehr leid. Ich hoffe auf Ihr Verständnis.</p>
+                                    <p class="mt-2">Mit freundlichen Grüßen<br>[Ihr Name]</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-sm">E-Mail 2: An alle Kollegen</h3>
+                                <div class="bg-white text-gray-800 p-5 rounded-lg text-sm font-serif shadow-inner">
+                                    <p class="font-bold border-b pb-2 mb-2 text-gray-500 font-sans">Betreff: Neue Ideen und Projektvorschläge gesucht!</p>
+                                    <p>Liebe Kolleginnen und Kollegen,</p>
+                                    <p class="mt-2">ich möchte Sie bitten, Vorschläge für neue Projekte und innovative Ideen zu entwickeln. Bitte schicken Sie mir Ihre Konzepte bis Ende der Woche.</p>
+                                    <p class="mt-2">Lassen Sie uns nächste Woche Mittwoch um 10.00 Uhr zusammenkommen, um die Ideen zu besprechen.</p>
+                                    <p class="mt-2">Ich freue mich auf Ihre kreativen Vorschläge!</p>
+                                    <p class="mt-2 mt-4">Viele Grüße<br>[Ihr Name]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="kurzgeschichte" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-t-4 border-t-purple-600 p-8">
+                        <div class="flex items-center justify-between mb-6 border-b pb-4">
+                            <h2 class="text-3xl font-bold text-gray-900 flex items-center"><i class="fa-solid fa-book-open text-purple-600 mr-3"></i> 14 Innovatives Sprachenlernen</h2>
+                            <span class="text-xs text-gray-400 font-mono">Seite 533-535</span>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Deutsch als Spritze</h3>
+                        <p class="text-sm text-purple-600 font-semibold mb-6">Eine Kurzgeschichte von Wladimir Kaminer</p>
+
+                        <div class="columns-1 md:columns-2 gap-8 text-sm text-gray-700 leading-relaxed mb-8">
+                            <p class="mb-4">Nicht nur in Amerika und Europa, auch unter den Russen bildet sich derzeit eine neue Harry-Potter-Generation: Menschen, die fest an Wunder glauben. Sie sind bereit, jede Anstrengung, die von ihnen verlangt wird, durch einen Zaubertisch zu ersetzen. Auch dann, wenn ihnen der Zaubertisch letztlich noch größere Anstrengungen abverlangt. Auf beispielsweise festzustellen, ob es draußen regnet, schauen sie lieber ins Internet als aus dem Fenster.</p>
+                            
+                            <p class="mb-4">Mein Nachbar Andrej gehört auch zu diesen Leuten, obwohl er vom Alter her durchaus der Vater von Harry Potter sein könnte. Seit einem Jahr arbeitet er bei einer deutschen Internetfirma, und seine Chefs sind mit ihm sehr zufrieden, weil er fleißig ist und nie Überstunden ablehnt. Nur eines finden seine Chefs bedauerlich: dass der Mann schon so lange in Deutschland lebt und noch immer nur einen Satz auf Deutsch kann: „Tschüss, bis zum nächsten Mal, wenn es wieder heißt: Popkornzen."</p>
+                            
+                            <p class="mb-4">Das sagt Andrej jeden Tag zum Abschied. Seine Chefs wundern sich, aber ich finde es völlig normal. Unaufdringlich versuchen sie ihn zu überzeugen, doch noch ein paar zusätzliche Äußerungen dazuzulernen. „Du bist intelligent, du schaffst es", ermunterten ihn seine Chefs vor zwei Wochen und schickten ihn in unbezahlten Urlaub. Andrej fühlte sich daraufhin von den Kollegen verraten und in seiner Existenz bedroht. „Das ist pure Zeitverschwendung", meinte er.</p>
+                            
+                            <p class="mb-4">„Es muss doch eine Alternative geben, die einem den Einstieg in eine Fremdsprache innerhalb kürzester Zeit ermöglicht", sinnierte er bei uns in der Küche.</p>
+                            
+                            <p class="mb-4">„Aber natürlich gibt es so etwas", bestätigte ich und zeigte ihm eine Annonce in der russischsprachigen Zeitung, die bei uns seit Monaten liegt: „Geheime Kreml-Medizin wird zum Gemeingut des Volkes: Erlernen Sie eine Fremdsprache in 24 Stunden. Deutsch als Spritze" stand da. In einem kleinen Werbetrakt erwähnte der Anbieter geheime Medikamente, die man früher zur Unterstützung des regierenden Parteiapparats in sowjetischen Forschungslaboren entwickelt hatte. Auf diese Weise lernte beispielsweise Gorbatschow Englisch. Mit diesen Mitteln konnte sich dadurch mit Kohl unter vier Augen unterhalten – behauptet jedenfalls der Anbieter. Ich hielt diese Annonce schlicht für eine Versuchung. Andrej hatte auch seine Zweifel. Er glaubte nicht, dass sich Gorbatschow sein Englisch hatte einspritzen lassen: „Dafür hat er einen viel zu starken Akzent."</p>
+                            
+                            <p class="mb-4">In der Annonce stand zwar, dass man unmittelbar nach der Injektion eine Fremdsprache sprechen kann, aber nirgendwo war erwähnt, dass jemand sie auch verstand. Wir saßen bei mir in der Küche und amüsierten uns über all die Leichtigkeiten. Plötzlich stieß Andrej auf eine andere kleine Annonce, die ich übersehen hatte: „Einsteiger danken! Lernen Sie Deutsch unter Hypnose: Ohne Sprachschule und ohne besondere Vorkenntnisse lernen Sie Deutsch in 30 Stunden", behauptete der Doktor. Sein Kurs „Selbstlernen unter Hypnose" kostete nur 150 Euro plus Versandkosten. Dafür bekam man ein Buch des Autors, eine Audiokassette und ein Meditationsobjekt – um sich selbst zu hypnotisieren. Auf dem Foto sah Doktor Hoffmann sehr seriös aus. „An Ihren Wohnzimmertüren wird die Fremdsprache direkt auf die Festplatte Ihres Unterbewusstseins gespeichert", stand unter dem Bild.</p>
+                            
+                            <p class="mb-4">Der wichtigste Teil des Kurses war die Audiokassette. „36 Lektionen aus der ganzen Welt haben sechs Jahre hart gearbeitet, um diese 90-Minuten-Aufnahme zu entwickeln. Und jeder, der sich diese Kassette zwölfmal unter Hypnose anhört, wird die Fremdsprache sprechen können. Das ist wissenschaftlich erwiesen", behauptete Doktor Hoffmann.</p>
+                        </div>
+
+                        <div class="bg-gray-100 p-4 rounded mb-8 border border-gray-200">
+                            <h4 class="font-bold text-gray-800 mb-2">Fortsetzung...</h4>
+                            <div class="columns-1 md:columns-2 gap-8 text-sm text-gray-700 leading-relaxed">
+                                <p class="mb-4">Ich schenkte auch dieser Annonce keinen Glauben. Besonders merkwürdig schien mir, dass alle Zahlen, die Doktor Hoffmann verwendete, um die Einmaligkeit seines Kurses zu beweisen, durch sechs teilbar waren. Für mich war das ein eindeutiges Zeichen für den Wahnsinn des Doktors. Doch Andrejs Augen glänzten. Vielleicht war es der Vergleich seines Unterbewusstseins mit einer Festplatte, der ihn überzeugte. In Nu war er fest entschlossen, diese Methode auszuprobieren.</p>
+
+                                <p class="mb-4">Am nächsten Tag überwies Andrej tatsächlich 150 Euro an Doktor Hoffmann, und schon drei Tage später bekam er von einem Kurierdienst einen Karton ausgehändigt. Mit diesem Karton kreuzte er dann wieder bei mir auf, denn so groß war sein Vertrauen in den Doktor doch nicht. Er wollte nicht allein in hypnotisiertem Zustand in der Wohnung sitzen. Wir packten das Paket zusammen aus. Laut beiliegender Instruktion sollte der Fremdsprachenliebhaber zuerst die Broschüre lesen, dann das Meditationsobjekt – eine kleine silberne Kugel, die an einer Schnur hing – mithilfe von zwei Elektrobatterien in Bewegung setzen, damit die Kassette in den Rekorder schieben, Kopfhörer aufsetzen und sich in einem Sessel entspannen. So einfach war das Ganze.</p>
+
+                                <p class="mb-4">Doktor Hoffmann beschrieb ausführlich die am häufigsten auftretenden Probleme und Fragen seiner Patienten:<br>
+                                „Sie haben sich die Kassette zwölfmal angehört, können aber die von Ihnen gewünschte Fremdsprache noch immer nicht. Das bedeutet: Ihr Unterbewusstsein ist überlastet. Machen Sie einfach eine Pause. Gehen Sie an die frische Luft, versuchen Sie, ein paar Tage nicht zu trinken und nicht zu rauchen. Schlafen Sie sich gut aus, und dann versuchen Sie es mit der Kassette erneut."</p>
+                                
+                                <p class="mb-4">Weiter hieß es: „Sie haben sich die Kassette zwölfmal angehört und beherrschen nun eine Fremdsprache, aber nicht die, die Sie sich gewünscht haben. Sie und Ihre Mitmenschen sind überzeugt, dass es sich um eine Fremdsprache handelt, aber keiner weiß, um welche. Bewahren Sie Ruhe. Wenden Sie sich an den Hersteller."</p>
+
+                                <p class="mb-4">Vorsichtig erkundigte ich mich bei Andrej, ob seine Opferbereitschaft nicht doch etwas übertrieben war. „Stell dir mal vor", sagte ich, „du hörst dir die Kassette ein paarmal an und kannst anschließend gar keine Sprache mehr. Dann kannst du dich auch nicht mehr an den Notarzt wenden."<br>
+                                „Stimmt nicht", sagte Andrej, „ich kann immer noch E-Mails schreiben."</p>
+
+                                <p class="mb-4">Mir wurde klar, wie ernst ihm die Sache war. Ich versprach, in der Nähe zu bleiben, für alle Fälle, und verdrückte mich in die Küche. Eine Stunde lang hörte ich Andrej im Wohnzimmer fluchen: Sein Organismus wehrte sich und wollte nicht hypnotisiert werden. Doch irgendwann wurde es still in der Wohnung. Man konnte fast hören, wie die Audiokassette im Rekorder quietschte und die gewünschte Fremdsprache in Andrejs Unterbewusstsein tropfte. Ich las Anna Karenina. Als ich das Kapitel über den ausländischen Prinzen gerade durchhatte, erschien Andrej in der Küche. Er sah müde, aber zufrieden aus.</p>
+
+                                <p class="mb-4">„Na, wie geht es dir, mein Freund?", fragte ich ihn vorsichtig.<br>
+                                Er zündete sich schweigend eine Zigarette an. Dann sagte er in nahezu perfektem Deutsch: „Tschüss, bis zum nächsten Mal, wenn es wieder heißt: Popkornzen" und lachte.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
+                                <h4 class="font-bold text-purple-900 mb-3 text-sm">Zusammenfassung der Kurzgeschichte</h4>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-gray-800">
+                                    <li><strong>Das Problem:</strong> Andrej, ein Russe in Deutschland, arbeitet bei einer Internetfirma. Er ist fleißig, spricht aber nur einen einzigen Satz Deutsch. Er wird in unbezahlten Urlaub geschickt, um Deutsch zu lernen.</li>
+                                    <li><strong>Die absurde Suche:</strong> Andrej sucht nach magischen, schnellen Lernmethoden ("Zaubertisch"). Er findet Zeitungsannoncen: Erst "Deutsch als Spritze" (angeblich von Gorbatschow genutzt), dann "Lernen unter Hypnose" für 150 Euro.</li>
+                                    <li><strong>Die Methode:</strong> Der "Wunder-Kurs" von Dr. Hoffmann besteht aus einer Kassette, einem Buch und einem Meditationsobjekt (Kugel). Das Handbuch enthält absurde Problemlösungen (z.B. "Sie sprechen eine Sprache, aber keiner weiß welche -> Ruhe bewahren").</li>
+                                    <li><strong>Die Pointe:</strong> Andrej testet die Hypnose bei seinem Freund. Er "kämpft" eine Stunde lang damit. Am Ende kommt er erschöpft in die Küche, zündet sich eine Zigarette an und sagt stolz seinen einzigen alten Satz: "Tschüss, bis zum nächsten Mal..." – Die ganze teure Hypnose war völlig nutzlos.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-gray-800 mb-3 text-sm">5 Informationen über den Schriftsteller Wladimir Kaminer</h4>
+                                <p class="text-xs text-gray-500 mb-4">Setzen Sie die passenden Verben im Präteritum ein: <em>veröffentlichen, studieren, folgen, ziehen, arbeiten, erscheinen, organisieren</em></p>
+                                
+                                <p class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-4 rounded">
+                                    Wladimir Kaminer wurde 1967 in Moskau geboren. Er <strong class="text-brand-600">studierte</strong> am Theaterinstitut in Moskau. 1990 wanderte er aus und <strong class="text-brand-600">zog</strong> nach Berlin. Am Anfang <strong class="text-brand-600">schrieb</strong> Wladimir Kaminer Artikel in verschiedenen deutschen Zeitungen und <strong class="text-brand-600">arbeitete</strong> u. a. beim Radiosender „Multikulti". Daneben <strong class="text-brand-600">organisierte</strong> er mit seinem Freund Yuriy Gurzhy Veranstaltungen wie die „Russendisko" im Kaffee Burger. Sein erster Erzählband hieß wie die beliebte Veranstaltung „Russendisko" und <strong class="text-brand-600">erschien</strong> im Jahre 2000.
+                                </p>
+                                <p class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-4 rounded mt-2">
+                                    Das Buch hatte mit einer Gesamtauflage von 1,3 Millionen Exemplaren einen sensationellen Erfolg und wurde 2012 auch verfilmt. Es <strong class="text-brand-600">gibt</strong> den Roman „Militärmusik" und viele weitere Erzählbände wie „Schönhauser Allee", „Mein deutsches Dschungelbuch" oder „Meine russischen Nachbarn".
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Kapitel 8 (Erfindungen & Kreativität). Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mainScrollArea = document.getElementById('main-scroll-area');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons or tooltips)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i') {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free MyMemory Translation API (no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                            translation = "[No trans]";
+                        }
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+    
+        });
+    </script>
+</body>
+</html>

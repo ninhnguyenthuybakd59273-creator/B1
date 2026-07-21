@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spektrum Deutsch B1 - Digital Reader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            950: '#042f2e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #2dd4bf 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+        }
+        .dark .hero-gradient {
+            background: radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen hero-gradient">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center shadow-lg shadow-brand-500/20">
+                    <i class="fa-solid fa-book-open text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold font-outfit tracking-tight leading-none text-slate-900 dark:text-white">Spektrum Deutsch B1</h1>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Interaktiver Reader / Zweisprachig</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Hero Section -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brand-100 dark:bg-brand-950/50 text-brand-800 dark:text-brand-300 mb-4 border border-brand-200/50 dark:border-brand-900/50">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-500 mr-1.5 animate-pulse"></span>
+                Sprachniveau B1
+            </span>
+            <h2 class="text-4xl sm:text-5xl font-extrabold font-outfit tracking-tight text-slate-900 dark:text-white mb-6">
+                Lerne Deutsch mit <span class="gradient-text">Spektrum B1</span>
+            </h2>
+            <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                Ein interaktiver zweisprachiger Begleiter für deinen Deutschkurs. Wähle unten ein Kapitel aus, um mit dem Lesen, Übersetzen und Vokabellernen zu beginnen.
+            </p>
+            
+            <!-- Dynamic Stats Bar -->
+            <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto p-2.5 rounded-2xl bg-white/50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 shadow-sm">
+                <div class="p-3 text-center border-r border-slate-200 dark:border-slate-700/60">
+                    <span class="block text-2xl font-bold font-outfit text-brand-600 dark:text-brand-400" id="stats-available">0</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Verfügbare Kapitel</span>
+                </div>
+                <div class="p-3 text-center border-r border-slate-200 dark:border-slate-700/60">
+                    <span class="block text-2xl font-bold font-outfit text-slate-800 dark:text-white" id="stats-total">12</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Gesamtanzahl</span>
+                </div>
+                <div class="p-3 text-center">
+                    <span class="block text-2xl font-bold font-outfit text-amber-500" id="stats-percentage">0%</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Fortschritt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="max-w-md mx-auto mb-10 relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input type="text" id="search-input" placeholder="Kapitel oder Thema suchen..." class="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all shadow-sm">
+        </div>
+
+        <!-- Grid of Lessons -->
+        <div id="lessons-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <!-- Dynamic Cards Will Be Inserted Here -->
+        </div>
+
+        <!-- Integration Help Card -->
+        <div class="max-w-3xl mx-auto bg-gradient-to-r from-teal-500/10 to-emerald-500/10 border border-brand-500/20 rounded-3xl p-6 sm:p-8 shadow-sm">
+            <div class="flex items-start space-x-4">
+                <div class="p-3 bg-brand-500/10 rounded-2xl text-brand-600 dark:text-brand-400">
+                    <i class="fa-solid fa-circle-info text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Wie füge ich neue Kapitel hinzu?</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                        Das Dashboard erkennt neu hochgeladene Kapitel-Dateien vollkommen automatisch! Wenn du ein neues Kapitel (z.B. Kapitel 3) erstellst, benenne die Datei einfach nach einem der folgenden Muster und lege sie in denselben Ordner ab:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono text-slate-700 dark:text-slate-300 bg-white/60 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200/50 dark:border-slate-800">
+                        <div>• spektrum_deutsch_b1_kapitel_3_bilingual.html</div>
+                        <div>• spektrum_deutsch_b1_kapitel_3.html</div>
+                        <div>• Kapitel 3.html</div>
+                        <div>• kapitel_3.html</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-slate-500 dark:text-slate-400">
+            <p>© 2026 Spektrum Deutsch B1 Reader. Erstellt mit ❤️ für Deutschlerner.</p>
+        </div>
+    </footer>
+
+    <!-- Script for Dynamic Loading & Interactive Features -->
+    <script>
+        // Theme switching logic
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Initialize theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Chapters configuration
+        const totalChapters = 12;
+        
+        // Standard topics default as fallback
+        const defaultChaptersData = {
+            1: { title: "Kapitel 1: Alltag", desc: "Beruf, Freizeit, Alltagstätigkeiten und grundlegende Grammatik (Akkusativ/Dativ)." },
+            2: { title: "Kapitel 2: Begegnungen", desc: "Kontakte knüpfen, über Interessen sprechen, Wohnen und Präteritum." },
+            3: { title: "Kapitel 3: Arbeitswelt", desc: "Büroalltag, Bewerbungen, Telefonate und Modalverben." },
+            4: { title: "Kapitel 4: Gesundheit", desc: "Körper, Krankheiten, Ratschläge geben, Wellness und Konjunktiv II." },
+            5: { title: "Kapitel 5: Unterwegs", desc: "Reisen, Verkehrsmittel, Wegbeschreibungen und Nebensätze." },
+            6: { title: "Kapitel 6: Konsum & Einkaufen", desc: "Einkaufsgewohnheiten, Reklamationen, Geschäfte und Passiv." },
+            7: { title: "Kapitel 7: Wie wir leben", desc: "Wohnformen, Nachbarschaft, Lebensstile und Relativsätze." },
+            8: { title: "Kapitel 8: Kultur & Medien", desc: "Fernsehen, Bücher, soziale Medien, Kunst und Infinitiv mit zu." },
+            9: { title: "Kapitel 9: Lernen & Schule", desc: "Schulsysteme, lebenslanges Lernen, Fremdsprachen und Nebensätze." },
+            10: { title: "Kapitel 10: Umwelt & Natur", desc: "Klimaschutz, Wetter, Landschaften und Futur I." },
+            11: { title: "Kapitel 11: Gesellschaft", desc: "Politik, Geschichte, Traditionen und Partizipialattribute." },
+            12: { title: "Kapitel 12: Zukunft", desc: "Pläne, Visionen, Berufsaussichten und Abschlussthemen." }
+        };
+
+        // Chapters configuration with static file mappings to prevent local file:// CORS issues
+        const chaptersConfig = {
+            1: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_1_bilingual.html", title: "Kapitel 1: Alltag", desc: "Beruf, Freizeit, Alltagstätigkeiten und grundlegende Grammatik (Akkusativ/Dativ)." },
+            2: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_2_bilingual.html", title: "Kapitel 2: Essen und Trinken", desc: "Nahrungsmittel, Kochen, Lieblingsgerichte und Essgewohnheiten." },
+            3: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_3_bilingual.html", title: "Kapitel 3: Arbeitswelt", desc: "Büroalltag, Bewerbungen, Telefonate und Modalverben." },
+            4: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_4_bilingual.html", title: "Kapitel 4: Lernen", desc: "Schule, Universität und Weiterbildung." },
+            5: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_5_bilingual.html", title: "Kapitel 5: Städte", desc: "Städte vorstellen, Architektur." },
+            6: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_6_bilingual.html", title: "Kapitel 6: Gesundheit", desc: "Ernährung, Sport, Fitness und Entspannung." },
+            7: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_7_bilingual.html", title: "Kapitel 7: Wie wir leben", desc: "Wohnformen, Nachbarschaft, Lebensstile und Relativsätze." },
+            8: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_8_bilingual.html", title: "Kapitel 8: Produkte und Konsum", desc: "Einkaufsgewohnheiten, Kult-Produkte, Werbung und Konjunktiv II." },
+            9: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_9_bilingual.html", title: "Kapitel 9: Reisen und Verkehr", desc: "Berufe, Bewerbungen, Arbeitswelt und Nebensätze." },
+            10: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_10_bilingual.html", title: "Kapitel 10: Medien und Aktuelles", desc: "Medien, Sprache, Kommunikationsformen und Passiv." },
+            11: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_11_bilingual.html", title: "Kapitel 11: Geschichte und Politik", desc: "Politik, Geschichte, Traditionen und Partizipialattribute." },
+            12: { exists: true, filePath: "spektrum_deutsch_b1_kapitel_12_bilingual.html", title: "Kapitel 12: Ideen, Erfindungen & Kreativität", desc: "Pläne, Visionen, Berufsaussichten und Abschlussthemen." }
+        };
+
+        const lessonsGrid = document.getElementById('lessons-grid');
+        const searchInput = document.getElementById('search-input');
+        
+        let availableCount = 0;
+
+        // Render card
+        function renderCard(chapNum, data) {
+            const isAvailable = data.exists;
+            const linkUrl = isAvailable ? data.filePath : '#';
+            const title = data.title;
+            const description = data.desc;
+            
+            const cardHtml = `
+                <div class="chapter-card group relative rounded-3xl p-6 transition-all duration-300 ${
+                    isAvailable 
+                        ? 'bg-white dark:bg-slate-800/90 shadow-md shadow-slate-100 dark:shadow-none hover:shadow-xl hover:-translate-y-1 border border-slate-100 dark:border-slate-800 cursor-pointer' 
+                        : 'bg-slate-100/50 dark:bg-slate-800/30 border border-dashed border-slate-300 dark:border-slate-700/60 opacity-75'
+                }" data-title="${title.toLowerCase()}" data-desc="${description.toLowerCase()}" ${isAvailable ? `onclick="window.location.href='${linkUrl}'"` : ''}>
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center ${
+                            isAvailable 
+                                ? 'bg-brand-500/10 text-brand-600 dark:text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-all duration-300' 
+                                : 'bg-slate-200 dark:bg-slate-800 text-slate-400'
+                        }">
+                            <i class="fa-solid ${isAvailable ? 'fa-book-open' : 'fa-lock'} text-xl"></i>
+                        </div>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                            isAvailable 
+                                ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20' 
+                                : 'bg-slate-200/60 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-300/30'
+                        }">
+                            ${isAvailable ? '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>Bereit' : 'Fehlt noch'}
+                        </span>
+                    </div>
+
+                    <h3 class="text-xl font-bold font-outfit text-slate-900 dark:text-white mb-2 leading-tight ${isAvailable ? 'group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors' : ''}">
+                        ${title}
+                    </h3>
+                    
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                        ${description}
+                    </p>
+
+                    ${isAvailable 
+                        ? `<a href="${linkUrl}" class="inline-flex items-center text-sm font-semibold text-brand-600 dark:text-brand-400 group-hover:underline">
+                            Lektion starten <i class="fa-solid fa-arrow-right ml-1.5 transition-transform group-hover:translate-x-1"></i>
+                           </a>`
+                        : `<span class="inline-flex items-center text-sm font-medium text-slate-400 cursor-not-allowed">
+                            Warten auf Upload
+                           </span>`
+                    }
+                </div>
+            `;
+            return cardHtml;
+        }
+
+        // Initialize and load all chapters status
+        function loadChapters() {
+            let htmlBuffer = "";
+            availableCount = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const status = chaptersConfig[i];
+                if (status && status.exists) {
+                    availableCount++;
+                }
+                htmlBuffer += renderCard(i, status);
+            }
+
+            lessonsGrid.innerHTML = htmlBuffer;
+
+            // Update stats
+            document.getElementById('stats-available').textContent = availableCount;
+            const percentage = Math.round((availableCount / 12) * 100);
+            document.getElementById('stats-percentage').textContent = `${percentage}%`;
+        }
+
+        // Search filtering logic
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.chapter-card');
+            
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const desc = card.getAttribute('data-desc');
+                if (title.includes(query) || desc.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Run on load
+        window.addEventListener('DOMContentLoaded', loadChapters);
+    </script>
+</body>
+</html>

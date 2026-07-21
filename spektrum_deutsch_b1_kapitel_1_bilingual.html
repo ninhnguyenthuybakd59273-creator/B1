@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 1: Alltag - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        .translatable-word {
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .translatable-word:hover {
+            background-color: #ccfbf1;
+            color: #0f766e;
+            border-radius: 2px;
+        }
+
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            user-select: none;
+            -webkit-user-select: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        
+        /* Utility class to distinguish English text and prevent translation on it */
+        .english-text {
+            color: #64748b; /* text-slate-500 */
+            font-size: 0.875rem; /* text-sm */
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Spektrum Deutsch
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 1: Alltag</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li class="pt-2 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Part 1: Vocabulary</li>
+                <li><a href="#vocab-alltag" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-clock w-5 text-center mr-2 text-gray-400"></i> 1.1 Alltag</a></li>
+                <li><a href="#vocab-buero" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-briefcase w-5 text-center mr-2 text-gray-400"></i> 1.2 Büro / Uni</a></li>
+                <li><a href="#vocab-emotionen" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-face-smile w-5 text-center mr-2 text-gray-400"></i> 1.3 Freude und Ärger</a></li>
+                <li><a href="#vocab-umfragen" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-chart-bar w-5 text-center mr-2 text-gray-400"></i> 1.4 Umfragen</a></li>
+                <li><a href="#vocab-krimis" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-user-secret w-5 text-center mr-2 text-gray-400"></i> 1.5 Krimis</a></li>
+                <li><a href="#vocab-freizeit" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-gamepad w-5 text-center mr-2 text-gray-400"></i> 1.6 Freizeitaktivitäten</a></li>
+                <li><a href="#vocab-veraenderungen" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-arrow-trend-up w-5 text-center mr-2 text-gray-400"></i> 1.7 Veränderungen</a></li>
+                <li><a href="#vocab-biografie" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-book w-5 text-center mr-2 text-gray-400"></i> 1.8 Eine Biografie</a></li>
+                
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Part 2: Grammar</li>
+                <li><a href="#grammar-akkusativ" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pen-nib w-5 text-center mr-2 text-gray-400"></i> 2.1 Akkusativ</a></li>
+                <li><a href="#grammar-dativ" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pen-nib w-5 text-center mr-2 text-gray-400"></i> 2.2 Dativ</a></li>
+                
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Part 3: Reading Texts</li>
+                <li><a href="#text-markus" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 3.1 Markus' Bericht</a></li>
+                <li><a href="#text-leni" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 3.2 Leni</a></li>
+                
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Part 4: Transkription & Artikel</li>
+                <li><a href="#audio-sara" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-headphones w-5 text-center mr-2 text-gray-400"></i> 4. Saras Tag</a></li>
+                <li><a href="#artikel-alltag" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-newspaper w-5 text-center mr-2 text-gray-400"></i> 4.1 Alltagszufriedenheit</a></li>
+                <li><a href="#diskussion-freude" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> 4.2 Ärgern und Freude</a></li>
+                <li><a href="#interview-freizeit" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-microphone w-5 text-center mr-2 text-gray-400"></i> 4.3 Freizeit-Interview</a></li>
+                
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Part 5 & 6: Statistics & Literature</li>
+                <li><a href="#stats-freizeit" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-chart-pie w-5 text-center mr-2 text-gray-400"></i> 5. Freizeitstatistik</a></li>
+                <li><a href="#lit-krimi" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-book-journal-whills w-5 text-center mr-2 text-gray-400"></i> 6. Der Kriminalroman</a></li>
+                <li><a href="#lit-maurer" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-feather w-5 text-center mr-2 text-gray-400"></i> 7. Jörg Maurer</a></li>
+                
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Part 8: Extras</li>
+                                <li><a href="#sec-1" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pencil w-5 text-center mr-2 text-gray-400"></i> 1. Diskussion: Krimis & Freizeitaktivitäten</a></li>
+                <li><a href="#sec-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pencil w-5 text-center mr-2 text-gray-400"></i> 2. Präpositionen und Zeitformen</a></li>
+                <li><a href="#sec-3" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pencil w-5 text-center mr-2 text-gray-400"></i> 3. Fragen und Antworten: Präpositionen</a></li>
+                <li><a href="#sec-4" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pencil w-5 text-center mr-2 text-gray-400"></i> 4. Wie lange haben Sie ...?</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 1: Alltag</h1>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-5xl mx-auto space-y-12 pb-20">
+                
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Bilingual Edition / Zweisprachige Ausgabe</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 1: Alltag</h1>
+                    <p class="text-xl text-gray-600">Beruf, Freizeit, Alltagstätigkeiten</p>
+                </div>
+
+                <section id="vocab-alltag" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">1</span> 
+                        Part 1: Vocabulary / Wortschatz
+                    </h2>
+                    
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                            1.1 Alltag – Everyday Life / Daily Routine
+                        </div>
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">um (7.00 Uhr) aufstehen</span>
+                                <span class="english-text">get up at (7:00 AM)</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">mit dem Bus ins Büro/zur Uni/nach Hause fahren</span>
+                                <span class="english-text">go to the office/to university/home by bus</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">im Stau stehen</span>
+                                <span class="english-text">be stuck in traffic</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">auf den Fahrstuhl/auf den Bus warten</span>
+                                <span class="english-text">wait for the elevator/for the bus</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">abends fernsehen</span>
+                                <span class="english-text">watch TV in the evening</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">regelmäßig auf das Smartphone schauen</span>
+                                <span class="english-text">look at the smartphone regularly</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich mit Freunden treffen</span>
+                                <span class="english-text">meet with friends</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Lebensmittel einkaufen</span>
+                                <span class="english-text">shop for groceries</span>
+                            </div>
+                            <div class="pb-1">
+                                <span class="font-semibold text-gray-800">(die Wohnung) aufräumen/sauber machen</span>
+                                <span class="english-text">tidy up/clean (the apartment)</span>
+                            </div>
+                            <div class="pb-1">
+                                <span class="font-semibold text-gray-800">Wäsche waschen</span>
+                                <span class="english-text">do the laundry / wash clothes</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="vocab-buero" class="scroll-mt-12">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                            1.2 Alltag / Im Büro / An der Uni – Everyday Life / At the Office / At the University
+                        </div>
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">als (Redakteur) bei (einem Verlag) arbeiten</span>
+                                <span class="english-text">work as an (editor) at (a publishing house)</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">E-Mails checken/schreiben/beantworten</span>
+                                <span class="english-text">check/write/answer e-mails</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Dokumente lesen</span>
+                                <span class="english-text">read documents</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">eine Besprechung/Sitzung haben</span>
+                                <span class="english-text">have a meeting</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">über Projekte/mit Kollegen sprechen</span>
+                                <span class="english-text">talk about projects/with colleagues</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Probleme lösen</span>
+                                <span class="english-text">solve problems</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ideen sammeln</span>
+                                <span class="english-text">collect/gather ideas</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">an einer Konferenz teilnehmen</span>
+                                <span class="english-text">participate in/attend a conference</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">(Ergebnisse/Projekte) präsentieren</span>
+                                <span class="english-text">present (results/projects)</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Vorlesungen und Seminare besuchen</span>
+                                <span class="english-text">attend lectures and seminars</span>
+                            </div>
+                            <div class="pb-1">
+                                <span class="font-semibold text-gray-800">eine Prüfung haben</span>
+                                <span class="english-text">have an exam</span>
+                            </div>
+                            <div class="pb-1">
+                                <span class="font-semibold text-gray-800">(gute/schlechte) Noten bekommen</span>
+                                <span class="english-text">get (good/bad) grades</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="vocab-emotionen" class="scroll-mt-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        
+                        <!-- 1.3 Freude und Ärger -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                                1.3 Freude und Ärger im Alltag – Joy and Annoyance
+                            </div>
+                            <div class="p-5 space-y-3">
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">mit dem Alltag (sehr) zufrieden sein</span>
+                                    <span class="english-text">be (very) satisfied with everyday life</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">den Alltag abwechslungsreich finden/nicht immer das Gleiche machen</span>
+                                    <span class="english-text">find everyday life varied/not always do the same thing</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">sein Leben selbst bestimmen können</span>
+                                    <span class="english-text">be able to determine one's own life (self-determination)</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">sich über den Verkehr/die Arbeit im Haushalt ärgern</span>
+                                    <span class="english-text">get annoyed about traffic/housework</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">Mich nervt es/Ich mag es nicht, wenn (ich auf etwas warten muss).</span>
+                                    <span class="english-text">It annoys me/I don't like it when (I have to wait for something).</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">sich über kleine Komplimente freuen</span>
+                                    <span class="english-text">be happy about small compliments</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">ein Lob bekommen</span>
+                                    <span class="english-text">receive praise</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">Erfolge im Beruf/Studium feiern</span>
+                                    <span class="english-text">celebrate successes in career/studies</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">an (ein tolles Konzert) denken</span>
+                                    <span class="english-text">think of (a great concert)</span>
+                                </div>
+                                <div class="">
+                                    <span class="font-semibold text-gray-800">von (mehr Freizeit) träumen</span>
+                                    <span class="english-text">dream of (more free time)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- 1.4 Umfragen -->
+                            <div id="vocab-umfragen" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-12">
+                                <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                                    1.4 Umfrage-/Studienergebnisse – Survey Results
+                                </div>
+                                <div class="p-5 space-y-3">
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Einer Umfrage/Studie zufolge ...</span>
+                                        <span class="english-text">According to a survey/study ...</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Laut einer Umfrage/Studie ...</span>
+                                        <span class="english-text">According to a survey/study ...</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Das sind die Ergebnisse einer Umfrage.</span>
+                                        <span class="english-text">These are the results of a survey.</span>
+                                    </div>
+                                    <div class="">
+                                        <span class="font-semibold text-gray-800">Eine Umfrage zum Thema ergab, dass ...</span>
+                                        <span class="english-text">A survey on the topic revealed that ...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 1.5 Krimis -->
+                            <div id="vocab-krimis" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-12">
+                                <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                                    1.5 Krimis – Crime Thrillers / Detective Stories
+                                </div>
+                                <div class="p-5 space-y-3">
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">am liebsten Krimis sehen/lesen</span>
+                                        <span class="english-text">prefer watching/reading crime thrillers</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Mord und Totschlag</span>
+                                        <span class="english-text">murder and manslaughter</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Spannung bieten</span>
+                                        <span class="english-text">offer suspense/tension</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Straftaten aufklären/um Mithilfe bitten</span>
+                                        <span class="english-text">solve crimes/ask for assistance</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Spitzenreiter (bei der Verbrecherjagd) sein</span>
+                                        <span class="english-text">be the frontrunner (in hunting criminals)</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Verbrechen aufklären</span>
+                                        <span class="english-text">solve crimes</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Täter verhaften</span>
+                                        <span class="english-text">arrest perpetrators</span>
+                                    </div>
+                                    <div class="">
+                                        <span class="font-semibold text-gray-800">die Bösen besiegen</span>
+                                        <span class="english-text">defeat the bad guys</span>
+                                    </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="vocab-freizeit" class="scroll-mt-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+                        <!-- 1.6 Freizeit -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                                1.6 Freizeitaktivitäten – Leisure Activities
+                            </div>
+                            <div class="p-5 space-y-3">
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">zum Alltag gehören</span>
+                                    <span class="english-text">be part of everyday life</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">(knapp vier Stunden) Freizeit haben/über (vier Stunden) freie Zeit verfügen</span>
+                                    <span class="english-text">have (just under four hours) free time/have (four hours) of free time available</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">bei den Freizeitaktivitäten auf Platz (eins) liegen</span>
+                                    <span class="english-text">rank (first) among leisure activities</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">regelmäßig im Netz surfen/Smartphones nutzen</span>
+                                    <span class="english-text">regularly surf the net/use smartphones</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">sich mit (Politik) beschäftigen</span>
+                                    <span class="english-text">occupy oneself with (politics) / deal with (politics)</span>
+                                </div>
+                                <div class="border-b border-gray-50 pb-2">
+                                    <span class="font-semibold text-gray-800">den Wunsch nach Ruhe haben</span>
+                                    <span class="english-text">have the desire for peace and quiet</span>
+                                </div>
+                                <div class="">
+                                    <span class="font-semibold text-gray-800">nichts tun und faulenzen</span>
+                                    <span class="english-text">do nothing and laze around</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- 1.7 Veränderungen -->
+                            <div id="vocab-veraenderungen" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-12">
+                                <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                                    1.7 Veränderungen – Changes
+                                </div>
+                                <div class="p-5 space-y-3">
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">(sehr stark) zunehmen/abnehmen</span>
+                                        <span class="english-text">increase/decrease (very strongly)</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">der (große) Gewinner/Verlierer sein</span>
+                                        <span class="english-text">be the (big) winner/loser</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">zu den Gewinnern/Verlierern zählen</span>
+                                        <span class="english-text">count among the winners/losers</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">an Attraktivität gewinnen/verlieren</span>
+                                        <span class="english-text">gain/lose attractiveness</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">Das Interesse an (persönlichen Treffen) steigt/sinkt/geht zurück.</span>
+                                        <span class="english-text">Interest in (personal meetings) is rising/falling/declining.</span>
+                                    </div>
+                                    <div class="">
+                                        <span class="font-semibold text-gray-800">(gerade) im Trend liegen</span>
+                                        <span class="english-text">be (currently) trending / in fashion</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 1.8 Biografie -->
+                            <div id="vocab-biografie" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-12">
+                                <div class="bg-gray-50 px-5 py-3 border-b border-gray-100 font-bold text-gray-800">
+                                    1.8 Eine Biografie – A Biography
+                                </div>
+                                <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">geboren werden</span>
+                                        <span class="english-text">be born</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">einen Ort verlassen</span>
+                                        <span class="english-text">leave a place</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">die Schule/das Studium abschließen</span>
+                                        <span class="english-text">finish school/studies / graduate</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">als (Lehrer) arbeiten</span>
+                                        <span class="english-text">work as a (teacher)</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">(ein Kabarett) leiten</span>
+                                        <span class="english-text">manage/direct (a cabaret)</span>
+                                    </div>
+                                    <div class="border-b border-gray-50 pb-2">
+                                        <span class="font-semibold text-gray-800">ein Buch schreiben</span>
+                                        <span class="english-text">write a book</span>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <span class="font-semibold text-gray-800">Preise erhalten/bekommen</span>
+                                        <span class="english-text">receive/get awards/prizes</span>
+                                    </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="grammar-akkusativ" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-indigo-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">2</span> 
+                        Part 2: Grammar – Prepositions / Präpositionen
+                    </h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100">
+                            <h2 class="text-xl font-bold text-indigo-900">2.1 Akkusativ-Präpositionen – Accusative Prepositions</h2>
+                        </div>
+                        
+                        <div class="p-6 grid grid-cols-1 gap-6">
+                            <!-- an + Akkusativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-indigo-700 text-lg border-b pb-2 mb-3">an + Akkusativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">denken (to think of) / sich erinnern (to remember)</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Ich denke oft an meinen letzten Urlaub.</p>
+                                        <p class="english-text">I often think about my last vacation.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Bitte denk an den Termin morgen früh!</p>
+                                        <p class="english-text">Please remember the appointment tomorrow morning!</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Er kann sich nicht an deinen Namen erinnern.</p>
+                                        <p class="english-text">He cannot remember your name.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Wir erinnern uns gern an die Schulzeit.</p>
+                                        <p class="english-text">We like to remember our school days.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Sie denkt den ganzen Tag nur an ihre Arbeit.</p>
+                                        <p class="english-text">She thinks only about her work all day long.</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- auf + Akkusativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-indigo-700 text-lg border-b pb-2 mb-3">auf + Akkusativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">warten (to wait for) / sich freuen (to look forward to)</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Ich warte schon seit einer Stunde auf den Bus.</p>
+                                        <p class="english-text">I have been waiting for the bus for an hour.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Wir warten auf eine Antwort von der Firma.</p>
+                                        <p class="english-text">We are waiting for an answer from the company.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Die Kinder freuen sich auf die Ferien.</p>
+                                        <p class="english-text">The children are looking forward to the holidays.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Er freut sich auf das Fußballspiel am Wochenende.</p>
+                                        <p class="english-text">He is looking forward to the soccer match this weekend.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Worauf wartest du noch?</p>
+                                        <p class="english-text">What are you still waiting for?</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- für + Akkusativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-indigo-700 text-lg border-b pb-2 mb-3">für + Akkusativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">sich interessieren (to be interested in) / sich bedanken (to thank for)</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Ich interessiere mich sehr für Geschichte.</p>
+                                        <p class="english-text">I am very interested in history.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Er interessiert sich nicht für Sport.</p>
+                                        <p class="english-text">He is not interested in sports.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Wir bedanken uns für das schöne Geschenk.</p>
+                                        <p class="english-text">We thank you for the beautiful gift.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Sie hat sich für die Einladung bedankt.</p>
+                                        <p class="english-text">She thanked (them) for the invitation.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Interessierst du dich für moderne Kunst?</p>
+                                        <p class="english-text">Are you interested in modern art?</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- über + Akkusativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-indigo-700 text-lg border-b pb-2 mb-3">über + Akkusativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">sich ärgern / sich freuen / reden / sprechen / verfügen</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Er ärgert sich über den Stau auf der Autobahn.</p>
+                                        <p class="english-text">He is annoyed about the traffic jam on the highway.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Wir haben uns sehr über deinen Besuch gefreut.</p>
+                                        <p class="english-text">We were very happy about your visit.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Sie sprechen oft über Politik.</p>
+                                        <p class="english-text">They often talk about politics.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Die beiden reden über das Wetter.</p>
+                                        <p class="english-text">The two are talking about the weather.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Das Hotel verfügt über einen großen Swimmingpool.</p>
+                                        <p class="english-text">The hotel features (has available) a large swimming pool.</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- um + Akkusativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition ">
+                                <h4 class="font-bold text-indigo-700 text-lg border-b pb-2 mb-3">um + Akkusativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">bitten (to ask for) / steigen (to rise by) / sinken (to fall by)</p>
+                                <div class="grid grid-cols-1 gap-4">
+                                    <ul class="space-y-3 text-sm">
+                                        <li>
+                                            <p class="font-bold text-gray-800">1. Darf ich dich um einen Gefallen bitten?</p>
+                                            <p class="english-text">May I ask you for a favor?</p>
+                                        </li>
+                                        <li>
+                                            <p class="font-bold text-gray-800">2. Er bat sie um Hilfe bei der Aufgabe.</p>
+                                            <p class="english-text">He asked her for help with the task.</p>
+                                        </li>
+                                        <li>
+                                            <p class="font-bold text-gray-800">3. Die Preise sind um drei Prozent gestiegen.</p>
+                                            <p class="english-text">Prices have risen by three percent.</p>
+                                        </li>
+                                    </ul>
+                                    <ul class="space-y-3 text-sm">
+                                        <li>
+                                            <p class="font-bold text-gray-800">4. Die Temperatur ist um fünf Grad gesunken.</p>
+                                            <p class="english-text">The temperature has dropped by five degrees.</p>
+                                        </li>
+                                        <li>
+                                            <p class="font-bold text-gray-800">5. Wir bitten um etwas Geduld.</p>
+                                            <p class="english-text">We ask for some patience.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="grammar-dativ" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100">
+                            <h2 class="text-xl font-bold text-emerald-900">2.2 Dativ-Präpositionen – Dative Prepositions</h2>
+                        </div>
+                        
+                        <div class="p-6 grid grid-cols-1 gap-6">
+                            <!-- aus + Dativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-emerald-700 text-lg border-b pb-2 mb-3">aus + Dativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">bestehen (to consist of / be made of)</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Der Tisch besteht aus massivem Holz.</p>
+                                        <p class="english-text">The table is made of solid wood.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Die Prüfung besteht aus einem mündlichen und einem schriftlichen Teil.</p>
+                                        <p class="english-text">The exam consists of an oral and a written part.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Unsere Gruppe besteht aus fünf Personen.</p>
+                                        <p class="english-text">Our group consists of five people.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Das Kleid besteht aus reiner Seide.</p>
+                                        <p class="english-text">The dress is made of pure silk.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Woraus besteht dieses Getränk?</p>
+                                        <p class="english-text">What is this drink made of?</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- bei + Dativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-emerald-700 text-lg border-b pb-2 mb-3">bei + Dativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">sich bedanken (to thank someone)</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Ich bedanke mich bei dir für die Hilfe.</p>
+                                        <p class="english-text">I thank you for the help.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Er hat sich bei seinem Chef bedankt.</p>
+                                        <p class="english-text">He thanked his boss.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Wir müssen uns bei unseren Nachbarn bedanken.</p>
+                                        <p class="english-text">We have to thank our neighbors.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Hast du dich bei ihr schon bedankt?</p>
+                                        <p class="english-text">Have you thanked her yet?</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Der Schüler bedankt sich bei der Lehrerin.</p>
+                                        <p class="english-text">The student thanks the teacher.</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- mit + Dativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-emerald-700 text-lg border-b pb-2 mb-3">mit + Dativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">sprechen / reden / telefonieren / sich beschäftigen</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Kann ich kurz mit dir sprechen?</p>
+                                        <p class="english-text">Can I speak with you briefly?</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Er telefoniert gerade mit einem Kunden.</p>
+                                        <p class="english-text">He is currently on the phone with a customer.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Sie redet gerne mit ihrer besten Freundin.</p>
+                                        <p class="english-text">She likes talking to her best friend.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Wir beschäftigen uns intensiv mit diesem Thema.</p>
+                                        <p class="english-text">We are dealing intensively with this topic.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. In meiner Freizeit beschäftige ich mich viel mit Musik.</p>
+                                        <p class="english-text">In my free time, I occupy myself a lot with music.</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- nach + Dativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-emerald-700 text-lg border-b pb-2 mb-3">nach + Dativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">fragen (to ask about/for)</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Ein Tourist fragt nach dem Weg zum Bahnhof.</p>
+                                        <p class="english-text">A tourist asks for the way to the train station.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Ich habe nach dem Preis gefragt.</p>
+                                        <p class="english-text">I asked about the price.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Der Chef fragt nach dem aktuellen Stand des Projekts.</p>
+                                        <p class="english-text">The boss asks about the current status of the project.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Sie hat nach dir gefragt.</p>
+                                        <p class="english-text">She asked about you.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Wir müssen nach der Uhrzeit fragen.</p>
+                                        <p class="english-text">We have to ask for the time.</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- von + Dativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-emerald-700 text-lg border-b pb-2 mb-3">von + Dativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">träumen (to dream of) / handeln (to be about/deal with)</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Ich träume von einem Haus am Meer.</p>
+                                        <p class="english-text">I dream of a house by the sea.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Er träumt von einer Weltreise.</p>
+                                        <p class="english-text">He dreams of a trip around the world.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Das Buch handelt von einer schwierigen Freundschaft.</p>
+                                        <p class="english-text">The book is about a difficult friendship.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Der Film handelt von dem Zweiten Weltkrieg.</p>
+                                        <p class="english-text">The movie is about the Second World War.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Wovon hast du heute Nacht geträumt?</p>
+                                        <p class="english-text">What did you dream about last night?</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- zu + Dativ -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                                <h4 class="font-bold text-emerald-700 text-lg border-b pb-2 mb-3">zu + Dativ</h4>
+                                <p class="text-sm font-semibold text-gray-600 mb-3">gehören / zählen / gratulieren</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li>
+                                        <p class="font-bold text-gray-800">1. Dieser Schlüssel gehört zu meinem Auto.</p>
+                                        <p class="english-text">This key belongs to my car.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">2. Spanien zählt zu den beliebtesten Urlaubsländern.</p>
+                                        <p class="english-text">Spain counts among the most popular vacation countries.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">3. Ich gratuliere dir herzlich zum Geburtstag.</p>
+                                        <p class="english-text">I congratulate you warmly on your birthday.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">4. Er zählt zu meinen besten Freunden.</p>
+                                        <p class="english-text">He counts as one of my best friends.</p>
+                                    </li>
+                                    <li>
+                                        <p class="font-bold text-gray-800">5. Wir gratulieren euch zur Hochzeit.</p>
+                                        <p class="english-text">We congratulate you on your wedding.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="text-markus" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">3</span> 
+                        Part 3: Reading Texts / Lesetexte
+                    </h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                        <!-- Markus -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 pb-2 border-b">3.1 Markus’ Report – Markus' Bericht</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ich heiße Markus und ich bin mit meinem Leben im Allgemeinen zufrieden.</p>
+                                    <p class="english-text">My name is Markus and I am generally satisfied with my life.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Montags bis freitags stehe ich um 7.00 Uhr auf, gegen 8.00 Uhr fahre ich mit dem Auto ins Büro.</p>
+                                    <p class="english-text">Mondays to Fridays I get up at 7:00 a.m., around 8:00 a.m. I drive to the office by car.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Das dauert normalerweise 15 Minuten, aber an drei Tagen in der Woche brauche ich 30 Minuten oder länger.</p>
+                                    <p class="english-text">That normally takes 15 minutes, but on three days of the week I need 30 minutes or longer.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Dann stehe ich im Stau und ärgere mich.</p>
+                                    <p class="english-text">Then I stand in a traffic jam and get annoyed.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ich arbeite als Redakteur bei einem großen Verlag.</p>
+                                    <p class="english-text">I work as an editor at a large publishing house.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Der Verlag befindet sich in einem Hochhaus in Frankfurt, in der 20. und 21. Etage.</p>
+                                    <p class="english-text">The publishing house is located in a high-rise building in Frankfurt, on the 20th and 21st floors.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Im Gebäude muss ich meistens ein paar Minuten auf den Fahrstuhl warten.</p>
+                                    <p class="english-text">In the building, I usually have to wait a few minutes for the elevator.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Meine Arbeitszeit beginnt um 9.00 Uhr.</p>
+                                    <p class="english-text">My working time begins at 9:00 a.m.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Zuerst beantworte ich meine E-Mails, danach lese ich Dokumente und Manuskripte.</p>
+                                    <p class="english-text">First I answer my emails, after that I read documents and manuscripts.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Jeden Mittwoch um 9.00 Uhr haben wir eine Besprechung.</p>
+                                    <p class="english-text">Every Wednesday at 9:00 a.m. we have a meeting.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">In der Sitzung reden wir über Projekte, lösen kleinere Probleme oder sammeln Ideen.</p>
+                                    <p class="english-text">In the meeting we talk about projects, solve minor problems or collect ideas.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Der Kampf auf dem Buchmarkt ist hart.</p>
+                                    <p class="english-text">The battle in the book market is tough.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Zwischen 12.30 und 13.15 Uhr mache ich Mittagspause.</p>
+                                    <p class="english-text">Between 12:30 and 1:15 p.m. I take my lunch break.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ich gehe meistens mit einer Kollegin in ein Fast-Food-Restaurant, manchmal esse ich nur ein Sandwich.</p>
+                                    <p class="english-text">I usually go to a fast-food restaurant with a female colleague, sometimes I only eat a sandwich.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Am interessantesten finde ich meine Arbeit, wenn ich mit Autoren sprechen kann oder wenn ich an einer Konferenz teilnehme.</p>
+                                    <p class="english-text">I find my work most interesting when I can speak with authors or when I participate in a conference.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Nach der Arbeit gehe ich ins Fitnessstudio und dann nach Hause.</p>
+                                    <p class="english-text">After work I go to the gym and then home.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ich lese auch zu Hause viel oder ich sehe abends fern.</p>
+                                    <p class="english-text">I also read a lot at home or I watch TV in the evening.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ab und zu muss ich auch meine Wohnung aufräumen oder Wäsche waschen.</p>
+                                    <p class="english-text">From time to time I also have to clean up my apartment or wash laundry.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Das gehört nicht zu meinen Lieblingstätigkeiten.</p>
+                                    <p class="english-text">That does not belong to my favorite activities.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Leni -->
+                        <div id="text-leni" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition scroll-mt-12">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 pb-2 border-b">3.2 Information about Leni – Informationen über Leni</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="font-semibold text-gray-900">Leni ist Studentin an der Universität Greifswald.</p>
+                                    <p class="english-text">Leni is a student at the University of Greifswald.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">An der Universität besucht sie Vorlesungen und Seminare.</p>
+                                    <p class="english-text">At the university she attends lectures and seminars.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Die Studenten arbeiten oft in Gruppen und müssen die Ergebnisse ihrer Gruppenprojekte präsentieren.</p>
+                                    <p class="english-text">The students often work in groups and have to present the results of their group projects.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">In den Pausen spricht sie mit Kommilitonen oder sie isst etwas in der Mensa.</p>
+                                    <p class="english-text">In the breaks she speaks with fellow students or she eats something in the cafeteria.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Leni schaut auch regelmäßig auf ihr Smartphone und kontrolliert, ob sie Nachrichten von Freunden hat.</p>
+                                    <p class="english-text">Leni also regularly looks at her smartphone and checks whether she has messages from friends.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ihr Freund studiert in Berlin. Mit ihm telefoniert sie sehr oft.</p>
+                                    <p class="english-text">Her boyfriend studies in Berlin. She talks on the phone with him very often.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Abends lernt sie für Prüfungen oder trifft sich mit Freunden.</p>
+                                    <p class="english-text">In the evenings she studies for exams or meets with friends.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Dann kauft sie ein paar Lebensmittel ein und kocht zusammen mit ihren Freunden.</p>
+                                    <p class="english-text">Then she buys a few groceries and cooks together with her friends.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Leni ärgert sich manchmal über die Dozenten, vor allem, wenn sie eine schlechte Note bekommt.</p>
+                                    <p class="english-text">Leni sometimes gets annoyed with the lecturers, especially when she gets a bad grade.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Aber die meisten Studienfächer mag sie.</p>
+                                    <p class="english-text">But she likes most subjects of study.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Leni wohnt in einer netten Wohngemeinschaft und muss nur einmal im Monat das Bad und die Küche sauber machen.</p>
+                                    <p class="english-text">Leni lives in a nice shared apartment and only has to clean the bathroom and the kitchen once a month.</p>
+                                </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="audio-sara" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-12">
+                        <div class="flex items-center justify-between mb-6 border-b pb-4">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <i class="fa-solid fa-headphones text-brand-500 mr-3"></i> 
+                                Part 4: Transkription Hörtext – Saras Tag / Sara's Day
+                            </h2>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="dialogue-a">
+                                <strong class="text-brand-700 block mb-1">Renate:</strong>
+                                <span class="font-semibold">Hallo Sara!</span>
+                                <span class="english-text">Hello Sara!</span>
+                            </div>
+                            
+                            <div class="dialogue-b">
+                                <strong class="text-amber-600 block mb-1">Sara:</strong>
+                                <span class="font-semibold">Hallo Renate!</span>
+                                <span class="english-text">Hello Renate!</span>
+                            </div>
+                            
+                            <div class="dialogue-a">
+                                <strong class="text-brand-700 block mb-1">Renate:</strong>
+                                <span class="font-semibold">Du siehst müde aus. Geht es dir gut?</span>
+                                <span class="english-text">You look tired. Are you doing okay?</span>
+                            </div>
+                            
+                            <div class="dialogue-b">
+                                <strong class="text-amber-600 block mb-1">Sara:</strong>
+                                <span class="font-semibold">Ja, mir geht es gut, aber ich bin tatsächlich sehr müde. Ich hatte einen anstrengenden Tag.</span>
+                                <span class="english-text">Yes, I am doing well, but I am actually very tired. I had an exhausting day.</span>
+                            </div>
+                            
+                            <div class="dialogue-a">
+                                <strong class="text-brand-700 block mb-1">Renate:</strong>
+                                <span class="font-semibold">Hast du heute zu viel gearbeitet?</span>
+                                <span class="english-text">Did you work too much today?</span>
+                            </div>
+                            
+                            <div class="dialogue-b">
+                                <strong class="text-amber-600 block mb-1">Sara:</strong>
+                                <span class="font-semibold">Ja. Zuerst habe ich an zwei Besprechungen teilgenommen, eine war auf Deutsch, eine auf Englisch.</span>
+                                <span class="english-text">Yes. First, I attended two meetings, one was in German, one in English.</span>
+                                
+                                <span class="font-semibold block mt-3">Unsere Kollegen haben die Arbeitsergebnisse der letzten Monate präsentiert.</span>
+                                <span class="english-text">Our colleagues presented the work results of the last months.</span>
+                                
+                                <span class="font-semibold block mt-3">Als ich endlich an meinem Schreibtisch gesessen habe, waren genau 52 neue Mails in meiner Mailbox.</span>
+                                <span class="english-text">When I finally sat down at my desk, there were exactly 52 new emails in my mailbox.</span>
+                            </div>
+                            
+                            <div class="dialogue-a">
+                                <strong class="text-brand-700 block mb-1">Renate:</strong>
+                                <span class="font-semibold">Oje. Und hast du alle Mails beantwortet?</span>
+                                <span class="english-text">Oh dear. And did you answer all the emails?</span>
+                            </div>
+                            
+                            <div class="dialogue-b">
+                                <strong class="text-amber-600 block mb-1">Sara:</strong>
+                                <span class="font-semibold">Fast alle. Wir haben aber auch noch eine neue Mitarbeiterin, der ich helfen muss – und das kostet viel Zeit.</span>
+                                <span class="english-text">Almost all. But we also have a new colleague (female employee) who I have to help – and that costs a lot of time.</span>
+                            </div>
+                            
+                            <div class="dialogue-a">
+                                <strong class="text-brand-700 block mb-1">Renate:</strong>
+                                <span class="font-semibold">Das glaube ich dir! Kann dir vielleicht jemand helfen?</span>
+                                <span class="english-text">I believe you! Can someone perhaps help you?</span>
+                            </div>
+                            
+                            <div class="dialogue-b">
+                                <strong class="text-amber-600 block mb-1">Sara:</strong>
+                                <span class="font-semibold">Nein, das muss ich schon selbst machen.</span>
+                                <span class="english-text">No, I really have to do that myself.</span>
+                                
+                                <span class="font-semibold block mt-3">Ich habe ihr erklärt, wie sie mit dem neuen Programm Formulare ausfüllen kann, wie der Kopierer funktioniert, wo sie bestimmte Informationen im Intranet findet usw.</span>
+                                <span class="english-text">I explained to her how she can fill out forms with the new program, how the copier works, where she can find certain information on the intranet, etc.</span>
+                                
+                                <span class="font-semibold block mt-3">Dann habe ich noch einen Kurs über Marketingstrategien besucht. Der ging bis 18.00 Uhr.</span>
+                                <span class="english-text">Then I also attended a course on marketing strategies. It went until 6:00 PM.</span>
+                                
+                                <span class="font-semibold block mt-3">Ich habe heute nur ein Käsebrötchen gegessen, sonst nichts.</span>
+                                <span class="english-text">I only ate a cheese roll today, nothing else.</span>
+                                
+                                <span class="font-semibold block mt-3">Und wenn ich daran denke, dass ich auch noch ins Fitnessstudio gehen wollte!</span>
+                                <span class="english-text">And when I think about the fact that I also wanted to go to the gym!</span>
+                            </div>
+                            
+                            <div class="dialogue-a">
+                                <strong class="text-brand-700 block mb-1">Renate:</strong>
+                                <span class="font-semibold">Ach, so viel kann man an einem Tag ja gar nicht machen.</span>
+                                <span class="english-text">Oh, you really can't do that much in one day.</span>
+                                
+                                <span class="font-semibold block mt-3">Aber wenn du Lust hast, können wir zusammen schnell etwas essen. Ich kenne ein nettes Restaurant hier um die Ecke.</span>
+                                <span class="english-text">But if you feel like it, we can quickly eat something together. I know a nice restaurant right around the corner here.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="artikel-alltag" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-700 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">4</span> 
+                        Part 4: Articles & Discussions / Artikel & Diskussionen
+                    </h2>
+
+                    <!-- 4.1 Alltagszufriedenheit -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">4.1 Alltagszufriedenheit in Deutschland – Everyday Life Satisfaction in Germany</h3>
+                        <div class="space-y-5">
+                            <div>
+                                <p class="font-semibold text-gray-900">Eine Umfrage zur Alltagszufriedenheit in Deutschland ergab, dass 76 Prozent der Deutschen mit ihrem Alltag zufrieden sind.</p>
+                                <p class="english-text">A survey on everyday life satisfaction in Germany showed that 76 percent of Germans are satisfied with their everyday life.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Besonders wichtig fanden die Befragten, dass der Alltag abwechslungsreich ist.</p>
+                                <p class="english-text">The respondents found it particularly important that everyday life is varied.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Außerdem spielt das Gefühl, sein Leben selbst bestimmen zu können, eine wichtige Rolle.</p>
+                                <p class="english-text">In addition, the feeling of being able to determine one's own life plays an important role.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Einen großen Einfluss auf die Zufriedenheit haben auch eine sinnvolle Tätigkeit und die Anerkennung von anderen Menschen.</p>
+                                <p class="english-text">A meaningful occupation and the recognition of other people also have a great influence on satisfaction.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Überraschenderweise liegen materielle Aspekte wie die finanzielle Situation der Umfrageteilnehmer nicht auf den vorderen Plätzen, sie kamen nur auf Platz neun.</p>
+                                <p class="english-text">Surprisingly, material aspects like the financial situation of the survey participants do not lie in the top spots; they only came in ninth place.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Zu den Dingen, die die Deutschen im Alltag nerven, gehören ungeliebte Tätigkeiten im Haushalt, Verspätungen bei öffentlichen Verkehrsmitteln und Staus.</p>
+                                <p class="english-text">Among the things that annoy Germans in everyday life are disliked household chores, delays in public transportation, and traffic jams.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                        <!-- 4.2 Ärgern und Freude -->
+                        <div id="diskussion-freude" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 scroll-mt-12">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">4.2 Ärgern und Freude – Annoyance and Joy</h3>
+                            <div class="space-y-4">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <p class="font-semibold text-gray-900">Hallo zusammen! Worüber ärgert ihr euch im Alltag am meisten?</p>
+                                    <p class="english-text">Hello everyone! What do you get annoyed about the most in everyday life?</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-red-300">
+                                    <p class="font-semibold text-gray-800">Ich ärgere mich am meisten über Staus und andere Autofahrer. Mich nervt es wirklich, wenn ich im Stau stehen muss.</p>
+                                    <p class="english-text">I mostly get annoyed about traffic jams and other drivers. It really annoys me when I have to stand in a traffic jam.</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-red-300">
+                                    <p class="font-semibold text-gray-800">Das verstehe ich gut. Ich ärgere mich oft über Hausarbeiten wie Bügeln und Staubsaugen. Ich mag es auch nicht, wenn es zu viel Bürokratie im Alltag gibt.</p>
+                                    <p class="english-text">I understand that well. I often get annoyed about housework like ironing and vacuuming. I also don't like it when there is too much bureaucracy in everyday life.</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-red-300">
+                                    <p class="font-semibold text-gray-800">Mich nervt Werbung im Internet extrem. Außerdem ärgere ich mich, wenn ich lange an der Supermarktkasse warten muss.</p>
+                                    <p class="english-text">Internet ads annoy me extremely. Besides, I get annoyed when I have to wait a long time at the supermarket checkout.</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-red-300">
+                                    <p class="font-semibold text-gray-800">Ja, das ewige Warten ist furchtbar. Schlechter Service beim Einkaufen oder in Restaurants ärgert mich auch manchmal.</p>
+                                    <p class="english-text">Yes, the endless waiting is terrible. Bad service when shopping or in restaurants also annoys me sometimes.</p>
+                                </div>
+
+                                <div class="bg-gray-50 p-4 rounded-lg mt-6">
+                                    <p class="font-semibold text-gray-900">Aber lasst uns über schöne Dinge sprechen. Worüber freut ihr euch im Alltag?</p>
+                                    <p class="english-text">But let's talk about nice things. What makes you happy in everyday life?</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-green-300">
+                                    <p class="font-semibold text-gray-800">Für mich ist es sehr wichtig, dass ich Zeit für mich selbst habe. Und ich freue mich sehr über kleine Komplimente.</p>
+                                    <p class="english-text">For me it is very important that I have time for myself. And I am very happy about small compliments.</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-green-300">
+                                    <p class="font-semibold text-gray-800">Ich freue mich, wenn die öffentlichen Verkehrsmittel pünktlich sind und die Straßen leer sind. Gutes Essen mit anderen zu kochen, finde ich auch super.</p>
+                                    <p class="english-text">I am happy when public transport is punctual and the streets are empty. Cooking good food with others I also find super.</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-green-300">
+                                    <p class="font-semibold text-gray-800">Kleine Erfolge im Beruf sind für mich sehr wichtig. Neue Freunde in sozialen Netzwerken finde ich nicht so wichtig, aber ich freue mich, wenn ich mir neue Kleidung kaufen kann.</p>
+                                    <p class="english-text">Small successes at work are very important to me. I don't find new friends on social networks so important, but I am happy when I can buy myself new clothes.</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-green-300">
+                                    <p class="font-semibold text-gray-800">Ich freue mich über nette Kollegen und interessante, abwechslungsreiche Aufgaben bei der Arbeit.</p>
+                                    <p class="english-text">I am happy about nice colleagues and interesting, varied tasks at work.</p>
+                                </div>
+                                <div class="pl-4 border-l-4 border-green-300">
+                                    <p class="font-semibold text-gray-800">Das stimmt, nette Leute sind wichtig. Ich freue mich auch, wenn ich beim Einkaufen etwas sparen kann. Aber am meisten freue ich mich über die Zeit mit Freunden und der Familie.</p>
+                                    <p class="english-text">That's right, nice people are important. I am also happy when I can save something when shopping. But most of all I am happy about time with friends and family.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4.3 Freizeit-Interview -->
+                        <div id="interview-freizeit" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 scroll-mt-12">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">4.3 Freizeit-Interview – Leisure Interview</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="font-bold text-brand-700">Was machst du in deiner Freizeit am liebsten?</p>
+                                    <p class="font-semibold text-gray-800">Am liebsten lese ich ein gutes Buch oder gehe in der Natur spazieren.</p>
+                                    <p class="english-text">What do you like doing most in your free time? / I like reading a good book or taking a walk in nature the most.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-brand-700">Und wie lange siehst du täglich fern?</p>
+                                    <p class="font-semibold text-gray-800">Ich sehe ungefähr eine Stunde pro Tag fern, meistens nur die Nachrichten oder eine spannende Serie.</p>
+                                    <p class="english-text">And how long do you watch TV daily? / I watch TV for about an hour a day, mostly just the news or an exciting series.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-brand-700">Auf welches Gerät kannst du in deiner Freizeit nicht mehr verzichten?</p>
+                                    <p class="font-semibold text-gray-800">Ganz klar auf mein Smartphone. Ich brauche es, um Musik zu hören und mit Freunden zu schreiben.</p>
+                                    <p class="english-text">Which device can you no longer do without in your free time? / Definitely my smartphone. I need it to listen to music and text with friends.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-brand-700">Wie oft triffst du dich mit Freunden, Bekannten oder Verwandten?</p>
+                                    <p class="font-semibold text-gray-800">Wir treffen uns meistens am Wochenende, also ungefähr ein- oder zweimal pro Woche.</p>
+                                    <p class="english-text">How often do you meet with friends, acquaintances, or relatives? / We usually meet on the weekend, so about once or twice a week.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-brand-700">Besuchst du auch Kulturveranstaltungen? Wenn ja, welche?</p>
+                                    <p class="font-semibold text-gray-800">Ja, sehr gerne sogar. Ich gehe ab und zu ins Theater oder besuche Konzerte.</p>
+                                    <p class="english-text">Do you also attend cultural events? If so, which ones? / Yes, very much so. I go to the theater from time to time or attend concerts.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-brand-700">Was möchtest du gerne in deiner Freizeit mehr, was weniger machen?</p>
+                                    <p class="font-semibold text-gray-800">Ich möchte gerne mehr Sport treiben und in der Natur sein. Dafür möchte ich weniger Zeit sinnlos im Internet surfen.</p>
+                                    <p class="english-text">What would you like to do more of, and what less of, in your free time? / I would like to do more sports and be in nature. For that, I would like to spend less time pointlessly surfing the internet.</p>
+                                </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="stats-freizeit" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-gray-800 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">5</span> 
+                        Part 5: Leisure Statistics / Freizeitstatistik
+                    </h2>
+
+                    <!-- 5.1 & 5.2 -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">5.1 Beliebte Freizeitaktivitäten in Deutschland – Popular Leisure Activities in Germany</h3>
+                        <div class="space-y-4 text-gray-800">
+                            <div>
+                                <p class="font-semibold">Die Freizeitgestaltung gehört genauso zum Alltag wie Ausbildung und Beruf.</p>
+                                <p class="english-text">Organizing free time is just as much a part of everyday life as education and work.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Laut Statistik verfügen die Deutschen am Tag über drei Stunden und 49 Minuten freie Zeit.</p>
+                                <p class="english-text">According to statistics, Germans have three hours and 49 minutes of free time per day.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Im Fünf-Jahres-Vergleich sind das ca. 15 Minuten weniger als vor fünf Jahren.</p>
+                                <p class="english-text">In a five-year comparison, that is about 15 minutes less than five years ago.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Die meisten Freizeitaktivitäten werden von den Medien bestimmt.</p>
+                                <p class="english-text">Most leisure activities are determined by the media.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Dabei liegt das Fernsehen als 'Lagerfeuer im Wohnzimmer' immer noch auf Platz eins: 97 Prozent der Deutschen sehen regelmäßig fern.</p>
+                                <p class="english-text">Here, television as the 'campfire in the living room' is still in first place: 97 percent of Germans watch television regularly.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Sehr stark zugenommen haben die Nutzung des Internets (drei Viertel der Bundesbürger surfen inzwischen regelmäßig im Netz) und der Gebrauch von Smartphones als mobile Alleskönner.</p>
+                                <p class="english-text">The use of the internet (three quarters of German citizens now surf the net regularly) and the use of smartphones as mobile all-rounders have increased very strongly.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">In manchen Fällen beschäftigen sich die Nutzer aber nur aus Langeweile mit ihren mobilen Geräten.</p>
+                                <p class="english-text">In some cases, however, users only occupy themselves with their mobile devices out of boredom.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Die großen Verlierer unter den Freizeitaktivitäten sind persönliche Treffen und gemeinsame Aktivitäten mit Freunden: Ihr Anteil ist um ein Drittel auf 17 Prozent zurückgegangen.</p>
+                                <p class="english-text">The big losers among leisure activities are personal meetings and joint activities with friends: Their share has decreased by a third to 17 percent.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Interessanterweise ist das Interesse an privater Kommunikation aber nicht gesunken. 70 Prozent der Befragten nutzen dafür jetzt soziale Medien, Kurznachrichten oder das Telefon.</p>
+                                <p class="english-text">Interestingly, however, the interest in private communication has not decreased. 70 percent of those surveyed now use social media, text messages, or the telephone for this.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Ebenfalls im Trend liegen Sport (vor allem in Fitnessstudios) und Besuche von Rock- und Popkonzerten oder von Volksfesten.</p>
+                                <p class="english-text">Also trending are sports (especially in gyms) and visits to rock and pop concerts or public festivals.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Kulturveranstaltungen wie Theater-, Ballett- und Opernaufführungen haben mit einem Minus von 32 Prozent deutlich an Attraktivität verloren.</p>
+                                <p class="english-text">Cultural events such as theater, ballet, and opera performances have clearly lost their attractiveness with a decrease of 32 percent.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Geblieben ist der Wunsch nach Ruhe. Rund die Hälfte der Befragten möchte einfach mal nichts tun und faulenzen.</p>
+                                <p class="english-text">The desire for peace and quiet has remained. Around half of those surveyed would just like to do nothing and laze around.</p>
+                            </div>
+                        </div>
+
+                        <h4 class="font-bold text-gray-800 mt-8 mb-4 border-b pb-2">5.2 Statistik-Zusammenfassung – Statistics Summary</h4>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="font-bold text-blue-900 mb-1">Die Zeit</p>
+                                <p class="text-sm font-semibold text-gray-800">Laut der Statistik haben die Deutschen täglich etwa 3 Stunden und 49 Minuten Freizeit.</p>
+                                <p class="english-text">According to the statistics, Germans have about 3 hours and 49 minutes of free time daily.</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="font-bold text-blue-900 mb-1">Die Nummer eins</p>
+                                <p class="text-sm font-semibold text-gray-800">Die beliebteste Freizeitbeschäftigung: Das Fernsehen ist nach wie vor die Nummer eins; 97 Prozent der Deutschen sehen regelmäßig fern.</p>
+                                <p class="english-text">The most popular leisure activity: Television is still number one; 97 percent of Germans regularly watch TV.</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <p class="font-bold text-green-900 mb-1">Die Gewinner</p>
+                                <p class="text-sm font-semibold text-gray-800">Die Gewinner: Zu den Gewinnern zählen eindeutig das Internet und die Smartphones.</p>
+                                <p class="english-text">The winners: The clear winners are the internet and smartphones.</p>
+                                <p class="text-sm font-semibold text-gray-800 mt-2">Ebenfalls im Trend liegen Sport (besonders im Fitnessstudio) sowie der Besuch von Konzerten und Volksfesten. Auch die Kommunikation über soziale Medien hat stark zugenommen.</p>
+                                <p class="english-text">Also trending are sports (especially in the gym) as well as attending concerts and public festivals. Communication via social media has also increased significantly.</p>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <p class="font-bold text-red-900 mb-1">Die Verlierer</p>
+                                <p class="text-sm font-semibold text-gray-800">Die Verlierer: Die großen Verlierer sind persönliche Treffen und gemeinsame Aktivitäten mit Freunden, deren Anteil stark zurückgegangen ist. Auch Kulturveranstaltungen wie Oper oder Theater haben deutlich an Attraktivität verloren.</p>
+                                <p class="english-text">The losers: The big losers are personal meetings and joint activities with friends, whose share has decreased significantly. Cultural events like opera or theater have also clearly lost their attractiveness.</p>
+                                <p class="text-sm font-semibold text-gray-800 mt-2">Keine Veränderungen: Keine Veränderungen gibt es beim Wunsch nach Ruhe. Rund die Hälfte der Befragten möchte nach wie vor einfach mal nichts tun und faulenzen.</p>
+                                <p class="english-text">No changes: There are no changes in the desire for peace and quiet. Around half of the respondents still just want to do nothing and laze around.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5.3 & 5.4 -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">5.3 Beschreibung & Bericht – Description & Report</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="font-semibold text-gray-900">Aus der Statistik geht hervor, dass sich das Freizeitverhalten in den letzten fünf Jahren stark verändert hat.</p>
+                                    <p class="english-text">The statistics show that leisure behavior has changed significantly over the last five years.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Man kann deutlich sehen, dass die Nutzung des Internets mit einem Plus von 56 % der absolute Spitzenreiter ist.</p>
+                                    <p class="english-text">One can clearly see that the use of the internet is the absolute frontrunner with an increase of 56 %.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Auch Musik hören (+31 %) und Sport treiben (+16 %) zählen zu den Gewinnern und werden häufiger gemacht als früher.</p>
+                                    <p class="english-text">Listening to music (+31 %) and doing sports (+16 %) are also among the winners and are done more frequently than before.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Auf der anderen Seite lässt sich erkennen, dass der Besuch von Kulturveranstaltungen mit einem Minus von 32 % am stärksten abgenommen hat.</p>
+                                    <p class="english-text">On the other hand, it can be seen that attending cultural events has decreased the most with a minus of 32 %.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ebenfalls an Attraktivität verloren haben gemeinsame Unternehmungen mit Freunden (-28 %) und das Lesen von Büchern (-10 %).</p>
+                                    <p class="english-text">Joint activities with friends (-28 %) and reading books (-10 %) have also lost their attractiveness.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded mt-4">
+                                    <p class="font-semibold text-gray-900">Im Vergleich zu früher nutze ich heute deutlich mehr das Internet, vor allem für die Arbeit und um mit meiner Familie in Kontakt zu bleiben.</p>
+                                    <p class="english-text">Compared to the past, I use the internet significantly more today, especially for work and to stay in contact with my family.</p>
+                                    
+                                    <p class="font-semibold text-gray-900 mt-2">Früher habe ich öfter Sport getrieben, aber leider habe ich momentan weniger Zeit dafür.</p>
+                                    <p class="english-text">I used to do sports more often, but unfortunately, I currently have less time for it.</p>
+                                    
+                                    <p class="font-semibold text-gray-900 mt-2">Was das Lesen betrifft, lese ich heute weniger gedruckte Bücher als früher, dafür lese ich aber viel mehr Artikel online.</p>
+                                    <p class="english-text">As for reading, I read fewer printed books today than in the past, but instead, I read a lot more articles online.</p>
+
+                                    <p class="font-semibold text-gray-900 mt-2">Treffen mit Freunden sind mir immer noch wichtig, aber wir unternehmen heute leider seltener etwas zusammen als vor fünf Jahren.</p>
+                                    <p class="english-text">Meeting friends is still important to me, but unfortunately, we do things together less frequently today than five years ago.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">5.4 Forumsbeitrag – Forum Post</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="font-semibold text-gray-900">Hallo zusammen!</p>
+                                    <p class="english-text">Hello everyone!</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Ich habe den Artikel über Freizeitaktivitäten gelesen und finde die Ergebnisse sehr interessant.</p>
+                                    <p class="english-text">I read the article about leisure activities and find the results very interesting.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Mich hat wirklich überrascht, dass persönliche Treffen mit Freunden so stark abgenommen haben.</p>
+                                    <p class="english-text">It really surprised me that personal meetings with friends have decreased so much.</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Andererseits habe ich genau erwartet, dass das Internet und Smartphones die Spitzenplätze belegen, da wir sie im Alltag ständig nutzen.</p>
+                                    <p class="english-text">On the other hand, I expected exactly that the internet and smartphones take the top spots, since we use them constantly in everyday life.</p>
+                                </div>
+                                <div class="bg-indigo-50 p-4 rounded mt-4">
+                                    <p class="font-semibold text-indigo-900">In meinem Heimatland Ägypten gibt es sehr ähnliche Tendenzen.</p>
+                                    <p class="english-text">In my home country Egypt, there are very similar tendencies.</p>
+                                    
+                                    <p class="font-semibold text-indigo-900 mt-2">Fast jeder verbringt viel freie Zeit in sozialen Netzwerken oder chattet am Handy.</p>
+                                    <p class="english-text">Almost everyone spends a lot of free time on social networks or chatting on the phone.</p>
+                                    
+                                    <p class="font-semibold text-indigo-900 mt-2">Trotzdem bleiben regelmäßige Treffen und das gemeinsame Essen mit der Familie bei uns zum Glück immer noch sehr wichtig.</p>
+                                    <p class="english-text">Nevertheless, regular meetings and eating together with the family fortunately still remain very important to us.</p>
+                                </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="lit-krimi" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-red-700 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">6</span> 
+                        Part 6: Der Kriminalroman – The Crime Novel
+                    </h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-sm border border-t-4 border-t-red-700 p-8 mb-8">
+                        <div class="space-y-6">
+                            <div>
+                                <p class="font-semibold text-gray-900">An der Lieblingsbeschäftigung der Deutschen hat sich in den letzten Jahrzehnten nichts geändert: Sie sitzen vor dem Fernseher und sehen Umfragen zufolge am liebsten Fußball oder Krimis.</p>
+                                <p class="english-text">Regarding the favorite pastime of the Germans, in the last decades, nothing has changed: They sit in front of the TV and, according to surveys, prefer to watch football or crime thrillers.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Rund 19 Stunden Mord und Totschlag kann man im deutschen Fernsehen täglich konsumieren.</p>
+                                <p class="english-text">Around 19 hours of murder and manslaughter can one consume daily on German television.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Neben Krimis in Form von Filmen und Serien gibt es auch Sendungen, in denen die Kriminalpolizei die Zuschauer um Mithilfe bittet.</p>
+                                <p class="english-text">Besides crime thrillers in the form of films and series, there are also programs in which the criminal police ask the viewers for help.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Klarer Spitzenreiter bei der fiktiven Verbrecherjagd ist die Reihe „Tatort“, in der seit 1970 jeweils verschiedene Tatort-Kommissare in Deutschland, Österreich und der Schweiz Verbrechen aufklären.</p>
+                                <p class="english-text">The clear frontrunner in the fictional crime hunt is the series "Tatort", in which since 1970 different Tatort inspectors respectively in Germany, Austria and Switzerland solve crimes.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Und egal, was passiert, am Sonntagabend um 21.45 Uhr werden die Täter verhaftet, die Guten besiegen die Bösen, die Welt ist wieder in Ordnung.</p>
+                                <p class="english-text">And no matter what happens, on Sunday evening at 9:45 PM the perpetrators are arrested, the good defeat the bad, the world is fine again.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Die gleiche Faszination üben auch Krimis in Buchform aus.</p>
+                                <p class="english-text">The same fascination is also exerted by crime thrillers in book form.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Jedes Jahr erscheinen im deutschsprachigen Raum weit über 2 000 neue Kriminalromane, knapp zehn Prozent der verkauften Bücher sind Krimis.</p>
+                                <p class="english-text">Every year in the German-speaking region, well over 2,000 new crime novels are published, almost ten percent of sold books are crime thrillers.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Im Moment boomen regionale Krimis, zum Beispiel Alpen- oder Ostseekrimis und Thriller aus den skandinavischen Ländern.</p>
+                                <p class="english-text">At the moment, regional crime thrillers are booming, for example Alpine or Baltic Sea crime thrillers and thrillers from the Scandinavian countries.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Die erfolgreichsten Krimis werden in der Regel verfilmt und man kann sie nach dem Lesen auch als Film im Fernsehen sehen.</p>
+                                <p class="english-text">The most successful crime thrillers are usually made into films and you can after reading also watch them as a film on television.</p>
+                            </div>
+
+                            <div class="h-px bg-gray-200 my-8"></div>
+
+                            <div>
+                                <p class="font-semibold text-gray-900">Der Kriminalroman ist relativ jung.</p>
+                                <p class="english-text">The crime novel is relatively young.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Seine Entwicklung hing eng mit den Anfängen der Kriminalpolizei zusammen.</p>
+                                <p class="english-text">Its development was closely connected with the beginnings of the criminal police.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">1810 gründete interessanterweise ein ehemaliger Berufsverbrecher in Frankreich die erste ermittelnde Polizei, 1829 entstand in England 'Scotland Yard'.</p>
+                                <p class="english-text">Interestingly, in 1810 a former professional criminal founded the first investigating police force in France, and in 1829 'Scotland Yard' was established in England.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">In Deutschland gab es erst Ende des 19. Jahrhunderts in den großen Städten eine eigene Kriminalpolizei.</p>
+                                <p class="english-text">In Germany, a separate criminal police force did not exist in the large cities until the end of the 19th century.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Im Allgemeinen gilt die Kurzgeschichte 'Der Doppelmord in der Rue Morgue' von Edgar Allan Poe aus dem Jahr 1841 als der erste Krimi.</p>
+                                <p class="english-text">Generally, the short story 'The Murders in the Rue Morgue' by Edgar Allan Poe from the year 1841 is considered the first crime thriller.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">In dieser Erzählung fanden die Leser zum ersten Mal das Grundmotiv des klassischen Kriminalromans: Ein Privatdetektiv klärt ein Verbrechen auf.</p>
+                                <p class="english-text">In this story, readers found the basic motive of the classic crime novel for the first time: A private detective solves a crime.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Privatdetektive waren in den Romanen dieser Zeit gebildeter als die Polizei und dienten ausschließlich der Gerechtigkeit.</p>
+                                <p class="english-text">Private detectives in the novels of this time were more educated than the police and served exclusively justice.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Das beweist unter anderem die Detektivfigur des Sherlock Holmes, den der Londoner Arzt Arthur Conan Doyle erfand.</p>
+                                <p class="english-text">This is proven, among other things, by the detective character Sherlock Holmes, who was invented by the London doctor Arthur Conan Doyle.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">1887 tauchte diese Figur zum ersten Mal in einer Erzählung auf.</p>
+                                <p class="english-text">In 1887, this character appeared in a story for the first time.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Der absolute Star unter den Krimiautoren ist bis heute Agatha Christie.</p>
+                                <p class="english-text">The absolute star among crime authors is still Agatha Christie today.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Sie schrieb 66 Romane.</p>
+                                <p class="english-text">She wrote 66 novels.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Ihre Bücher wurden weltweit über zwei Milliarden Mal verkauft.</p>
+                                <p class="english-text">Her books have been sold over two billion times worldwide.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Die Geschichten hatten Witz und oft eine überraschende Wendung.</p>
+                                <p class="english-text">The stories had wit and often a surprising twist.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Die nächste Entwicklungsstufe des Kriminalromans stellten die Bücher von Georges Simenon aus Belgien dar.</p>
+                                <p class="english-text">The next stage of development of the crime novel was represented by the books of Georges Simenon from Belgium.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Bei ihm suchten staatliche Polizisten wie Kommissar Maigret die Mörder und Verbrecher.</p>
+                                <p class="english-text">With him, state police officers like Inspector Maigret searched for the murderers and criminals.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Ähnlich wie Agatha Christie konnte auch Georges Simenon Menschen, Gefühle, Stimmungen, Orte und Landschaften wundervoll beschreiben.</p>
+                                <p class="english-text">Similar to Agatha Christie, Georges Simenon was also able to wonderfully describe people, feelings, moods, places, and landscapes.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Beide Autoren gelten bis heute als große Erzähler.</p>
+                                <p class="english-text">Both authors are still considered great storytellers today.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="lit-maurer" class="scroll-mt-12">
+                    <div class="bg-gray-800 text-white rounded-2xl shadow-xl overflow-hidden mt-8">
+                        <div class="px-8 py-6 border-b border-gray-700">
+                            <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-feather text-red-400 mr-3"></i> Part 7: Jörg Maurer – Ein Deutscher Krimiautor / A German Crime Author</h2>
+                        </div>
+                        
+                        <div class="p-8 space-y-6">
+                            <div>
+                                <p class="font-semibold text-white">Jörg Maurer – ein deutscher Krimiautor.</p>
+                                <p class="english-text !text-gray-400">Jörg Maurer – a German crime author.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Jörg Maurer wurde 1953 im bayerischen Oberland an der österreichischen Grenze geboren.</p>
+                                <p class="english-text !text-gray-400">Jörg Maurer was born in 1953 in the Bavarian Oberland on the Austrian border.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Nach der Schulzeit verließ er Garmisch-Partenkirchen und studierte in München Germanistik.</p>
+                                <p class="english-text !text-gray-400">After his school days, he left Garmisch-Partenkirchen and studied German language and literature in Munich.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Seine Magisterarbeit schrieb er über den deutschen Schriftsteller Arno Schmidt.</p>
+                                <p class="english-text !text-gray-400">He wrote his master's thesis on the German writer Arno Schmidt.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Er schloss sein Studium mit Erfolg ab und arbeitete einige Jahre als Lehrer für Deutsch und Englisch.</p>
+                                <p class="english-text !text-gray-400">He successfully completed his studies and worked for a few years as a teacher of German and English.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Zur gleichen Zeit erfand er eine neue Form des Kabaretts und gründete ein kleines Theater.</p>
+                                <p class="english-text !text-gray-400">At the same time, he invented a new form of cabaret and founded a small theater.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Sein erster Kriminalroman Föhnlage erschien 2009.</p>
+                                <p class="english-text !text-gray-400">His first crime novel Föhnlage was published in 2009.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Das war auch die Geburtsstunde von Kommissar Jennerwein, der mit seinem Team in zahlreichen weiteren Romanen in einem bayerischen Kurort auf die Jagd nach Verbrechern ging.</p>
+                                <p class="english-text !text-gray-400">That was also the birth of Inspector Jennerwein, who went on the hunt for criminals with his team in numerous other novels in a Bavarian spa town.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">2011 verfilmte Rainer Kaufmann das Buch im Auftrag des Bayerischen Rundfunks.</p>
+                                <p class="english-text !text-gray-400">In 2011, Rainer Kaufmann adapted the book into a film on behalf of the Bavarian Broadcasting Corporation.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Der Film wurde mit dem Bernd-Burgemeister-Preis ausgezeichnet.</p>
+                                <p class="english-text !text-gray-400">The film was awarded the Bernd-Burgemeister Prize.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Jörg Maurer erhielt für seine Krimis viele weitere Preise.</p>
+                                <p class="english-text !text-gray-400">Jörg Maurer received many other prizes for his crime novels.</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white">Seine Bücher sind unverwechselbar, originell, spannend und witzig.</p>
+                                <p class="english-text !text-gray-400">His books are unmistakable, original, exciting, and funny.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                
+                <section id="sec-1" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">1</span>
+                        Diskussion: Krimis & Freizeitaktivitäten
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div>
+                            
+                            <div class="bg-indigo-50/50 border border-indigo-100 p-6 rounded-xl space-y-6">
+                                
+                                <div>
+                                    <p class="font-bold text-lg text-indigo-900 mb-3 flex items-center"><i class="fa-solid fa-user-secret mr-2"></i> Diskussion: Krimis (Bild 1)</p>
+                                    <div class="space-y-4">
+                                        <div class="dialogue-a">
+                                            <p class="font-semibold text-gray-900">A: Sag mal, magst du eigentlich Krimis?</p>
+                                            <p class="english-text">A: Tell me, do you actually like crime thrillers?</p>
+                                        </div>
+                                        <div class="dialogue-b">
+                                            <p class="font-semibold text-gray-900">B: Ja, absolut! Ich bin ein großer Fan von spannenden Kriminalromanen und Filmen. Und du?</p>
+                                            <p class="english-text">B: Yes, absolutely! I am a big fan of exciting crime novels and movies. And you?</p>
+                                        </div>
+                                        <div class="dialogue-a">
+                                            <p class="font-semibold text-gray-900">A: Ich auch! Sind Krimis in deinem Heimatland beliebt?</p>
+                                            <p class="english-text">A: Me too! Are crime thrillers popular in your home country?</p>
+                                        </div>
+                                        <div class="dialogue-b">
+                                            <p class="font-semibold text-gray-900">B: Auf jeden Fall. In Ägypten sehen sich viele Menschen sehr gerne Krimiserien an, besonders im Ramadan.</p>
+                                            <p class="english-text">B: Definitely. In Egypt, many people really like watching crime series, especially during Ramadan.</p>
+                                        </div>
+                                        <div class="dialogue-a">
+                                            <p class="font-semibold text-gray-900">A: Interessant! Kennst du denn auch deutsche Krimis?</p>
+                                            <p class="english-text">A: Interesting! Do you also know any German crime thrillers?</p>
+                                        </div>
+                                        <div class="dialogue-b">
+                                            <p class="font-semibold text-gray-900">B: Ja, einige. Ich habe zum Beispiel schon Folgen von „Alarm für Cobra 11“ gesehen, das ist sehr actionreich.</p>
+                                            <p class="english-text">B: Yes, some. For example, I have already seen episodes of "Alarm für Cobra 11", which is very action-packed.</p>
+                                        </div>
+                                        <div class="dialogue-a">
+                                            <p class="font-semibold text-gray-900">A: Oh ja, das kenne ich. Hast du schon mal von der Serie „Tatort“ gehört?</p>
+                                            <p class="english-text">A: Oh yes, I know that one. Have you ever heard of the series "Tatort"?</p>
+                                        </div>
+                                        <div class="dialogue-b">
+                                            <p class="font-semibold text-gray-900">B: Ja, natürlich. Ich habe im Internet darüber gelesen, weil sie so berühmt ist. Es ist die älteste und beliebteste Krimiserie in Deutschland. Soweit ich weiß, wird jeden Sonntagabend ein neuer Fall aus einer anderen deutschen Stadt gelöst, richtig?</p>
+                                            <p class="english-text">B: Yes, of course. I read about it on the internet because it is so famous. It is the oldest and most popular crime series in Germany. As far as I know, a new case from a different German city is solved every Sunday evening, right?</p>
+                                        </div>
+                                        <div class="dialogue-a">
+                                            <p class="font-semibold text-gray-900">A: Genau! Es ist schon fast eine Tradition in Deutschland, sonntags „Tatort“ zu schauen.</p>
+                                            <p class="english-text">A: Exactly! It's almost a tradition in Germany to watch "Tatort" on Sundays.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="pt-6 border-t border-indigo-200">
+                                    <p class="font-bold text-lg text-indigo-900 mb-3 flex items-center"><i class="fa-solid fa-comments mr-2"></i> Diskussionsforum: Trends bei Freizeitaktivitäten (Bild 2)</p>
+                                    <div class="bg-white p-5 rounded-lg border border-indigo-100 shadow-sm space-y-3">
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Hallo zusammen!</p>
+                                            <p class="english-text">Hello everyone!</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Ich habe gerade den interessanten Artikel über das Freizeitverhalten in Deutschland gelesen und möchte gerne meine Meinung dazu äußern.</p>
+                                            <p class="english-text">I have just read the interesting article about leisure behavior in Germany and would like to express my opinion on it.</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Ehrlich gesagt hat mich wirklich überrascht, dass persönliche Treffen mit Freunden um fast ein Drittel abgenommen haben. Ich finde es sehr schade, dass die Menschen immer weniger Zeit füreinander finden.</p>
+                                            <p class="english-text">To be honest, it really surprised me that personal meetings with friends have decreased by almost a third. I find it a real pity that people find less and less time for each other.</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Andererseits habe ich genau erwartet, dass das Internet und Smartphones mittlerweile die Spitzenplätze belegen. Heutzutage nutzt fast jeder sein Handy ständig für soziale Medien oder zum Chatten.</p>
+                                            <p class="english-text">On the other hand, I expected exactly that the internet and smartphones take the top spots by now. Nowadays, almost everyone uses their phone constantly for social media or chatting.</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">In meinem Heimatland Ägypten gibt es übrigens sehr ähnliche Tendenzen. Auch bei uns verbringen vor allem die Jugendlichen extrem viel Zeit online. Dennoch sind regelmäßige Treffen mit der Großfamilie glücklicherweise immer noch ein sehr wichtiger Teil unserer Kultur.</p>
+                                            <p class="english-text">By the way, in my home country Egypt, there are very similar tendencies. Here too, especially young people spend an extremely large amount of time online. Nevertheless, regular meetings with the extended family are fortunately still a very important part of our culture.</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Wie seht ihr das?</p>
+                                            <p class="english-text">How do you guys see this?</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Viele Grüße!</p>
+                                            <p class="english-text">Best regards!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-2" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">2</span>
+                        Präpositionen und Zeitformen (Bild 3)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div>
+                            
+                            <div class="grid grid-cols-1 gap-4 text-gray-800">
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <p class="font-semibold text-gray-900">1. <span class="text-indigo-600 font-bold">Mit</span> 97 Prozent liegt das Fernsehen bei der Freizeitgestaltung auf Platz eins.</p>
+                                    <p class="english-text">With 97 percent, television ranks first in leisure time activities.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <p class="font-semibold text-gray-900">2. Drei Viertel der Bundesbürger surfen inzwischen regelmäßig <span class="text-indigo-600 font-bold">im</span> Netz.</p>
+                                    <p class="english-text">Three quarters of German citizens now regularly surf the net.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <p class="font-semibold text-gray-900">3. Der große Verlierer <span class="text-indigo-600 font-bold">unter</span> den Freizeitaktivitäten sind persönliche Treffen.</p>
+                                    <p class="english-text">The big loser among leisure activities are personal meetings.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <p class="font-semibold text-gray-900">4. Die Kommunikation <span class="text-indigo-600 font-bold">über</span> soziale Netzwerke hat zugenommen.</p>
+                                    <p class="english-text">Communication via social networks has increased.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <p class="font-semibold text-gray-900">5. Sport liegt ebenfalls <span class="text-indigo-600 font-bold">im</span> Trend.</p>
+                                    <p class="english-text">Sports are also trendy.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                    <p class="font-semibold text-gray-900">6. Kulturveranstaltungen wie Opernaufführungen haben <span class="text-indigo-600 font-bold">an</span> Attraktivität verloren.</p>
+                                    <p class="english-text">Cultural events such as opera performances have lost their attractiveness.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 ">
+                                    <p class="font-semibold text-gray-900">7. Der Wunsch <span class="text-indigo-600 font-bold">nach</span> Ruhe ist geblieben.</p>
+                                    <p class="english-text">The desire for peace and quiet has remained.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-3" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">3</span>
+                        Fragen und Antworten: Präpositionen (Bild 4 - Teil A)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">1. <span class="text-indigo-600">[von]</span> schnellen Autos träumen</p>
+                                    <p class="english-text !mt-0 !mb-3">to dream of fast cars</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Träumst du auch von schnellen Autos?</p>
+                                        <p class="english-text !mt-0">A: Do you also dream of fast cars?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ja, davon träume ich auch. / Nein, davon träume ich überhaupt nicht.</p>
+                                        <p class="english-text !mt-0">B: Yes, I dream of that too. / No, I don't dream of that at all.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">2. <span class="text-indigo-600">[über]</span> ein Kompliment sich freuen</p>
+                                    <p class="english-text !mt-0 !mb-3">to be happy about a compliment</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Freust du dich auch über ein Kompliment?</p>
+                                        <p class="english-text !mt-0">A: Are you also happy about a compliment?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ja, darüber freue ich mich auch. / Nein, darüber freue ich mich gar nicht.</p>
+                                        <p class="english-text !mt-0">B: Yes, I am happy about that too. / No, I am not happy about that at all.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">3. <span class="text-indigo-600">[an]</span> die Schulzeit sich oft erinnern</p>
+                                    <p class="english-text !mt-0 !mb-3">to often remember school days</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Erinnerst du dich oft an die Schulzeit?</p>
+                                        <p class="english-text !mt-0">A: Do you often remember school days?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ja, daran erinnere ich mich oft. / Nein, daran erinnere ich mich gar nicht oft.</p>
+                                        <p class="english-text !mt-0">B: Yes, I remember that often. / No, I don't remember that often at all.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">4. <span class="text-indigo-600">[mit]</span> Politik sich gern beschäftigen</p>
+                                    <p class="english-text !mt-0 !mb-3">to like dealing with politics</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Beschäftigst du dich gern mit Politik?</p>
+                                        <p class="english-text !mt-0">A: Do you like dealing with politics?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ja, damit beschäftige ich mich gern. / Nein, damit beschäftige ich mich gar nicht gern.</p>
+                                        <p class="english-text !mt-0">B: Yes, I like dealing with that. / No, I don't like dealing with that at all.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">5. <span class="text-indigo-600">[an]</span> den letzten Urlaub manchmal denken</p>
+                                    <p class="english-text !mt-0 !mb-3">to sometimes think about the last vacation</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Denkst du manchmal an den letzten Urlaub?</p>
+                                        <p class="english-text !mt-0">A: Do you sometimes think about the last vacation?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ja, daran denke ich manchmal. / Nein, daran denke ich überhaupt nicht.</p>
+                                        <p class="english-text !mt-0">B: Yes, I think about that sometimes. / No, I don't think about that at all.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-4" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">4</span>
+                        Wie lange haben Sie ...? (Bild 4 - Teil B)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div>
+                            
+                            <div class="space-y-4">
+                                
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">1. <span class="text-indigo-600">[mit]</span> Freunden telefonieren</p>
+                                    <p class="english-text !mt-0 !mb-3">to talk on the phone with friends</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Wie lange haben Sie in der letzten Woche mit Freunden telefoniert?</p>
+                                        <p class="english-text !mt-0">A: How long did you talk on the phone with friends last week?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ich habe in der letzten Woche zwei Stunden mit Freunden telefoniert.</p>
+                                        <p class="english-text !mt-0">B: I talked on the phone with friends for two hours last week.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">2. <span class="text-indigo-600">[über]</span> Politik reden</p>
+                                    <p class="english-text !mt-0 !mb-3">to talk about politics</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Wie lange haben Sie gestern über Politik geredet?</p>
+                                        <p class="english-text !mt-0">A: How long did you talk about politics yesterday?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ich habe gestern 30 Minuten über Politik geredet.</p>
+                                        <p class="english-text !mt-0">B: I talked about politics for 30 minutes yesterday.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">3. <span class="text-indigo-600">[an]</span> die Arbeit denken</p>
+                                    <p class="english-text !mt-0 !mb-3">to think about work</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Wie lange haben Sie in der letzten Woche an die Arbeit gedacht?</p>
+                                        <p class="english-text !mt-0">A: How long did you think about work last week?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ich habe in der letzten Woche sehr oft an die Arbeit gedacht.</p>
+                                        <p class="english-text !mt-0">B: I thought about work very often last week.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">4. <span class="text-indigo-600">[über]</span> andere Menschen sich ärgern</p>
+                                    <p class="english-text !mt-0 !mb-3">to get annoyed about other people</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Wie lange haben Sie sich gestern über andere Menschen geärgert?</p>
+                                        <p class="english-text !mt-0">A: How long did you get annoyed about other people yesterday?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ich habe mich gestern zum Glück gar nicht über andere Menschen geärgert.</p>
+                                        <p class="english-text !mt-0">B: Fortunately, I didn't get annoyed about other people at all yesterday.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">5. <span class="text-indigo-600">[mit]</span> Ihrem Chef/Ihrer Chefin sprechen</p>
+                                    <p class="english-text !mt-0 !mb-3">to speak with your boss</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Wie lange haben Sie in der letzten Woche mit Ihrem Chef/Ihrer Chefin gesprochen?</p>
+                                        <p class="english-text !mt-0">A: How long did you speak with your boss last week?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ich habe in der letzten Woche eine Stunde mit meinem Chef gesprochen.</p>
+                                        <p class="english-text !mt-0">B: I spoke with my boss for an hour last week.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm">
+                                    <p class="font-bold text-lg text-slate-800 mb-2 border-b border-slate-200 pb-2">6. <span class="text-indigo-600">[an]</span> Besprechungen teilnehmen</p>
+                                    <p class="english-text !mt-0 !mb-3">to take part in meetings</p>
+                                    <div class="ml-4 space-y-1">
+                                        <p class="text-gray-800 font-medium">A: Wie lange haben Sie gestern an Besprechungen teilgenommen?</p>
+                                        <p class="english-text !mt-0">A: How long did you take part in meetings yesterday?</p>
+                                        <p class="text-gray-800 font-medium mt-2">B: Ich habe gestern zwei Stunden an Besprechungen teilgenommen.</p>
+                                        <p class="english-text !mt-0">B: I took part in meetings for two hours yesterday.</p>
+                                    </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Kapitel 1. Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mainScrollArea = document.getElementById('main-scroll-area');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    // Cache sectionTop calculations to avoid forced reflow
+                    // Actually reading offsetTop is cheap if no layout changed,
+                    // but the throttling will prevent freezing anyway.
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, span.font-semibold, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons, tooltips, or english translations)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i' || el.classList.contains('english-text')) {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.parentElement.classList.contains('english-text') ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free public MyMemory Translation API
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        
+                        // Minor cleanup of the API response
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                             translation = "[No trans]"; // Indicate if it couldn't find a diff word
+                        }
+                        
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+        });
+    </script>
+</body>
+</html>

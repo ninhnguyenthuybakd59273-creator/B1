@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 4: Lernen - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        
+        .translatable-word {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            transition: background-color 0.2s, color 0.2s;
+            border-bottom: 1px dashed transparent;
+        }
+        
+        .translatable-word:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+            border-bottom-color: #94a3b8;
+            border-radius: 2px;
+        }
+        
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        .english-text {
+            color: #64748b; /* text-slate-500 */
+            font-size: 0.875rem; /* text-sm */
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Spektrum Deutsch
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 4: Lernen</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li class="pt-2 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Inhalt</li>
+                <li><a href="#sec-1" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-book-open w-5 text-center mr-2 text-gray-400"></i> 1. Lernen</a></li>
+                <li><a href="#sec-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pen-nib w-5 text-center mr-2 text-gray-400"></i> 2. Grammatik</a></li>
+                <li><a href="#sec-3" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-headphones w-5 text-center mr-2 text-gray-400"></i> 3. Transkription Hörtexte</a></li>
+                <li><a href="#sec-4" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> 4. Interview & Thesen</a></li>
+                <li><a href="#sec-5" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-brain w-5 text-center mr-2 text-gray-400"></i> 5. Merken oder vergessen?</a></li>
+                <li><a href="#sec-6" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 6. Lesetext â€žUnser Gehirnâ€œ</a></li>
+                <li><a href="#sec-7" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-users w-5 text-center mr-2 text-gray-400"></i> 7. Diskussion & Interview</a></li>
+                <li><a href="#sec-8" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-building-columns w-5 text-center mr-2 text-gray-400"></i> 8. Bildung für alle</a></li>
+                <li><a href="#sec-9" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-envelope w-5 text-center mr-2 text-gray-400"></i> 9. Bitte um Informationen</a></li>
+                <li><a href="#sec-10" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-graduation-cap w-5 text-center mr-2 text-gray-400"></i> 10. Kurse an der VHS</a></li>
+                <li><a href="#sec-11" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> 11. Diskussion der Kurse</a></li>
+                <li><a href="#sec-12" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-at w-5 text-center mr-2 text-gray-400"></i> 12. E-Mail an die VHS</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="text-gray-500 hover:text-brand-600 transition-colors mr-1">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                </a>
+                <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 4: Lernen</h1>
+            </div>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-5xl mx-auto space-y-12 pb-20">
+                
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Bilingual Edition / Zweisprachige Ausgabe</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 4: Lernen</h1>
+                    <p class="text-xl text-gray-600">Schule, Universität und Weiterbildung</p>
+                </div>
+                <section id="sec-1" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">1</span>
+                        Lernen | Learning
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">an einem Kurs/an einer Weiterbildung teilnehmen</span>
+                                <span class="english-text">participate in/attend a course / further education</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">einen Kurs besuchen/machen</span>
+                                <span class="english-text">attend/take a course</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich für einen Kurs/für eine Prüfung einschreiben</span>
+                                <span class="english-text">enroll/register for a course/an exam</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">die Vorlesung/das Seminar/den Sprachunterricht interessant/langweilig/zu theoretisch finden</span>
+                                <span class="english-text">find the lecture/seminar/language lesson interesting/boring/too theoretical</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">eine Prüfung machen/ablegen/bestehen</span>
+                                <span class="english-text">take/sit/pass an exam</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">gute/schlechte Noten haben/bekommen</span>
+                                <span class="english-text">have/get good/bad grades</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">etwas macht Spaß</span>
+                                <span class="english-text">something is fun</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">(nicht) gern in die Schule/zur Uni gehen</span>
+                                <span class="english-text">(not) like going to school/university</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">das Gelernte direkt anwenden</span>
+                                <span class="english-text">apply what has been learned directly</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">etwas für den Beruf brauchen</span>
+                                <span class="english-text">need something for the job/profession</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">jemandem in einem Fach helfen</span>
+                                <span class="english-text">help someone in a subject</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Empfehlungen geben: Giving recommendations:
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Man sollte (Wörter mehrmals wiederholen).</span>
+                                <span class="english-text">One should (repeat words several times).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der Text empfiehlt, (vor dem Einschlafen zu lernen).</span>
+                                <span class="english-text">The text recommends (learning/studying before falling asleep).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nach Meinung von Experten ist es sinnvoll, (den eigenen Lerntyp zu erkennen).</span>
+                                <span class="english-text">In the opinion of experts, it makes sense (to recognize one's own learning type).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es ist ratsam/effektiv, (aktive Übungen zu machen).</span>
+                                <span class="english-text">It is advisable/effective (to do active exercises).</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Wie wir lernen: How we learn:
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">das Lernmaterial hören</span>
+                                <span class="english-text">hear/listen to the learning material</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">absolute Stille brauchen</span>
+                                <span class="english-text">need absolute silence</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">etwas schreiben müssen</span>
+                                <span class="english-text">have to write something</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">beim Einprägen helfen</span>
+                                <span class="english-text">help with memorizing</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">in der Fremdsprache kommunizieren</span>
+                                <span class="english-text">communicate in the foreign language</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">neue Informationen veranschaulichen/visualisieren</span>
+                                <span class="english-text">illustrate/visualize new information</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">neue Wörter mit Bildern verbinden</span>
+                                <span class="english-text">connect new words with pictures/images</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Bilder in den Lernprozess einbeziehen</span>
+                                <span class="english-text">include pictures/images in the learning process</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">etwas farbig hervorheben</span>
+                                <span class="english-text">highlight something in color</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">die Struktur einer Fremdsprache verstehen wollen</span>
+                                <span class="english-text">want to understand the structure of a foreign language</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Interesse zeigen: Showing interest:
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mich interessiert (der Kurs Zeichnen).</span>
+                                <span class="english-text">I am interested in (the drawing course).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich finde (den Kurs Pasta! Pasta!) interessant.</span>
+                                <span class="english-text">I find (the course Pasta! Pasta!) interesting.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich möchte mehr über (Kunst) erfahren.</span>
+                                <span class="english-text">I would like to learn more about (art).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich wollte schon immer (tanzen lernen).</span>
+                                <span class="english-text">I have always wanted (to learn to dance).</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Lernprozess Learning process
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ein gutes/schlechtes Gedächtnis haben</span>
+                                <span class="english-text">have a good/bad memory</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich (Zahlen) gut merken können</span>
+                                <span class="english-text">be able to remember (numbers) well</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich an chemische Formeln erinnern</span>
+                                <span class="english-text">remember chemical formulas</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">in Vergessenheit geraten</span>
+                                <span class="english-text">fall into oblivion / be forgotten</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Informationen mit Interesse aufnehmen</span>
+                                <span class="english-text">absorb/take in information with interest</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">etwas als wichtig bewerten</span>
+                                <span class="english-text">rate/evaluate something as important</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ins Kurzzeitgedächtnis/Langzeitgedächtnis gelangen</span>
+                                <span class="english-text">reach/enter the short-term memory / long-term memory</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">aus dem Gedächtnis gelöscht/entfernt werden</span>
+                                <span class="english-text">be deleted/removed from memory</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">alte Daten mit neuen Daten überschreiben</span>
+                                <span class="english-text">overwrite old data with new data</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">das Gehirn vor einer Datenflut schützen</span>
+                                <span class="english-text">protect the brain from a flood of data</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">den bestmöglichen Lernerfolg erzielen</span>
+                                <span class="english-text">achieve the best possible learning success</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">der Schlüssel zum erfolgreichen Lernen sein</span>
+                                <span class="english-text">be the key to successful learning</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Gelerntes in regelmäßigen Abständen wiederholen</span>
+                                <span class="english-text">repeat what has been learned at regular intervals</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Verbindungen im Gehirn aktivieren</span>
+                                <span class="english-text">activate connections in the brain</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">für eine langfristige Speicherung sorgen</span>
+                                <span class="english-text">ensure long-term storage</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">besonders effektiv sein/als besonders effektiv gelten</span>
+                                <span class="english-text">be particularly effective / be considered particularly effective</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">vor dem Einschlafen lernen</span>
+                                <span class="english-text">learn/study before falling asleep</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ereignisse im Schlaf verarbeiten</span>
+                                <span class="english-text">process events during sleep</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">sich Wörter beim Reden/Lesen/Hören einprägen</span>
+                                <span class="english-text">memorize words while speaking/reading/listening</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">lautes Lesen bevorzugen</span>
+                                <span class="english-text">prefer reading aloud</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">aktive Lernformen benutzen</span>
+                                <span class="english-text">use active forms of learning</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">auf Wörter zurückgreifen, an die wir uns erinnern</span>
+                                <span class="english-text">fall back on / access words that we remember</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Volkshochschulen Adult education centers (Community colleges)
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Kurse oder Vorträge anbieten</span>
+                                <span class="english-text">offer courses or lectures</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">wissenschaftliche Erkenntnisse in einfacher Sprache präsentieren</span>
+                                <span class="english-text">present scientific findings in simple language</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ein vielfältiges Kursangebot haben/ein Bildungsangebot für die Bevölkerung unterbreiten</span>
+                                <span class="english-text">have a diverse range of courses / submit (offer) an educational offer for the population</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">einen Schulabschluss nachholen können</span>
+                                <span class="english-text">be able to catch up on (obtain later) a school leaving certificate</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">das Angebot nutzen</span>
+                                <span class="english-text">use the offer</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">finanziell unterstützt werden</span>
+                                <span class="english-text">be financially supported</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">auf Wirtschaftlichkeit achten</span>
+                                <span class="english-text">pay attention to economic efficiency/profitability</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es steht zu wenig Geld zur Verfügung.</span>
+                                <span class="english-text">There is too little money available.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">das Fehlen technischer Geräte kritisieren</span>
+                                <span class="english-text">criticize the lack of technical equipment</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der Geldmangel wirkt sich auf die Ausstattung der Klassenräume aus.</span>
+                                <span class="english-text">The lack of money affects the equipment of the classrooms.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">gute Resultate erzielen</span>
+                                <span class="english-text">achieve good results</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ein gutes Preis-Leistungs-Verhältnis bieten</span>
+                                <span class="english-text">offer a good price-performance ratio</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">einen Auftrag erfüllen</span>
+                                <span class="english-text">fulfill a mandate/mission/order</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-2" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">2</span>
+                        Grammatik | Grammar
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                1. Sätze mit „weil“ (because) – Nebensatz
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich gehe früh ins Bett, weil ich sehr müde bin.</span>
+                                <span class="english-text">I am going to bed early because I am very tired.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er kauft Äpfel, weil er einen Kuchen backen will.</span>
+                                <span class="english-text">He is buying apples because he wants to bake a cake.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir bleiben zu Hause, weil es draußen stark regnet.</span>
+                                <span class="english-text">We are staying at home because it is raining heavily outside.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie lernt fleißig, weil sie die Prüfung bestehen möchte.</span>
+                                <span class="english-text">She is studying hard because she wants to pass the exam.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das Kind weint, weil es sein Spielzeug verloren hat.</span>
+                                <span class="english-text">The child is crying because it has lost its toy.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich esse nichts, weil ich keinen Hunger habe.</span>
+                                <span class="english-text">I am not eating anything because I am not hungry.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir nehmen den Bus, weil unser Auto kaputt ist.</span>
+                                <span class="english-text">We are taking the bus because our car is broken.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er ist glücklich, weil er im Lotto gewonnen hat.</span>
+                                <span class="english-text">He is happy because he won the lottery.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie ruft ihre Mutter an, weil sie braucht Hilfe.</span>
+                                <span class="english-text">She is calling her mother because she needs help.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich trinke Wasser, weil ich Durst habe.</span>
+                                <span class="english-text">I am drinking water because I am thirsty.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                2. Sätze mit „denn“ (for / because) – Hauptsatz
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich gehe früh ins Bett, denn ich bin sehr müde.</span>
+                                <span class="english-text">I am going to bed early, for I am very tired.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er kauft Äpfel, denn er will einen Kuchen backen.</span>
+                                <span class="english-text">He is buying apples, for he wants to bake a cake.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir bleiben zu Hause, denn es regnet draußen stark.</span>
+                                <span class="english-text">We are staying at home, for it is raining heavily outside.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie lernt fleißig, denn sie möchte die Prüfung bestehen.</span>
+                                <span class="english-text">She is studying hard, for she wants to pass the exam.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das Kind weint, denn es hat sein Spielzeug verloren.</span>
+                                <span class="english-text">The child is crying, for it has lost its toy.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich esse nichts, denn ich habe keinen Hunger.</span>
+                                <span class="english-text">I am not eating anything, for I am not hungry.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir nehmen den Bus, denn unser Auto ist kaputt.</span>
+                                <span class="english-text">We are taking the bus, for our car is broken.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er ist glücklich, denn er hat im Lotto gewonnen.</span>
+                                <span class="english-text">He is happy, for he has won the lottery.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie ruft ihre Mutter an, denn sie braucht Hilfe.</span>
+                                <span class="english-text">She is calling her mother, for she needs help.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich trinke Wasser, denn ich habe Durst.</span>
+                                <span class="english-text">I am drinking water, for I am thirsty.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                3. Sätze mit „deshalb / deswegen / darum“ (therefore / that's why) – Hauptsatz
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich bin sehr müde, deshalb gehe ich früh ins Bett.</span>
+                                <span class="english-text">I am very tired, therefore I am going to bed early.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er will einen Kuchen backen, deswegen kauft er Äpfel.</span>
+                                <span class="english-text">He wants to bake a cake, that’s why he is buying apples.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es regnet draußen stark, darum bleiben wir zu Hause.</span>
+                                <span class="english-text">It is raining heavily outside, therefore we are staying at home.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie möchte die Prüfung bestehen, deshalb lernt sie fleißig.</span>
+                                <span class="english-text">She wants to pass the exam, that’s why she is studying hard.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das Kind hat sein Spielzeug verloren, deswegen weint es.</span>
+                                <span class="english-text">The child has lost its toy, therefore it is crying.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe keinen Hunger, darum esse ich nichts.</span>
+                                <span class="english-text">I am not hungry, that’s why I am not eating anything.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Unser Auto ist kaputt, deshalb nehmen wir den Bus.</span>
+                                <span class="english-text">Our car is broken, therefore we are taking the bus.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er hat im Lotto gewonnen, deswegen ist er glücklich.</span>
+                                <span class="english-text">He won the lottery, that’s why he is happy.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie braucht Hilfe, darum ruft sie ihre Mutter an.</span>
+                                <span class="english-text">She needs help, therefore she is calling her mother.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe Durst, deshalb trinke Wasser.</span>
+                                <span class="english-text">I am thirsty, that’s why I am drinking water.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Hier sind jeweils 20 Beispiele für Finalangaben mit „damit“ und „um ... zu“, Zeile für Zeile übersetzt.
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                1. Nebensätze mit „damit“
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Regel: Diese Konstruktion wird oft verwendet, wenn Hauptsatz und Nebensatz unterschiedliche Subjekte haben, kann aber auch bei gleichem Subjekt genutzt werden. Das konjugierte Verb steht am Ende.
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich erkläre es dir zweimal, damit du alles verstehst.</span>
+                                <span class="english-text">I explain it to you twice so that you understand everything.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Eltern sparen Geld, damit ihre Kinder studieren können.</span>
+                                <span class="english-text">The parents save money so that their children can study.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er spricht langsam, damit ihn die Schüler besser verstehen.</span>
+                                <span class="english-text">He speaks slowly so that the students understand him better.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich gebe dir den Schlüssel, damit du die Tür öffnen kannst.</span>
+                                <span class="english-text">I give you the key so that you can open the door.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir machen das Licht an, damit man uns im Dunkeln sieht.</span>
+                                <span class="english-text">We turn the light on so that people see us in the dark.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie schickt die E-Mail sofort ab, damit der Chef sie rechtzeitig liest.</span>
+                                <span class="english-text">She sends the email immediately so that the boss reads it in time.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich nehme ein Taxi, damit meine Freunde nicht auf mich warten müssen.</span>
+                                <span class="english-text">I take a taxi so that my friends don't have to wait for me.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er stellt den Wecker, damit seine Frau nicht verschläft.</span>
+                                <span class="english-text">He sets the alarm so that his wife doesn't oversleep.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir heizen den Raum, damit die Gäste nicht frieren.</span>
+                                <span class="english-text">We heat the room so that the guests don't freeze.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Du solltest leise sein, damit das Baby weiterschlafen kann.</span>
+                                <span class="english-text">You should be quiet so that the baby can keep sleeping.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich schreibe dir eine Liste, damit du nichts vergisst.</span>
+                                <span class="english-text">I am writing you a list so that you don't forget anything.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der Lehrer wiederholt die Regel, damit sie alle lernen.</span>
+                                <span class="english-text">The teacher repeats the rule so that everyone learns it.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie kauft gesundes Essen, damit ihre Familie fit bleibt.</span>
+                                <span class="english-text">She buys healthy food so that her family stays fit.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich leihe dir mein Buch, damit du für die Prüfung lernen kannst.</span>
+                                <span class="english-text">I lend you my book so that you can study for the exam.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir stellen den Wein kühl, damit er besser schmeckt.</span>
+                                <span class="english-text">We put the wine in the fridge so that it tastes better.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er arbeitet viel, damit seine Familie ein gutes Leben hat.</span>
+                                <span class="english-text">He works a lot so that his family has a good life.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich mache das Fenster zu, damit es im Zimmer warm bleibt.</span>
+                                <span class="english-text">I close the window so that it stays warm in the room.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie trägt eine Brille, damit sie die Tafel besser sieht.</span>
+                                <span class="english-text">She wears glasses so that she sees the blackboard better.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich schalte das Radio aus, damit du dich konzentrieren kannst.</span>
+                                <span class="english-text">I turn off the radio so that you can concentrate.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir nutzen das Internet, damit wir Informationen schneller finden.</span>
+                                <span class="english-text">We use the internet so that we find information faster.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                2. Infinitivkonstruktionen mit „um ... zu“
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Regel: Diese Konstruktion wird nur verwendet, wenn das Subjekt im Hauptsatz und im Infinitivteil identisch ist. Das „zu“ steht direkt vor dem Infinitiv am Ende.
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich lerne Deutsch, um in Deutschland zu arbeiten.</span>
+                                <span class="english-text">I learn German in order to work in Germany.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er geht in die Küche, um einen Kaffee zu kochen.</span>
+                                <span class="english-text">He goes into the kitchen to make a coffee.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir sparen Geld, um ein neues Auto zu kaufen.</span>
+                                <span class="english-text">We save money to buy a new car.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie treibt Sport, um gesund zu bleiben.</span>
+                                <span class="english-text">She does sports to stay healthy.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich brauche ein Wörterbuch, um den Text zu übersetzen.</span>
+                                <span class="english-text">I need a dictionary to translate the text.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er fährt zum Bahnhof, um seine Freundin abzuholen.</span>
+                                <span class="english-text">He drives to the station to pick up his girlfriend.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir gehen früh ins Bett, um morgen fit zu sein.</span>
+                                <span class="english-text">We go to bed early to be fit tomorrow.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie trägt einen Mantel, um nicht zu frieren.</span>
+                                <span class="english-text">She wears a coat so as not to freeze.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich höre Musik, um mich zu entspannen.</span>
+                                <span class="english-text">I listen to music to relax.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er nutzt das Internet, um Hotels zu reservieren.</span>
+                                <span class="english-text">He uses the internet to reserve hotels.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir machen eine Pause, um frische Luft zu schnappen.</span>
+                                <span class="english-text">We take a break to get some fresh air.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich gehe in den Supermarkt, um Brot zu kaufen.</span>
+                                <span class="english-text">I go to the supermarket to buy bread.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie lernt viel, um die Prüfung zu bestehen.</span>
+                                <span class="english-text">She studies a lot to pass the exam.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er ruft an, um einen Termin zu vereinbaren.</span>
+                                <span class="english-text">He calls to make an appointment.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir brauchen ein Auto, um zur Arbeit zu fahren.</span>
+                                <span class="english-text">We need a car to drive to work.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich brauche Ruhe, um das Buch zu lesen.</span>
+                                <span class="english-text">I need peace to read the book.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie nimmt ein Taxi, um pünktlich zu kommen.</span>
+                                <span class="english-text">She takes a taxi to arrive on time.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er macht das Fenster auf, um den Raum zu lüften.</span>
+                                <span class="english-text">He opens the window to air out the room.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich trinke Wasser, um meinen Durst zu löschen.</span>
+                                <span class="english-text">I drink water to quench my thirst.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir fliegen nach Japan, um die Kultur kennenzulernen.</span>
+                                <span class="english-text">We fly to Japan to get to know the culture.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Lernen Learning
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was verbinden Sie mit dem Thema Lernen?</span>
+                                <span class="english-text">What do you associate with the topic of learning?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Arbeiten Sie in kleinen Gruppen und erstellen Sie ein Assoziogramm. Präsentieren Sie Ihre Ergebnisse.</span>
+                                <span class="english-text">Work in small groups and create an associogram. Present your results.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Neugierde / Freude / Anstrengung / Motivation / Stress / Langeweile</span>
+                                <span class="english-text">Curiosity / Joy / Effort / Motivation / Stress / Boredom</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Schule / Ausbildung / Beruf / Universität / Freizeit</span>
+                                <span class="english-text">School / Training (Apprenticeship) / Profession / University / Free time</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Gruppendiskussion):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wenn ich an Lernen denke, denke ich sofort an die Schule und die Universität.</span>
+                                <span class="english-text">When I think of learning, I immediately think of school and university.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, das stimmt. Aber Lernen bedeutet für mich auch oft Stress und Anstrengung.</span>
+                                <span class="english-text">Yes, that's true. But learning also often means stress and effort for me.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Auf der anderen Seite kann es auch Freude machen, wenn man Neugierde und Motivation hat.</span>
+                                <span class="english-text">On the other hand, it can also bring joy if you have curiosity and motivation.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Genau! Im Beruf oder in der Freizeit lernt man ja auch ständig neue Dinge.</span>
+                                <span class="english-text">Exactly! In your profession or in your free time, you are constantly learning new things too.</span>
+                            </div>
+                            <div id="sec-3" class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md scroll-mt-12">
+                                Teil 2: Transkription Hörtexte (Interviews zum Thema Lernen)
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Olaf:
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich heiße Olaf Meisner und arbeite als Ingenieur bei Siemens.</span>
+                                <span class="english-text">My name is Olaf Meisner and I work as an engineer at Siemens.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich bin als Kind nicht so gern in die Schule gegangen.</span>
+                                <span class="english-text">As a child, I didn't like going to school very much.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Meine Lieblingsfächer waren Mathematik und Sport, da musste man nicht so viel lernen.</span>
+                                <span class="english-text">My favorite subjects were mathematics and sports, you didn't have to learn so much there.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich war recht faul und habe oft keine Hausaufgaben gemacht.</span>
+                                <span class="english-text">I was quite lazy and often didn't do my homework.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In meiner Freizeit war ich meistens auf dem Fußballplatz oder ich habe Computerspiele gespielt.</span>
+                                <span class="english-text">In my free time, I was mostly on the football pitch or I played computer games.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Im Studium war ich auch nicht besonders fleißig.</span>
+                                <span class="english-text">During my studies, I wasn't particularly diligent either.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Als ich mein Universitätsdiplom bekommen habe, dachte ich: Super, jetzt ist das Lernen vorbei!</span>
+                                <span class="english-text">When I got my university diploma, I thought: Great, now the learning is over!</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Aber so ist das natürlich nicht.</span>
+                                <span class="english-text">But of course it isn't like that.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Man muss sich im Berufsleben regelmäßig weiterbilden und neue Dinge lernen, die man in der Praxis braucht.</span>
+                                <span class="english-text">In professional life, one has to regularly further one's education and learn new things that are needed in practice.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Im Moment nehme ich an einer Weiterbildung zum Thema Projektmanagement teil.</span>
+                                <span class="english-text">At the moment I am taking part in further training on the topic of project management.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Und ich lerne Französisch, weil wir in einem neuen Projekt mit französischen Kollegen zusammenarbeiten.</span>
+                                <span class="english-text">And I am learning French because we are working together with French colleagues in a new project.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Heute macht mir das Lernen mehr Spaß als früher.</span>
+                                <span class="english-text">Today, learning is more fun for me than it used to be.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich glaube, das liegt daran, dass ich das Gelernte direkt anwenden kann.</span>
+                                <span class="english-text">I believe that is because I can directly apply what I have learned.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Anita:
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mein Name ist Anita Sander, ich arbeite als Assistentin bei der Firma Olifax.</span>
+                                <span class="english-text">My name is Anita Sander, I work as an assistant at the company Olifax.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich brauche für meinen Beruf neben meiner Muttersprache Deutsch auch Englisch, Spanisch und Griechisch, weil unsere Firma mit Oliven aus Griechenland und Spanien handelt.</span>
+                                <span class="english-text">For my job, besides my mother tongue German, I also need English, Spanish and Greek, because our company trades in olives from Greece and Spain.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Englisch habe ich schon in der Schule gelernt, das war auch mein Lieblingsfach.</span>
+                                <span class="english-text">I already learned English in school, that was also my favorite subject.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich hatte gute Noten in Deutsch, Englisch und Geschichte.</span>
+                                <span class="english-text">I had good grades in German, English and history.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mathematik und Physik mochte ich nicht so.</span>
+                                <span class="english-text">I didn't like mathematics and physics that much.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In meiner Ausbildung zur Assistentin habe ich Spanisch gelernt, das hat mir großen Spaß gemacht.</span>
+                                <span class="english-text">In my training as an assistant I learned Spanish, which was a lot of fun for me.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir hatten natürlich auch Unterricht in verschiedenen Computerprogrammen, wie z. B. Excel.</span>
+                                <span class="english-text">We of course also had lessons in various computer programs, such as Excel.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Computerfächer fand ich ziemlich anstrengend.</span>
+                                <span class="english-text">I found the computer subjects quite exhausting.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Vor einem Jahr habe ich mich für einen Griechischkurs an der Volkshochschule eingeschrieben.</span>
+                                <span class="english-text">A year ago I enrolled for a Greek course at the adult education center.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Für mich ist Griechisch schwerer als andere Sprachen, denn ich musste erst einmal das Alphabet lernen.</span>
+                                <span class="english-text">For me, Greek is harder than other languages, because first I had to learn the alphabet.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Außerdem findet der Unterricht abends statt und da bin ich meistens müde.</span>
+                                <span class="english-text">Furthermore, the lessons take place in the evening and then I am mostly tired.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Aber ich mache weiter.</span>
+                                <span class="english-text">But I will keep going.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich möchte gerne irgendwann mit unseren Kunden Griechisch sprechen.</span>
+                                <span class="english-text">I would like to speak Greek with our customers at some point.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Nina:
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich heiße Nina und ich studiere im ersten Semester BWL, also Betriebswirtschaftslehre, an der Universität Hamburg.</span>
+                                <span class="english-text">My name is Nina and I am studying business administration, i.e., business economics, in my first semester at the University of Hamburg.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe in der Schule immer sehr gerne gelernt und hatte in den meisten Fächern gute Noten.</span>
+                                <span class="english-text">I always liked learning in school very much and had good grades in most subjects.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">An der Uni habe ich jetzt aber Schwierigkeiten.</span>
+                                <span class="english-text">At the university, however, I am having difficulties now.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich besuche alle Vorlesungen und Seminare, aber einige Lehrveranstaltungen finde ich zu theoretisch.</span>
+                                <span class="english-text">I attend all lectures and seminars, but I find some courses too theoretical.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Und bei der Mathematik-Vorlesung verstehe ich überhaupt nichts.</span>
+                                <span class="english-text">And in the mathematics lecture I understand absolutely nothing.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich glaube, ich muss erst mal lernen, wie man an einer Universität lernt.</span>
+                                <span class="english-text">I think I first have to learn how one learns at a university.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das ist ganz anders als in der Schule.</span>
+                                <span class="english-text">That is completely different than in school.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">An der Uni muss man sich besser organisieren und effektiver lernen.</span>
+                                <span class="english-text">At the university, one has to organize oneself better and learn more effectively.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe jetzt eine Kommilitonin gefunden, die mir in Mathematik hilft.</span>
+                                <span class="english-text">I have now found a fellow student who helps me in mathematics.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wir treffen uns zweimal in der Woche und reden über die Dinge, die ich nicht verstanden habe.</span>
+                                <span class="english-text">We meet twice a week and talk about the things I didn't understand.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich hoffe, dass ich am Semesterende die Prüfungen bestehe.</span>
+                                <span class="english-text">I hope that I will pass the exams at the end of the semester.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-4" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">4</span>
+                        Interview und Thesen zum Sprachenlernen
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch (Fragen): Interview: Lernen Interview: Learning
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sind Sie gern zur Schule gegangen? Welche Fächer mochten Sie besonders?</span>
+                                <span class="english-text">Did you like going to school? Which subjects did you like in particular?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was war früher Ihr Traumberuf?</span>
+                                <span class="english-text">What was your dream job in the past?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Lernen Sie gern? Was lernen Sie gerade und was möchten Sie später noch lernen?</span>
+                                <span class="english-text">Do you like learning? What are you learning right now and what would you like to learn later?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Welche Sprachen haben Sie in der Schule/an der Universität gelernt? Hat Ihnen der Sprachunterricht Spaß gemacht?</span>
+                                <span class="english-text">Which languages did you learn in school/at university? Did you enjoy the language classes?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Bis zu welchem Alter kann ein Mensch etwas lernen? Was meinen Sie?</span>
+                                <span class="english-text">Up to what age can a person learn something? What do you think?</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Interview):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Bist du früher gern zur Schule gegangen und welche Fächer mochtest du besonders?</span>
+                                <span class="english-text">Did you like going to school in the past and which subjects did you like in particular?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, meistens schon. Meine Lieblingsfächer waren Biologie und Kunst.</span>
+                                <span class="english-text">Yes, mostly. My favorite subjects were biology and art.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was war eigentlich dein Traumberuf als Kind?</span>
+                                <span class="english-text">What was actually your dream job as a child?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich wollte als Kind immer Tierarzt werden.</span>
+                                <span class="english-text">As a child, I always wanted to become a veterinarian.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Lernst du heute noch gern und was möchtest du später noch lernen?</span>
+                                <span class="english-text">Do you still like learning today and what would you like to learn later?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich lerne sehr gern. Gerade lerne ich Deutsch und später möchte ich noch Programmieren lernen.</span>
+                                <span class="english-text">I really like learning. Right now I am learning German and later I would like to learn programming.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Welche Sprachen hast du gelernt und hat der Unterricht Spaß gemacht?</span>
+                                <span class="english-text">Which languages did you learn and were the classes fun?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich habe in der Schule Englisch und Französisch gelernt. Ja, der Sprachunterricht hat mir immer viel Spaß gemacht.</span>
+                                <span class="english-text">I learned English and French in school. Yes, I always enjoyed the language classes a lot.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was meinst du, bis zu welchem Alter kann ein Mensch etwas lernen?</span>
+                                <span class="english-text">What do you think, up to what age can a person learn something?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich glaube, man kann ein Leben lang lernen, bis ins hohe Alter.</span>
+                                <span class="english-text">I believe one can learn for a lifetime, into old age.</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch (Thesen): Thesen zum Sprachenlernen Theses on language learning
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Stimmen Sie den folgenden Thesen zu? Diskutieren Sie in kleinen Gruppen und fassen Sie die Ergebnisse zusammen.</span>
+                                <span class="english-text">Do you agree with the following theses? Discuss in small groups and summarize the results.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Eine Fremdsprache, die man beherrscht, kann man nicht vergessen.</span>
+                                <span class="english-text">A foreign language that one has mastered cannot be forgotten.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wenn man vor dem Einschlafen lernt, kann man sich das Gelernte besser merken.</span>
+                                <span class="english-text">If one learns before falling asleep, one can remember what has been learned better.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es ist besser, einzelne Wörter zu lernen als ganze Sätze.</span>
+                                <span class="english-text">It is better to learn individual words than whole sentences.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Jeder lernt anders.</span>
+                                <span class="english-text">Everyone learns differently.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Passives Lernen ist effektiver als aktives Lernen.</span>
+                                <span class="english-text">Passive learning is more effective than active learning.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Regelmäßiges Wiederholen ist der Schlüssel zum erfolgreichen Lernen.</span>
+                                <span class="english-text">Regular repetition is the key to successful learning.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Interesse und Aufmerksamkeit spielen beim Lernen eine wichtige Rolle.</span>
+                                <span class="english-text">Interest and attention play an important role in learning.</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Diskussion der Thesen):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Stimmst du der These zu, dass man eine Fremdsprache nicht vergessen kann?</span>
+                                <span class="english-text">Do you agree with the thesis that one cannot forget a foreign language?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Also, ich glaube nicht, dass man eine Fremdsprache komplett vergessen kann, aber meiner Meinung nach vergisst man Vokabeln, wenn man sie nicht übt.</span>
+                                <span class="english-text">Well, I don't believe that one can completely forget a foreign language, but in my opinion one forgets vocabulary if one doesn't practice it.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das stimmt. Und wie ist es mit dem Lernen vor dem Einschlafen?</span>
+                                <span class="english-text">That's true. And what about learning before falling asleep?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, das kann sein. Ich habe irgendwo gelesen, dass das Gehirn im Schlaf arbeitet und man sich Dinge dann besser merken kann.</span>
+                                <span class="english-text">Yes, that can be. I read somewhere that the brain works during sleep and one can remember things better then.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich bin auch der Meinung, dass jeder anders lernt und dass regelmäßiges Wiederholen der Schlüssel zum Erfolg ist.</span>
+                                <span class="english-text">I am also of the opinion that everyone learns differently and that regular repetition is the key to success.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-5" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">5</span>
+                        Merken oder vergessen?
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch: Merken oder vergessen? Wie unser Gehirn funktioniert Remembering or forgetting? How our brain works
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">a Suchen Sie zuerst die folgenden Wörter im Wörterbuch: Gehirn, Gedächtnis, Speicherkapazität, Festplatte.</span>
+                                <span class="english-text">a First, look up the following words in the dictionary: Brain, memory, storage capacity, hard drive.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">b Diskutieren Sie in kleinen Gruppen.</span>
+                                <span class="english-text">b Discuss in small groups.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Haben Sie ein gutes Gedächtnis?</span>
+                                <span class="english-text">Do you have a good memory?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was können Sie sich einfach merken? Erinnern Sie sich zum Beispiel gut an Namen, Zahlen, Gesichter, Wörter in einer anderen Sprache, an Melodien oder Songtexte?</span>
+                                <span class="english-text">What can you remember easily? Do you remember, for example, names, numbers, faces, words in another language, melodies or song lyrics well?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was vergessen Sie schnell?</span>
+                                <span class="english-text">What do you forget quickly?</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Diskussion):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Hast du eigentlich ein gutes Gedächtnis?</span>
+                                <span class="english-text">Do you actually have a good memory?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich habe ein ziemlich gutes Gedächtnis. Ich kann mir Gesichter und Melodien sehr einfach merken.</span>
+                                <span class="english-text">Yes, I have a pretty good memory. I can remember faces and melodies very easily.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wirklich? Ich vergesse Namen immer extrem schnell. Aber Zahlen und Songtexte bleiben lange in meinem Kopf.</span>
+                                <span class="english-text">Really? I always forget names extremely quickly. But numbers and song lyrics stay in my head for a long time.</span>
+                            </div>
+                            <div id="sec-6" class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md scroll-mt-12">
+                                Teil 5: Lesetext „Unser Gehirn“
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch: Unser Gehirn Our brain
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wissen Sie noch, was Sie in der Schulzeit im Fach Chemie gelernt haben?</span>
+                                <span class="english-text">Do you still know what you learned in chemistry class during your school days?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wenn Sie kein Chemiker sind, können Sie sich wahrscheinlich an die meisten chemischen Formeln nicht mehr erinnern.</span>
+                                <span class="english-text">If you are not a chemist, you probably cannot remember most of the chemical formulas anymore.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ihr Gehirn hat sie wieder gelöscht, weil Sie die Formeln nach der Schulzeit nicht mehr benötigt haben.</span>
+                                <span class="english-text">Your brain has deleted them again because you no longer needed the formulas after your school days.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Auch andere gelernte Fakten aus Wissenschaft, Gesellschaft oder Technik sind vermutlich in Vergessenheit geraten.</span>
+                                <span class="english-text">Other learned facts from science, society, or technology have also presumably been forgotten.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Informationen, die wir mit Interesse aufnehmen, kommen normalerweise ins Kurzzeitgedächtnis.</span>
+                                <span class="english-text">Information that we take in with interest normally enters the short-term memory.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das Kurzzeitgedächtnis hat nur eine begrenzte Speicherkapazität und muss deshalb 90 Prozent der Informationen wieder entfernen.</span>
+                                <span class="english-text">The short-term memory has only a limited storage capacity and therefore has to remove 90 percent of the information again.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Nur die Informationen, die wir als wichtig bewerten, gelangen ins Langzeitgedächtnis.</span>
+                                <span class="english-text">Only the information that we evaluate as important reaches the long-term memory.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Aber auch dort ist das Gespeicherte nicht sicher.</span>
+                                <span class="english-text">But even there, what is stored is not safe.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Um das Gehirn vor einer Datenflut zu schützen, überschreibt das Langzeitgedächtnis nicht mehr gebrauchte Daten mit neuen Daten.</span>
+                                <span class="english-text">To protect the brain from a flood of data, the long-term memory overwrites data that is no longer needed with new data.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das funktioniert ungefähr so wie mit einer Computerfestplatte.</span>
+                                <span class="english-text">That works roughly like a computer hard drive.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die alten Informationen verschwinden dann aus dem Gedächtnis.</span>
+                                <span class="english-text">The old information then disappears from memory.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Doch wie schaffen wir es beim Erlernen einer Fremdsprache, neuen Wortschatz nicht gleich wieder zu vergessen und bestmögliche Lernerfolge zu erzielen?</span>
+                                <span class="english-text">But how do we manage, when learning a foreign language, not to forget new vocabulary right away and to achieve the best possible learning success?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sicher ist, dass am Anfang Interesse und Aufmerksamkeit stehen müssen, damit die Wörter überhaupt im Kurzzeitgedächtnis ankommen.</span>
+                                <span class="english-text">It is certain that interest and attention must be there at the beginning so that the words even arrive in the short-term memory.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Um von dort den Weg ins Langzeitgedächtnis zu finden und im Langzeitgedächtnis zu bleiben, müssen wir die Wörter in regelmäßigen Abständen wiederholen.</span>
+                                <span class="english-text">To find the way from there into the long-term memory and to stay in the long-term memory, we must repeat the words at regular intervals.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die ersten Wiederholungen sollten kurz nach der Aufnahme neuer Informationen beginnen (innerhalb einer Stunde und innerhalb eines Tages).</span>
+                                <span class="english-text">The first repetitions should begin shortly after taking in new information (within an hour and within a day).</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Untersuchungen haben ergeben, dass aktives Lernen effektiver ist als passives.</span>
+                                <span class="english-text">Studies have shown that active learning is more effective than passive learning.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es aktiviert die Verbindungen im Gehirn und sorgt für eine langfristige Speicherung.</span>
+                                <span class="english-text">It activates the connections in the brain and ensures long-term storage.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Deshalb ist es besser, selbst Sätze zu formulieren, als sie nur zu lesen.</span>
+                                <span class="english-text">Therefore it is better to formulate sentences yourself than just to read them.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Als besonders effektiv gilt das Lernen direkt vor dem Einschlafen.</span>
+                                <span class="english-text">Learning right before falling asleep is considered particularly effective.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Im Schlaf verarbeitet das Gehirn die Ereignisse des Tages und übernimmt wichtige Informationen ins Langzeitgedächtnis.</span>
+                                <span class="english-text">During sleep, the brain processes the events of the day and transfers important information into the long-term memory.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Für das Gehirn ist es übrigens einfacher, Sätze oder Wortverbindungen zu speichern als einzelne Wörter.</span>
+                                <span class="english-text">By the way, it is easier for the brain to store sentences or word combinations than individual words.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Aber nicht alle Menschen lernen auf die gleiche Weise.</span>
+                                <span class="english-text">But not all people learn in the same way.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Manche Lerner merken sich neue Wörter am besten durch Markieren oder Schreiben, andere bevorzugen lautes Lesen oder Hören.</span>
+                                <span class="english-text">Some learners remember new words best by highlighting or writing, others prefer reading aloud or listening.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Jeder sollte seinen eigenen Weg finden und verschiedene Möglichkeiten des Lernens und Wiederholens nutzen.</span>
+                                <span class="english-text">Everyone should find their own way and use different possibilities of learning and repeating.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Denn in der Kommunikation können wir nur auf die Wörter und Strukturen zurückgreifen, an die wir uns erinnern.</span>
+                                <span class="english-text">Because in communication we can only fall back on the words and structures that we remember.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-7" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">7</span>
+                        Diskussion & Interview
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch: Diskussion: Lernerfahrungen Discussion: Learning experiences
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Diskutieren Sie mit anderen Kursteilnehmern und berichten Sie anschließend.</span>
+                                <span class="english-text">Discuss with other course participants and report afterwards.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie lernen Sie am besten?</span>
+                                <span class="english-text">How do you learn best?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Welche positiven/negativen Erfahrungen haben Sie beim Lernen gemacht?</span>
+                                <span class="english-text">What positive/negative experiences have you had while learning?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was kann man alleine (im Selbststudium) lernen, was sollte man mit anderen zusammen lernen?</span>
+                                <span class="english-text">What can one learn alone (in self-study), what should one learn together with others?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Haben Sie einen Geheimtipp, wie man am besten lernt?</span>
+                                <span class="english-text">Do you have a secret tip on how to learn best?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Schreiben Sie Ihre Meinung an die Online-Redaktion der Zeitschrift „Heute“, die Tipps zum Sprachenlernen veröffentlichen will. Schreiben Sie etwa 80 Wörter.</span>
+                                <span class="english-text">Write your opinion to the online editorial team of the magazine "Heute", which wants to publish tips on language learning. Write about 80 words.</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Diskussion):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie lernst du eigentlich am besten?</span>
+                                <span class="english-text">How do you actually learn best?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich lerne am besten, wenn ich mir Notizen mache und alles farbig markiere. Visuelles Lernen hilft mir sehr.</span>
+                                <span class="english-text">I learn best when I take notes and highlight everything in color. Visual learning helps me a lot.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Meine positivste Erfahrung war, als ich mit Karteikarten gelernt habe. Vokabeln merke ich mir so am schnellsten.</span>
+                                <span class="english-text">My most positive experience was when I studied with flashcards. I remember vocabulary fastest that way.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Negative Erfahrungen mache ich oft, wenn es zu laut ist. Ich brauche absolute Ruhe zum Lernen.</span>
+                                <span class="english-text">I often have negative experiences when it is too loud. I need absolute silence to study.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Was denkst du, sollte man alleine lernen und was besser in der Gruppe?</span>
+                                <span class="english-text">What do you think one should learn alone and what is better in a group?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Grammatik und Vokabeln kann man gut alleine im Selbststudium lernen. Aber das freie Sprechen sollte man unbedingt mit anderen zusammen üben.</span>
+                                <span class="english-text">Grammar and vocabulary can be learned well alone in self-study. But free speaking should definitely be practiced together with others.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Hast du einen Geheimtipp für mich?</span>
+                                <span class="english-text">Do you have a secret tip for me?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mein Geheimtipp ist: Filme in der Zielsprache mit Untertiteln schauen! Das trainiert das Hörverstehen enorm.</span>
+                                <span class="english-text">My secret tip is: Watch movies in the target language with subtitles! That trains listening comprehension enormously.</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Text für die Zeitschrift „Heute“):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Liebe Redaktion,</span>
+                                <span class="english-text">Dear editorial team,</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">meiner Meinung nach ist der beste Tipp zum Sprachenlernen, die Sprache aktiv in den Alltag zu integrieren.</span>
+                                <span class="english-text">in my opinion, the best tip for language learning is to actively integrate the language into everyday life.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Man sollte keine Angst davor haben, Fehler machen.</span>
+                                <span class="english-text">One should not be afraid of making mistakes.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mir hilft es sehr, fremdsprachige Musik zu hören oder Serien im Originalton zu schauen.</span>
+                                <span class="english-text">It helps me a lot to listen to foreign-language music or watch series in the original language.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Außerdem ist es wichtig, regelmäßig zu üben, am besten jeden Tag 15 Minuten, statt nur einmal pro Woche stundenlang zu lernen.</span>
+                                <span class="english-text">Furthermore, it is important to practice regularly, ideally 15 minutes every day, instead of studying for hours only once a week.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ein Tandempartner ist auch eine tolle Möglichkeit, um das freie Sprechen zu trainieren.</span>
+                                <span class="english-text">A tandem partner is also a great opportunity to practice free speaking.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Viele Grüße</span>
+                                <span class="english-text">Many greetings</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Partnerinterview: Weiterbildung (Bild 198)
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch: Partnerinterview: Weiterbildung Partner interview: Further education
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sprechen Sie mit Ihrer Partnerin/Ihrem Partner und notieren Sie die Antworten. Berichten Sie anschließend.</span>
+                                <span class="english-text">Speak with your partner and note the answers. Report afterwards.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Welche Institutionen (z. B. Volkshochschulen, staatliche Organisationen, private Institutionen) bieten in Ihrem Land Weiterbildungen für Erwachsene an?</span>
+                                <span class="english-text">Which institutions (e.g., adult education centers, state organizations, private institutions) offer further education for adults in your country?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie teuer sind Sprachkurse oder Kurse zur beruflichen Weiterbildung (z. B. zu neuen Computerprogrammen oder zum Projektmanagement)?</span>
+                                <span class="english-text">How expensive are language courses or courses for professional further education (e.g., on new computer programs or project management)?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">An welchen Weiterbildungskursen haben Sie schon teilgenommen? Was haben Sie gelernt? Haben die Kurse Spaß gemacht?</span>
+                                <span class="english-text">Which further education courses have you already participated in? What did you learn?Were the courses fun?</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Interview):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Gibt es in deinem Heimatland viele Angebote für die Erwachsenenbildung?</span>
+                                <span class="english-text">Are there many offers for adult education in your home country?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, es gibt staatliche Universitäten, die Abendkurse anbieten, und viele private Sprachschulen.</span>
+                                <span class="english-text">Yes, there are state universities that offer evening courses, and many private language schools.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Wie teuer sind solche Kurse ungefähr?</span>
+                                <span class="english-text">How expensive are such courses approximately?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Private Computerkurse sind oft sehr teuer, manchmal mehrere Hundert Euro. Sprachkurse an staatlichen Instituten sind günstiger.</span>
+                                <span class="english-text">Private computer courses are often very expensive, sometimes several hundred euros. Language courses at state institutes are cheaper.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Hast du selbst schon mal an einer Weiterbildung teilgenommen?</span>
+                                <span class="english-text">Have you ever participated in further education yourself?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, ich habe letztes Jahr einen Kurs für Projektmanagement gemacht. Ich habe viel über Teamorganisation gelernt und es hat großen Spaß gemacht.</span>
+                                <span class="english-text">Yes, I took a project management course last year. I learned a lot about team organization and it was a lot of fun.</span>
+                            </div>
+                            <div id="sec-8" class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md scroll-mt-12">
+                                Bildung für alle: Lesetexte A & B (Bild 199)
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text A: Was sind Volkshochschulen? Text A: What are adult education centers?
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Volkshochschulen (VHS) sind in Deutschland die bekanntesten Einrichtungen der Erwachsenenbildung.</span>
+                                <span class="english-text">Adult education centers (VHS) are the best-known institutions for adult education in Germany.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Es handelt sich bei den Volkshochschulen aber nicht um Hochschulen oder Universitäten, die zu einem akademischen Abschluss führen.</span>
+                                <span class="english-text">However, adult education centers are not higher education institutions or universities that lead to an academic degree.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Volkshochschulen bieten Kurse oder Vorträge für Personen ab 16 Jahren an.</span>
+                                <span class="english-text">Adult education centers offer courses or lectures for persons aged 16 and over.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das Kursangebot ist sehr vielfältig.</span>
+                                <span class="english-text">The course offering is very diverse.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Man kann z. B. Kurse für die berufliche Weiterbildung oder für die eigene Freizeitgestaltung besuchen.</span>
+                                <span class="english-text">One can, for example, attend courses for professional further education or for one's own leisure activities.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Auch einen Schulabschluss wie die mittlere Reife oder das Abitur können Interessierte nachholen.</span>
+                                <span class="english-text">Interested parties can also catch up on a school leaving certificate such as the intermediate secondary school certificate or the high school diploma.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Insgesamt nutzen das Angebot der Volkshochschulen jährlich ca. neun Millionen Menschen.</span>
+                                <span class="english-text">In total, approximately nine million people use the offerings of the adult education centers annually.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Idee der Volkshochschulen entwickelte Nikolai Frederik Severin Grundtvig in Dänemark.</span>
+                                <span class="english-text">The idea of the adult education centers was developed by Nikolai Frederik Severin Grundtvig in Denmark.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Er wollte, dass sich alle Bürger bilden können, und gründete 1844 in Rødding die erste Volkshochschule der Welt.</span>
+                                <span class="english-text">He wanted all citizens to be able to educate themselves and founded the world's first adult education center in Rødding in 1844.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Als erste Volkshochschule in Deutschland gilt die Humboldt-Akademie in Berlin.</span>
+                                <span class="english-text">The Humboldt Academy in Berlin is considered the first adult education center in Germany.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Hier fanden ab 1879 Vorträge für alle Bürger statt.</span>
+                                <span class="english-text">Lectures for all citizens took place here from 1879 onwards.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Neue wissenschaftliche Erkenntnisse wurden in einfacher Sprache präsentiert.</span>
+                                <span class="english-text">New scientific findings were presented in simple language.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die erste österreichische Volkshochschule war der 1887 von Eduard Leisching gegründete Volksbildungsverein in Margareten.</span>
+                                <span class="english-text">The first Austrian adult education center was the Volksbildungsverein (Adult Education Association) in Margareten, founded by Eduard Leisching in 1887.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">In der Schweiz entstand 1900 eine ähnliche Institution in Genf.</span>
+                                <span class="english-text">In Switzerland, a similar institution was established in Geneva in 1900.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mittlere Reife: Schulabschluss der Realschule.</span>
+                                <span class="english-text">Mittlere Reife: School leaving certificate of the secondary modern school.</span>
+                            </div>
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Text B: Volkshochschulen im Test Text B: Adult education centers in the test
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Heute zählt der Deutsche Volkshochschulverband rund 900 Volkshochschulen.</span>
+                                <span class="english-text">Today, the German Adult Education Association counts around 900 adult education centers.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ihr Auftrag, ein Bildungsangebot für die gesamte Bevölkerung zu unterbreiten, wird von den Gemeinden finanziell unterstützt.</span>
+                                <span class="english-text">Their mandate to provide an educational offering for the entire population is financially supported by the municipalities.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Doch weil den Gemeinden immer weniger Geld für Bildung zur Verfügung steht, müssen die Volkshochschulen mehr auf Wirtschaftlichkeit achten.</span>
+                                <span class="english-text">But because municipalities have less and less money available for education, adult education centers must pay more attention to economic efficiency.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der Geldmangel wirkt sich auch auf die Ausstattung der Klassenräume aus.</span>
+                                <span class="english-text">The lack of money also affects the equipment of the classrooms.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Organisation „Stiftung Warentest“ untersuchte vier große Anbieter im Bereich berufliche Weiterbildung.</span>
+                                <span class="english-text">The organization "Stiftung Warentest" examined four large providers in the field of professional further education.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Die Testpersonen kritisierten altes Mobiliar oder fehlende technische Geräte in den Volkshochschulen.</span>
+                                <span class="english-text">The test subjects criticized old furniture or missing technical equipment in the adult education centers.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Gute und sehr gute Resultate erzielten die Volkshochschulen im Bereich Unterricht und beim Preis-Leistungs-Verhältnis.</span>
+                                <span class="english-text">The adult education centers achieved good and very good results in the area of teaching and in the price-performance ratio.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Eine 45-minütige Unterrichtsstunde kostet im Schnitt fünf Euro, kommerzielle Unternehmen verlangen mit durchschnittlich 47 Euro fast das Zehnfache.</span>
+                                <span class="english-text">A 45-minute lesson costs an average of five euros; commercial companies charge an average of 47 euros, almost ten times as much.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Insgesamt kommen die Autoren der Studie zu dem Ergebnis, dass berufliche Weiterbildung an Volkshochschulen nicht schlechter, aber deutlich preiswerter ist als bei der Konkurrenz.</span>
+                                <span class="english-text">Overall, the authors of the study come to the conclusion that professional further education at adult education centers is not worse, but significantly cheaper than at the competition.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das zeigt, dass Volkshochschulen ihren Auftrag immer noch erfüllen.</span>
+                                <span class="english-text">That shows that adult education centers are still fulfilling their mandate.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">„Stiftung Warentest“: staatlich geförderte Organisation, die Waren und Dienstleistungen testet.</span>
+                                <span class="english-text">"Stiftung Warentest": state-funded organization that tests goods and services.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-10" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">10</span>
+                        Kurse an der Volkshochschule (Bild 200)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch: Kurse an der Volkshochschule Courses at the adult education center
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sie möchten an einem Kurs der Volkshochschule teilnehmen. In den folgenden Kursen gibt es noch freie Plätze.</span>
+                                <span class="english-text">You would like to participate in a course at the adult education center. There are still free places in the following courses.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Montag: Chinesisch für Anfänger, Bewerben Sie sich richtig!</span>
+                                <span class="english-text">Monday: Chinese for beginners, Apply correctly!</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Dienstag: Lernen Sie zeichnen!, Kunstgeschichte des 20. Jahrhunderts</span>
+                                <span class="english-text">Tuesday: Learn to draw!, Art history of the 20th century</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mittwoch: Tanzen macht fit!, Statistik</span>
+                                <span class="english-text">Datenanalyse Teil 1 – Wednesday: Dancing makes you fit!, Statistics – Data analysis part 1</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Donnerstag: Business Englisch, Rhetorik</span>
+                                <span class="english-text">Freies Sprechen, Pasta, Pasta! Kochkurs mit italienischen Gerichten – Thursday: Business English, Rhetoric – Free speaking, Pasta, Pasta! Cooking class with Italian dishes</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Freitag: Kreatives Schreiben</span>
+                                <span class="english-text">Friday: Creative writing</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-11" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">11</span>
+                        Simulation (Diskussion der Kurse)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 mt-4 rounded-t-md">
+                                Diskutieren Sie mit Ihrer Partnerin/Ihrem Partner. – Discuss with your partner.
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Für welchen Kurs entscheiden Sie sich? Welchen Kurs finden Sie nicht so interessant? Begründen Sie kurz Ihre Meinung.</span>
+                                <span class="english-text">Which course do you choose? Which course do you find not so interesting? Briefly justify your opinion.</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Diskussion der Kurse):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Für welchen Kurs entscheidest du dich?</span>
+                                <span class="english-text">Which course are you choosing?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich wollte schon immer italienisch kochen lernen, darum entscheide ich mich für den Kochkurs „Pasta, Pasta!“ am Donnerstag.</span>
+                                <span class="english-text">I have always wanted to learn to cook Italian, therefore I am choosing the cooking class "Pasta, Pasta!" on Thursday.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das klingt lecker! Mich interessiert der Kurs „Kreatives Schreiben“ am Freitag, denn ich schreibe in meiner Freizeit gerne kurze Geschichten.</span>
+                                <span class="english-text">That sounds delicious! I am interested in the course "Creative writing" on Friday, because I like to write short stories in my free time.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Welchen Kurs findest du nicht so interessant?</span>
+                                <span class="english-text">Which course do you find not so interesting?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ich finde den Kurs über Statistik total uninteressant, weil ich nicht gerne mit Zahlen arbeite.</span>
+                                <span class="english-text">I find the course on statistics totally uninteresting because I don't like working with numbers.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Da stimme ich dir zu. Ich möchte mehr über Kunst erfahren, deshalb finde ich die Kunstgeschichte viel spannender.</span>
+                                <span class="english-text">I agree with you there. I would like to learn more about art, therefore I find art history much more exciting.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-9" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">9</span>
+                        Bitte um Informationen
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Text aus dem Buch: Bitte um Informationen Request for information
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ihr Chef möchte, dass Sie Spanisch lernen, weil Ihre Firma demnächst mit Firmen in Spanien kooperieren möchte. Für Sie bieten sich jetzt gute Aufstiegschancen.</span>
+                                <span class="english-text">Your boss wants you to learn Spanish because your company wants to cooperate with companies in Spain soon. Good career advancement opportunities are now presenting themselves to you.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Rufen Sie in der VHS an und fragen Sie nach einem möglichen Kurs.</span>
+                                <span class="english-text">Call the VHS and ask about a possible course.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Erkundigen Sie sich nach: Kursbeginn, Kursdauer, Unterrichtszeit, Preis, Ermäßigung, Prüfung, Teilnehmerzahl.</span>
+                                <span class="english-text">Inquire about: Course start, course duration, class time, price, discount, exam, number of participants.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Schreiben Sie eine E-Mail an die VHS und bitten Sie um Informationen.</span>
+                                <span class="english-text">Write an email to the VHS and ask for information.</span>
+                            </div>
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (Telefongespräch):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Volkshochschule Zentrum, guten Tag. Was kann ich für Sie tun?</span>
+                                <span class="english-text">Adult education center center, good day. What can I do for you?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Guten Tag, mein Name ist Müller. Ich interessiere mich für einen Spanischkurs für Anfänger. Wann ist denn der Kursbeginn?</span>
+                                <span class="english-text">Good day, my name is Müller. I am interested in a Spanish course for beginners. When is the course start?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der nächste Kurs beginnt am 5. Oktober.</span>
+                                <span class="english-text">The next course starts on October 5th.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Und wie lange ist die Kursdauer und wann ist die Unterrichtszeit?</span>
+                                <span class="english-text">And how long is the course duration and when is the class time?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der Kurs dauert drei Monate. Der Unterricht ist immer dienstags und donnerstags von 18 bis 19:30 Uhr.</span>
+                                <span class="english-text">The course lasts three months. The classes are always on Tuesdays and Thursdays from 6 PM to 7:30 PM.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Das passt gut. Wie hoch ist der Preis für den Kurs und gibt es eine Ermäßigung?</span>
+                                <span class="english-text">That fits well. How high is the price for the course and is there a discount?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Der Preis beträgt 120 Euro. Studenten und Arbeitslose bekommen eine Ermäßigung von 20 Prozent.</span>
+                                <span class="english-text">The price is 120 euros. Students and unemployed people get a discount of 20 percent.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Gibt es am Ende eine offizielle Prüfung? Und wie groß ist die Teilnehmerzahl?</span>
+                                <span class="english-text">Is there an official exam at the end? And how large is the number of participants?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Ja, es gibt einen Abschlusstest. Die Teilnehmerzahl ist auf maximal 15 Personen begrenzt.</span>
+                                <span class="english-text">Yes, there is a final test. The number of participants is limited to a maximum of 15 people.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Vielen Dank für die Informationen!</span>
+                                <span class="english-text">Thank you very much for the information!</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="sec-12" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center mt-12">
+                        <span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">12</span>
+                        Simulation (E-Mail an die VHS)
+                    </h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+                        <div class="p-5 grid grid-cols-1 gap-4">
+                            <div class="col-span-full bg-brand-50 px-5 py-3 border-b border-brand-100 font-bold text-brand-800 mt-4 rounded-md">
+                                Simulation (E-Mail an die VHS):
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Sehr geehrte Damen und Herren,</span>
+                                <span class="english-text">Dear Sir or Madam,</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">ich interessiere mich für einen Spanischkurs für Anfänger.</span>
+                                <span class="english-text">I am interested in a Spanish course for beginners.</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Könnten Sie mir bitte Informationen zu Kursbeginn, Dauer und Preis schicken?</span>
+                                <span class="english-text">Could you please send me information about the course start, duration and price?</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Mit freundlichen Grüßen</span>
+                                <span class="english-text">Yours sincerely</span>
+                            </div>
+                            <div class="border-b border-gray-50 pb-3">
+                                <span class="font-semibold text-gray-800">Müller</span>
+                                <span class="english-text">Müller</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Kapitel 4. Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mainScrollArea = document.getElementById('main-scroll-area');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    // Cache sectionTop calculations to avoid forced reflow
+                    // Actually reading offsetTop is cheap if no layout changed,
+                    // but the throttling will prevent freezing anyway.
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, span.font-semibold, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons, tooltips, or english translations)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i' || el.classList.contains('english-text')) {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.parentElement.classList.contains('english-text') ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free public MyMemory Translation API
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        
+                        // Minor cleanup of the API response
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                             translation = "[No trans]"; // Indicate if it couldn't find a diff word
+                        }
+                        
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+        });
+    </script>
+</body>
+</html>

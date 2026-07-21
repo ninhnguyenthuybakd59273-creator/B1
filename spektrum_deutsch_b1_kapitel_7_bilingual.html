@@ -1,0 +1,1181 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 7: Wie wir leben - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        .translatable-word {
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .translatable-word:hover {
+            background-color: #ccfbf1;
+            color: #0f766e;
+            border-radius: 2px;
+        }
+
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            user-select: none;
+            -webkit-user-select: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    
+        .english-text {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Spektrum Deutsch
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 7: Wie wir leben</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li><a href="#intro" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-house w-5 text-center mr-2 text-gray-400"></i> Einleitung (S. 138)</a></li>
+                <li><a href="#teil-a" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-user w-5 text-center mr-2 text-gray-400"></i> Teil A (Namen, Beruf...)</a></li>
+                <li><a href="#teil-b" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-car w-5 text-center mr-2 text-gray-400"></i> Teil B (Familie, Mobilität...)</a></li>
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Aufgaben</li>
+                <li><a href="#aufgabe-1" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 1: Gruppenarbeit</a></li>
+                <li><a href="#aufgabe-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 2: Interview</a></li>
+                <li><a href="#aufgabe-5" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 5 & 6</a></li>
+                <li><a href="#aufgabe-7" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 7: Herausforderungen</a></li>
+                <li><a href="#aufgabe-8" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 8: Gepflogenheiten</a></li>
+                <li><a href="#aufgabe-9" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 9: Transkription</a></li>
+                <li><a href="#aufgabe-12" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 12 & 13</a></li>
+                <li><a href="#aufgabe-15" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm">Aufgabe 15 & 16: Smalltalk</a></li>
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Musterantworten</li>
+                <li><a href="#smalltalk-praxis" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> Smalltalk Situationen</a></li>
+                <li><a href="#email-tipps" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-envelope w-5 text-center mr-2 text-gray-400"></i> E-Mails & B1 Tipps</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 7: Wie wir leben</h1>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-4xl mx-auto space-y-12 pb-20">
+                
+                <!-- Title Block -->
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Extrahierte Texte (Verbatim)</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 7: Wie wir leben</h1>
+                    <p class="text-xl text-gray-600">Wohnformen, Nachbarschaft, Lebensstile und Relativsätze</p>
+                </div>
+
+                <section id="intro" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 pb-2 border-b">Seite 138 – Wie wir leben: Ein Blick auf den deutschen Durchschnittsbürger</h2>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            In Deutschland leben rund 82,5 Millionen Menschen. Sie sehen unterschiedlich aus, haben unterschiedliche Charaktereigenschaften, Vorlieben und Lebensgewohnheiten.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            In der Fernsehdokumentation „Deutschland – Wie wir leben“ berichtete das Zweite Deutsche Fernsehen (ZDF) mithilfe von Zahlen, Fakten und geschichtlichen Hintergründen über ein durchschnittliches Leben in Deutschland, bei dem der Fokus nicht auf den Unterschieden, sondern auf den Gemeinsamkeiten liegt. Im Mittelpunkt der Dokumentation steht der Durchschnittsbürger Thomas Müller, dem laut Statistik viele Deutsche teilen.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="teil-a" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">A</span> Teil A</h2>
+                    <div class="grid grid-cols-1 gap-6">
+                        
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3"><i class="fa-solid fa-address-card text-brand-500 mr-2"></i>Namen</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Unser Durchschnittsbürger trägt den Namen Thomas Müller. Thomas ist der häufigste männliche Vorname, bei den weiblichen Vornamen steht Sabine an erster Stelle. Der Name Müller ist der häufigste Nachname. Nachnamen verraten in Deutschland viel über die Vorfahren. Es gibt vier große Gruppen: 1. Vornamen, die auch als Nachnamen verwendet werden (Herr Werner), 2. Herkunftsnamen (Herr Merseburger aus Merseburg), 3. Übernamen, die etwas über eine Person aussagen (Herr Groß, Herr Klein) und 4. Berufsnamen (Herr Schneider, Herr Weber). Einen Müller, der in einer Mühle Mehl herstellte, brauchte man in jedem Ort, deshalb ist Müller der häufigste Nachname.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3"><i class="fa-solid fa-briefcase-medical text-brand-500 mr-2"></i>Beruf und Gesundheit</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Thomas steht jeden Morgen um 6.23 Uhr auf und arbeitet in einem Büro (33 Prozent der Deutschen). Im Büro erscheint er pünktlich und erledigt seine Arbeit korrekt und zuverlässig. Allerdings ist Thomas nicht immer motiviert und macht oft Dienst nach Vorschrift. Ursprünglich wollte er etwas ganz anderes werden, sein Kindheitstraum war Fußballprofi. Als moderner Büromensch bewegt sich Thomas zu wenig. Er leidet unter Rückenschmerzen. Außerdem hat er Probleme mit den Gelenken und dem Herz-Kreislauf-System.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3"><i class="fa-solid fa-coins text-brand-500 mr-2"></i>Geld</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Thomas verdient 3 391 Euro brutto im Monat. Am liebsten bezahlt er mit Bargeld und nicht mit Bankkarten. Thomas geht vorsichtig mit seinem Geld um, er mag stabile finanzielle Verhältnisse und hasst Unsicherheit und Instabilität. Deshalb lebt er sparsam, macht vieles selbst und sucht immer nach dem günstigsten Angebot. Bei der Anzahl der Baumärkte und Discounter ist Deutschland in Europa führend.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3"><i class="fa-solid fa-house-chimney text-brand-500 mr-2"></i>Wohnen</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Thomas wohnt in einer 90 Quadratmeter großen Mietwohnung. Sein Lieblingszimmer, das Wohnzimmer, ist ausgestattet mit einer Couch, einem Tisch, einem Fernseher, einer Schrankwand, Stehlampen und Pflanzen. Seine Schränke sind voll, denn Thomas sammelt gern und kann nichts wegwerfen. Auch von seinen alten Mobiltelefonen, die nicht mehr funktionieren, kann er sich nicht trennen. Ganz oben auf seiner Wunschliste steht das Eigenheim. Davon träumt er so lange, bis er irgendwann einen Kredit aufnimmt und für sich, seine Kinder und seine Enkel ein Haus baut. Am Ende seines Lebens wird Thomas ein Vermögen im Wert von 195 000 Euro vererben. Damit liegt er im europäischen Vergleich nicht auf den vordersten Plätzen.
+                            </p>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="teil-b" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span class="bg-brand-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">B</span> Teil B</h2>
+                    <div class="grid grid-cols-1 gap-6">
+                        
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Familie</h3>
+                            <p class="text-gray-600 text-sm">Für Thomas hat die Familie einen besonderen Stellenwert. Auf seiner Werteskala liegt sie vor Freunden, dem Beruf und Hobbys.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Mobilität</h3>
+                            <p class="text-gray-600 text-sm">Thomas liebt sein Auto und fährt gern schnell, manchmal zu schnell. Deshalb hat er zwei Strafpunkte beim Kraftfahrt-Bundesamt in Flensburg, wo alle Verkehrssünder registriert werden. Am Tag legt er mit seinem Auto 46 km zurück, im Jahr 16 744 km. Sein Auto hat für Thomas die Funktion eines Wohnzimmers, weil er sehr viel Zeit darin verbringt. In seinem Leben wird er 9,8 Fahrzeuge besitzen und sechs Monate im Stau stehen. Obwohl Thomas selbst viel und gern Auto fährt, fühlt er sich durch den Straßenlärm genervt.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Heimat</h3>
+                            <p class="text-gray-600 text-sm">Das Zentrum im Leben von Thomas ist sein Zuhause. Er lebt noch in der gleichen Region, in der er aufgewachsen ist. Hier tankt er Ruhe und Kraft. In seinem Leben wird er nur viermal seine Adresse ändern, im europäischen Vergleich ist das nicht die Bedeutung der Heimat unter anderem in geschichtlichen Ereignissen begründet. Durch verschiedene Kriege ist die Heimat im Bewusstsein der Deutschen zu einem bedrohten Gut geworden.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Natur</h3>
+                            <p class="text-gray-600 text-sm">Thomas ist Romantiker und hat eine große Liebe zur Natur. Er glaubt, dass er (wie 91 Prozent der Deutschen) die Natur schützen muss, und engagiert sich für den Umweltschutz. Der Wald in seiner Umgebung ist sein liebster Erholungsort und das Wandern. Die Wanderwege in Deutschland sind zusammengerechnet fast so lang wie das gesamte Straßennetz. Sie sind gut ausgebaut und haben viele Hinweisschilder, damit Thomas den Weg nach Hause wiederfindet.<br><br>Thomas hat große Angst vor Wetterextremen und Naturkatastrophen, obwohl es in Deutschland im Vergleich zu anderen Ländern nicht viele Naturkatastrophen gibt. Der deutsche Wetterdienst sammelt seit 1881 lückenlos jeden Tag Wetterdaten und hat damit die umfassendste Wetterdatensammlung der Welt.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 ">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Eigenschaften</h3>
+                            <p class="text-gray-600 text-sm mb-4">Thomas mag Ordnung, weil ihm Ordnung das Gefühl der Sicherheit gibt. Er ist pflichtbewusst und 84,4 Prozent der Deutschen sind pünktlich. Scheinbar gehören Ordnung und Deutschland zusammen. Doch das war nicht immer so. Bis ins 18. Jahrhundert galten die Deutschen als chaotische Lebemänner. Sie waren feierfreudig und in allen Lebenslagen locker. Das änderte sich erst mit dem Aufstieg Preußens im 19. Jahrhundert.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                    <li><strong>b</strong> Fassen Sie den Inhalt der Punkte für Ihre Partnerin/Ihren Partner zusammen. Berichten Sie. Was hat Sie überrascht? Was haben Sie erwartet?</li>
+                                    <li><strong>c</strong> Vergleichen Sie die Fakten aus dem Text mit Ihren Antworten in Aufgabe 1. Sehen Sie Gemeinsamkeiten zwischen sich und Thomas? Wo gibt es Unterschiede?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="aufgabe-1" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-t-4 border-t-brand-500 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 1 – Gruppenarbeit: Wie wir leben</h2>
+                            <p class="text-sm text-gray-600 mt-1">a Was trifft auf Sie zu, was nicht? Berichten Sie und diskutieren Sie in kleinen Gruppen.</p>
+                        </div>
+                        <div class="p-6">
+                            <ul class="grid grid-cols-1 gap-x-8 gap-y-3 text-sm text-gray-700 list-none">
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">1.</span> Ich arbeite in einem Büro.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">2.</span> Ich mache meine Arbeit nicht wirklich gern.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">3.</span> Als Kind hatte ich andere Berufswünsche.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">4.</span> Ich bewege mich zu wenig.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">5.</span> Ich stehe mit dem Auto oft im Stau.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">6.</span> Wenn ich Auto fahre, fahre ich manchmal zu schnell.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">7.</span> Straßenlärm nervt mich.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">8.</span> Ich lebe noch in der gleichen Region, in der ich aufgewachsen bin.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">9.</span> Ich engagiere mich für den Umweltschutz.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">10.</span> Ich wandere sehr gern.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">11.</span> Ich habe große Angst vor Wetterextremen und Naturkatastrophen.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">12.</span> Ich mag Ordnung und Pünktlichkeit.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">13.</span> Ich zahle am liebsten mit Bargeld.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">14.</span> Ich gehe vorsichtig mit Geld um.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">15.</span> Ich bin ein guter Heimwerker.</li>
+                                <li class="flex items-start"><span class="text-brand-500 mr-2 font-bold">16.</span> Es fällt mir schwer, mich von alten Sachen zu trennen.</li>
+                            </ul>
+
+                            <div class="mt-8">
+                                <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Zu Aufgabe 1: Simulierte Gruppendiskussion</h4>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Bei mir arbeite ich zwar im Büro, aber als Kind wollte ich eigentlich Pilot werden, kein Bürojob!</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Interessant, bei mir war es Fußballprofi. Aber ich stehe leider fast täglich im Stau, das nervt total.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Bei mir stört mich eher der Straßenlärm zu Hause, deshalb engagiere ich mich auch für den Umweltschutz.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-2" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 2 – Interview: Ideen und Kreativität</h2>
+                            <p class="text-sm text-gray-600 mt-1">Interviewen Sie zwei Kursteilnehmer und berichten Sie anschließend über die Ergebnisse.</p>
+                        </div>
+                        <div class="p-6">
+                            <ul class="list-disc pl-5 space-y-2 text-sm text-gray-700 mb-6">
+                                <li>Sind Sie künstlerisch kreativ? Wenn ja, wie? Ich schreibe, male, komponiere, mache Videos, fotografiere …</li>
+                                <li>Brauchen Sie kreative Lösungen an Ihrem Arbeitsplatz/in Ihrem Studium/bei Ihrem Hobby? Wenn ja, nennen Sie ein Beispiel.</li>
+                                <li>Welche Produktideen haben Sie in den letzten Jahren überzeugt? Nennen Sie ein Beispiel.</li>
+                                <li>Nennen Sie ein oder zwei berühmte Erfinder, Forscher oder Künstler aus Ihrem Heimatland.</li>
+                            </ul>
+
+                            <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Zu Aufgabe 2: Simuliertes Interview</h4>
+                            <div class="space-y-4 text-sm">
+                                <p><strong>Sind Sie künstlerisch kreativ?</strong> – <span class="text-brand-700">A: Ja, ich fotografiere gern und mache manchmal kleine Videos für soziale Medien.</span></p>
+                                <p><strong>Brauchen Sie kreative Lösungen bei der Arbeit?</strong> – <span class="text-amber-600">B: Ja, ständig – wenn ein Programm nicht funktioniert, muss ich improvisieren.</span></p>
+                                <p><strong>Welche Produktideen haben Sie in den letzten Jahren überzeugt?</strong> – <span class="text-brand-700">A: Die faltbaren Smartphones fand ich sehr innovativ.</span></p>
+                                <p><strong>Nennen Sie einen berühmten Erfinder aus Ihrem Heimatland.</strong> – <span class="text-amber-600">B: Ahmed Zewail, der ägyptische Nobelpreisträger für Chemie, ist ein gutes Beispiel.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-5" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 5 – Mündlicher Bericht</h2>
+                            <p class="text-sm text-gray-600 mt-1">a Berichten Sie nach einer Recherche mündlich über Ihr Heimatland. Vergleichen Sie die Ergebnisse mit Ihren persönlichen Erfahrungen. Wählen Sie mindestens vier Fragen, die Sie beantworten möchten.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 gap-4 text-sm text-gray-700 mb-6">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Welche Namen kommen oft vor?</li>
+                                    <li>Wo wohnen die meisten Einwohner? Wie oft zieht man um?</li>
+                                    <li>Wo und wie arbeiten viele Menschen?</li>
+                                    <li>Bezahlt man meistens mit Bargeld oder mit der Bankkarte?</li>
+                                    <li>Welche Verkehrsmittel werden bevorzugt?</li>
+                                </ul>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Welchen Stellenwert hat die Familie?</li>
+                                    <li>Wie ist das Verhältnis der Menschen zur Natur?</li>
+                                    <li>Gibt es etwas, wovor viele Menschen Angst haben?</li>
+                                    <li>Welche Charaktereigenschaften gelten als typisch für die Menschen Ihres Heimatlandes?</li>
+                                </ul>
+                            </div>
+                            <p class="text-sm text-gray-700 mb-6 bg-yellow-50 p-3 rounded border border-yellow-100">
+                                <strong>b</strong> Schreiben Sie einen Beitrag für das Forum zur Sendung „Wie wir leben“. Berichten Sie dort, welche Informationen Sie in den Texten aus Aufgabe 2a interessant fanden und welche Fakten Sie schon kannten. Vergleichen Sie einige Punkte mit Ihrem Heimatland. Schreiben Sie etwa 100 Wörter.
+                            </p>
+
+                            <div class="bg-brand-50 p-5 rounded-lg border border-brand-100">
+                                <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-2"><i class="fa-solid fa-earth-africa mr-2"></i>Zu Aufgabe 5: Simulierter mündlicher Bericht über Ägypten</h4>
+                                <p class="text-sm text-gray-800 leading-relaxed">
+                                    In Ägypten kommen Namen wie Mohamed, Ahmed und Fatma sehr oft vor. Die meisten Einwohner leben in großen Städten wie Kairo oder Alexandria, und es ziehen viele junge Menschen aus ländlichen Regionen in die Städte, um dort zu arbeiten. Man bezahlt im Alltag meistens mit Bargeld, obwohl Bankkarten immer beliebter werden. Als Verkehrsmittel bevorzugen viele das Auto oder Sammeltaxis, da öffentliche Verkehrsmittel oft überfüllt sind. Die Familie hat einen sehr hohen Stellenwert, oft wichtiger als Beruf oder Freizeit. Verglichen mit Deutschland, wo Thomas Müller sehr pünktlich und ordentlich ist, ist der Umgang mit Zeit in Ägypten entspannter.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Zu Aufgabe 6b: Lösungen – obwohl / trotzdem</h3>
+                            <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-3">
+                                <li>
+                                    a) Dirk will sich ein schönes Haus kaufen, <strong>obwohl</strong> er nicht viel verdient.<br>
+                                    b) Dirk verdient nicht viel, <strong>trotzdem</strong> will er sich ein schönes Haus kaufen.
+                                </li>
+                                <li>
+                                    a) Anna geht für ein paar Jahre ins Ausland, <strong>obwohl</strong> sie ihre Heimat, den Schwarzwald, liebt.<br>
+                                    b) Anna liebt ihre Heimat, den Schwarzwald, <strong>trotzdem</strong> geht sie für ein paar Jahre ins Ausland.
+                                </li>
+                                <li>
+                                    a) Otto ernährt sich am liebsten von Fastfood, <strong>obwohl</strong> er Probleme mit seiner Gesundheit hat.<br>
+                                    b) Otto hat Probleme mit seiner Gesundheit, <strong>trotzdem</strong> ernährt er sich am liebsten von Fastfood.
+                                </li>
+                                <li>
+                                    a) Katrin kommt oft zu spät ins Büro, <strong>obwohl</strong> Pünktlichkeit im Berufsleben wichtig ist.<br>
+                                    b) Pünktlichkeit ist im Berufsleben wichtig, <strong>trotzdem</strong> kommt Katrin oft zu spät ins Büro.
+                                </li>
+                                <li>
+                                    a) Thomas hat große Angst vor Naturkatastrophen, <strong>obwohl</strong> es in Deutschland kaum Wetterextreme gibt.<br>
+                                    b) Es gibt in Deutschland kaum Wetterextreme, <strong>trotzdem</strong> hat Thomas große Angst vor Naturkatastrophen.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Zu Aufgabe 6d: Lösungen – trotz + Genitiv</h3>
+                            <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-3">
+                                <li><strong>Trotz seines geringen Gehalts</strong> will sich Dirk ein Haus kaufen.</li>
+                                <li><strong>Trotz ihrer Heimatliebe</strong> geht Anna für ein paar Jahre ins Ausland.</li>
+                                <li><strong>Trotz seiner gesundheitlichen Probleme</strong> ernährt sich Otto am liebsten von Fastfood.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-7" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Aufgabe 7 – Herausforderungen im Alltag</h2>
+                        <p class="text-sm text-gray-600 mb-6">a In einem Forum berichten Menschen aus verschiedenen Ländern, die schon längere Zeit in Deutschland wohnen, über besondere Alltagserfahrungen.</p>
+
+                        <div class="space-y-6">
+                            <div class="border-l-4 border-blue-400 pl-4 py-1">
+                                <h4 class="font-bold text-blue-800">Carol aus Chicago</h4>
+                                <p class="text-sm text-gray-700 mt-1">Ich wohne und arbeite seit fünf Jahren in Deutschland. Bei meinen deutschen Kollegen ist mir aufgefallen, dass sie vieles kritisch sehen. Wenn zum Beispiel jemand einen Vorschlag macht, dann reagieren einige Kollegen skeptisch und denken gleich daran, was alles schiefgehen könnte. Ich dagegen sehe immer alles positiv und optimistisch, manchmal vielleicht ein bisschen zu optimistisch. Am Anfang hat mich das gestört, heute kann ich damit gut umgehen. Ich sage zu Vorschlägen und Ideen immer noch: „Das ist super, lass uns das mal machen!“ Und meine deutsche Kollegin antwortet jedes Mal: „Warte mal, so einfach ist das nicht.“ Aber irgendwie arbeiten wir doch gut zusammen.</p>
+                            </div>
+                            <div class="border-l-4 border-green-400 pl-4 py-1">
+                                <h4 class="font-bold text-green-800">Björn aus Stockholm</h4>
+                                <p class="text-sm text-gray-700 mt-1">Ich finde viele Menschen in Deutschland freundlich und höflich, ich lebe gern hier. Nur mit den Behörden hatte ich einige Probleme. Ich war sehr überrascht, wie wenig effizient die Beamten sind. Besonders höflich waren sie auch nicht. Ich musste viele Formulare ausfüllen (mit der Hand), die ich zum Teil nicht verstanden habe. Außerdem habe ich stundenlang auf dem Flur gewartet, bis ich an der Reihe war. Ich konnte das gar nicht glauben, denn in Schweden können wir alle Behördengänge online erledigen.</p>
+                            </div>
+                            <div class="border-l-4 border-red-400 pl-4 py-1">
+                                <h4 class="font-bold text-red-800">Shenmi aus Peking</h4>
+                                <p class="text-sm text-gray-700 mt-1">Ich habe meinen deutschen Mann in Peking kennengelernt und geheiratet. Danach wurde mein Mann von seiner Firma nach Deutschland versetzt, sind wir umgezogen. Wir haben in der Nähe von Berlin ein altes Haus gekauft und renovieren lassen. Das hat fast ein halbes Jahr gedauert. Die Handwerker kamen an manchen Tagen zu spät oder gingen schon nach den Mittagessen nach Hause, ohne einen Grund anzugeben. Das fand ich sehr seltsam und unprofessionell. Ich dachte während der Renovierungsarbeiten an meine Heimat und wie schnell dort gebaut wird. Jetzt ist unser Haus endlich fertig und ich bin glücklich, denn es ist doch sehr schön geworden.</p>
+                            </div>
+                            <div class="border-l-4 border-purple-400 pl-4 py-1">
+                                <h4 class="font-bold text-purple-800">John aus Manchester</h4>
+                                <p class="text-sm text-gray-700 mt-1">Ich mag das Leben in Deutschland, aber ich vermisse im Alltag oft ein bisschen Humor. Nehmen wir ein Beispiel: Viele Leute stehen auf einem Bahnsteig und es kommt zum Durcheinander, dass der Zug Verspätung hat. Bei uns reden die Menschen miteinander, auch wenn sie sich nicht kennen, und machen witzige Bemerkungen über die Eisenbahngesellschaft oder die Situation. Das macht das Warten angenehmer. In Deutschland haben die Züge oft Verspätung, aber jeder ärgert sich für sich allein.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 bg-gray-50 p-5 rounded-lg">
+                            <p class="text-sm font-bold text-gray-800 mb-2">c Feststellungen und Vorschläge. Bilden Sie Sätze mit den angegebenen Redemitteln.</p>
+                            <p class="text-xs text-gray-500 mb-4 italic">Redemittel: Mir ist aufgefallen, dass … / Mich hat gestört, dass … / Ich fand es merkwürdig/seltsam, dass … / Ich habe bemerkt, dass … / Meiner Meinung nach sollte/sollten …</p>
+                            
+                            <h5 class="text-sm font-bold text-brand-700 mb-2">Zu Aufgabe 7c: Lösungen – Feststellungen mit Redemitteln</h5>
+                            <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-2 mb-6">
+                                <li>Mir ist aufgefallen, dass man Behördengänge nicht online erledigen kann. Meiner Meinung nach sollten Behördengänge digitalisiert werden.</li>
+                                <li>Mich hat gestört, dass viele Formulare unverständlich sind. Meiner Meinung nach sollten Formulare in verständlicher Sprache geschrieben werden.</li>
+                                <li>Ich habe bemerkt, dass Handwerker grundlos zu spät oder gar nicht zur Arbeit kommen. Meiner Meinung nach sollte man sich darüber nicht aufregen.</li>
+                                <li>Ich fand es merkwürdig, dass viele Leute ihren Ärger nicht mit fremden Menschen teilen. Meiner Meinung nach sollte man bestimmte Situationen mit Humor nehmen.</li>
+                            </ol>
+
+                            <h5 class="text-sm font-bold text-brand-700 mb-2">Zu Aufgabe 7d: Simulierter Bericht über Alltagshürden</h5>
+                            <p class="text-sm text-gray-700">Auch bei uns in Ägypten gibt es kleine Herausforderungen im Alltag. Zum Beispiel dauern Behördengänge oft sehr lange, weil man mehrmals persönlich vorbeikommen muss statt online. Auch bei Handwerkern kommt es vor, dass sie ohne Ankündigung später erscheinen. Wie John aus Manchester finde ich es aber hilfreich, solche Situationen mit Humor zu nehmen, statt sich aufzuregen.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-8" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 8 – Interview: Kulturelle Gepflogenheiten</h2>
+                            <p class="text-sm text-gray-600 mt-1">a Fragen Sie Ihre Partnerin/Ihren Partner und berichten Sie über Ihre Erfahrungen im Heimatland und im Ausland.</p>
+                            <p class="text-xs text-brand-600 mt-1">Hinweis: Gepflogenheit = Gewohnheit, Brauch, Sitte, Tradition</p>
+                        </div>
+                        
+                        <div class="p-6 grid grid-cols-1 gap-8">
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2 text-sm">Wie begrüßen Sie normalerweise Familienmitglieder, Kollegen, Fremde/Gäste?</h4>
+                                <ul class="list-disc pl-5 text-sm text-gray-700 mb-4">
+                                    <li>Wir küssen uns.</li>
+                                    <li>Wir geben uns die Hand.</li>
+                                    <li>Wir verbeugen uns.</li>
+                                    <li>Wir nicken.</li>
+                                    <li>Wir lächeln.</li>
+                                    <li>Wir sagen …</li>
+                                    <li>Wir haben (keinen) Augenkontakt.</li>
+                                </ul>
+
+                                <h4 class="font-bold text-gray-800 mb-2 text-sm">Redemittel</h4>
+                                <ul class="list-disc pl-5 text-sm text-gray-700 mb-4">
+                                    <li>In … ist es wichtig/üblich, …</li>
+                                    <li>In … legt man Wert auf …</li>
+                                    <li>… hat einen wichtigen/hohen Stellenwert in …</li>
+                                    <li>Normalerweise/In der Regel …</li>
+                                    <li>Man sollte (unbedingt) darauf achten, dass …</li>
+                                    <li>In … wird es als unhöflich empfunden, wenn …</li>
+                                </ul>
+
+                                <h4 class="font-bold text-gray-800 mb-2 text-sm">Wie pünktlich sind Sie …</h4>
+                                <ul class="list-disc pl-5 text-sm text-gray-700 mb-2">
+                                    <li>wenn Sie privat eingeladen werden?</li>
+                                    <li>wenn Sie einen geschäftlichen/wichtigen Termin haben?</li>
+                                </ul>
+                                <p class="text-sm text-gray-600 italic">Eine Verspätung von … Minuten ist erlaubt/ist üblich/gilt als unhöflich.</p>
+                            </div>
+
+                            <div class="bg-brand-50 p-5 rounded-lg border border-brand-100">
+                                <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-4">Zu Aufgabe 8: Simuliertes Interview</h4>
+                                
+                                <p class="text-xs font-bold text-gray-500 mb-1">Wie begrüßen Sie normalerweise Familienmitglieder, Kollegen, Fremde/Gäste?</p>
+                                <div class="dialogue-a text-xs"><strong class="text-brand-700">A:</strong> Wir umarmen uns und geben uns die Hand. Bei Fremden geben wir nur die Hand mit Augenkontakt und einem Lächeln.</div>
+                                <div class="dialogue-b text-xs mb-4"><strong class="text-amber-600">B:</strong> Bei uns küsst man sich auf die Wange, bei Kollegen reicht ein Nicken oder Handschlag.</div>
+
+                                <p class="text-xs font-bold text-gray-500 mb-1">Über welche Themen sprechen Sie (nicht) mit Freunden, mit Kollegen, mit Gästen/Geschäftspartnern?</p>
+                                <div class="dialogue-a text-xs"><strong class="text-brand-700">A:</strong> Mit Freunden spreche ich über alles, sogar über Geld. Mit Kollegen vermeide ich Politik und Religion, das gilt als unhöflich am Arbeitsplatz.</div>
+                                <div class="dialogue-b text-xs mb-4"><strong class="text-amber-600">B:</strong> Bei Geschäftspartnern spreche ich lieber über Reisen oder Essen, das ist neutral und sicher.</div>
+
+                                <p class="text-xs font-bold text-gray-500 mb-1">Wie pünktlich sind Sie, wenn Sie privat eingeladen werden bzw. einen geschäftlichen/wichtigen Termin haben?</p>
+                                <div class="dialogue-a text-xs mb-4"><strong class="text-brand-700">A:</strong> Bei privaten Einladungen komme ich gern 10–15 Minuten später, das ist bei uns normal. Bei geschäftlichen Terminen bin ich aber immer pünktlich.</div>
+
+                                <p class="text-xs font-bold text-gray-500 mb-1">Wenn es verschiedene Formen der Anrede gibt: Zu wem sagen Sie „du“, zu wem „Sie“?</p>
+                                <div class="dialogue-b text-xs mb-4"><strong class="text-amber-600">B:</strong> Zu Kollegen im gleichen Alter und zu Freunden sage ich „du“. Zu Vorgesetzten und älteren Personen sage ich „Sie“, außer sie bieten das Du an.</div>
+
+                                <p class="text-xs font-bold text-gray-500 mb-1">Welche Tipps können Sie Gästen geben, wenn sie einen guten Eindruck machen wollen?</p>
+                                <div class="dialogue-a text-xs mb-4"><strong class="text-brand-700">A:</strong> Kleidet euch eher konservativ, bringt ein kleines Geschenk mit, und achtet auf angemessenen Körperkontakt – nicht zu distanziert, aber auch nicht zu nah.</div>
+
+                                <p class="text-xs font-bold text-gray-500 mb-1">Was sollte man im Alltag/bei Geschäftskontakten vermeiden?</p>
+                                <div class="dialogue-b text-xs"><strong class="text-amber-600">B:</strong> Man sollte vermeiden, laut über persönliche Probleme oder Gehalt zu sprechen, und körperliche Distanz respektieren, wenn man den anderen nicht gut kennt.</div>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 text-sm text-gray-700 border-t border-gray-100 pt-4">
+                            <p><strong>b</strong> Geben Sie einige interessante Informationen aus dem Gespräch wieder. (Zusätzliche Überlegungen: Kleidung, Gesprächsthemen, Geschenke, Körpersprache, Körperkontakt).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-9" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><i class="fa-solid fa-headphones text-brand-500 mr-3"></i> Aufgabe 9 – Transkription</h2>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-6">Hörtext: Interview – Andere Länder, andere Sitten</h3>
+
+                        <div class="space-y-4">
+                            <div class="dialogue-moderator">
+                                <strong class="text-indigo-700">Moderator:</strong> Wir reisen in fremde Länder, studieren im Ausland oder arbeiten in einem internationalen Umfeld. Welche Herausforderungen bringt die Internationalisierung mit sich? Darüber möchte ich mich heute mit Ingrid Meier vom Institut für Interkulturelle Kompetenz unterhalten. Herzlich willkommen im Studio.
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300">
+                                <strong class="text-gray-800">Frau Meier:</strong> Guten Morgen.
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300">
+                                <strong class="text-gray-800">Frau Meier:</strong> Viele deutsche Unternehmen haben mittlerweile internationale Geschäftspartner oder Standorte im Ausland. Das bedeutet, dass die Zusammenarbeit zwischen Menschen aus unterschiedlichen Ländern und Kontinenten für den Erfolg eines Unternehmens eine immer größere Rolle spielt. Was heißt das konkret für die Unternehmen? Für die Unternehmen heißt das, dass ihre Mitarbeiter neben fachlichen Kompetenzen auch die Fähigkeit haben müssen, sich sicher auf der internationalen Bühne zu bewegen. Dazu gehört, dass sie andere Kulturen kennen und andere kulturelle Gepflogenheiten kennen. Wer solche Unterschiede ignoriert, muss damit rechnen, dass es bei der Zusammenarbeit Probleme gibt. Studien haben den Zusammenhang zwischen unterschiedlichen Kulturen und einer erfolgreichen Arbeit auf internationaler Ebene wissenschaftlich nachgewiesen.
+                            </div>
+                            <div class="dialogue-moderator">
+                                <strong class="text-indigo-700">Moderator:</strong> Wo liegen denn die größten Probleme?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300">
+                                <strong class="text-gray-800">Frau Meier:</strong> Ein großes Problem liegt darin, dass Menschen Situationen, Prozesse und Verhaltensweisen aus der eigenen Perspektive sehen und denken: „Das ist bei uns alles besser.“ Wenn wir aber über andere Länder wissen, können wir besser mit Unterschieden umgehen.
+                            </div>
+                            <div class="dialogue-moderator">
+                                <strong class="text-indigo-700">Moderator:</strong> Können Sie einige Beispiele nennen?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300">
+                                <strong class="text-gray-800">Frau Meier:</strong> Ein ganz einfaches Beispiel sind die verschiedenen Formen der Begrüßung. In Deutschland gibt man in der Regel zur Begrüßung die Hand. In Japan vermeidet man den Körperkontakt üblich. In Spanien ist ein Wangenkuss üblich. Bei der Verbeugung sollte man darauf achten, dass man sich ungefähr genauso tief verbeugt wie der japanische Partner. Wichtig ist auch, den Chef zuerst zu begrüßen und bei der Begrüßung zu lächeln.
+                            </div>
+                            <div class="dialogue-moderator">
+                                <strong class="text-indigo-700">Moderator:</strong> In Deutschland legt man auf Pünktlichkeit großen Wert. Ist das in anderen Ländern auch so?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300">
+                                <strong class="text-gray-800">Frau Meier:</strong> Ja, in vielen Ländern. Wenn Sie zum Beispiel einen Termin in Serbien haben, in den Niederlanden oder in Norwegen, erwartet man, dass Sie pünktlich sind. In der Schweiz ist man etwas toleranter, da können Sie in bestimmten Situationen 15 Minuten später kommen. In Frankreich ist das anders. Wenn Sie nach Kenia fahren, merken Sie schnell, dass es dort ein anderes Zeitverständnis gibt. Es gehört dort zum Alltag, dass man warten muss, Geduld zu haben.
+                            </div>
+                            <div class="dialogue-moderator">
+                                <strong class="text-indigo-700">Moderator:</strong> Bei einem Smalltalk reagiert man bei Gesprächsthemen wie Politik, Religion, Geld oder privaten Problemen zurückhaltend. Gilt das auch für andere Länder?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300">
+                                <strong class="text-gray-800">Frau Meier:</strong> In China zum Beispiel gehört Smalltalk unbedingt dazu. Es wirkt sehr positiv, wenn man über die Familie oder die Kinder spricht. Es wird nicht als unhöflich empfunden, über das Gehalt zu sprechen. Aber das macht man solche nicht unbedingt hinterher unhöflich. Unterschiedliche Reaktionen gibt es bei der Darstellung der eigenen Erfolge. In Frankreich zum Beispiel stößt man nicht auf viel Sympathie, wenn man sich selbst sehr lobt. Ganz anders ist das in den Vereinigten Staaten. Dort ist es wichtig, dass man selbst gute Leistungen erkennt. Unbedingt vermeiden sollte man mit Amerikanern alle Themen, die schwierig empfunden werden können, wie zum Beispiel Religion oder Politik.
+                            </div>
+                            <div class="dialogue-moderator">
+                                <strong class="text-indigo-700">Moderator:</strong> Was ist eigentlich, wenn man nicht so viel machen kann?
+                            </div>
+                            <div class="pl-4 border-l-4 border-gray-300">
+                                <strong class="text-gray-800">Frau Meier:</strong> Mit Höflichkeit und Respekt geht man mit Partnern aus unterschiedlichen Nationen spricht und die Gepflogenheiten nicht so genau kennt. Und wer zu Hause gut Gespräche führen kann, wird im Ausland keine Probleme bekommen.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-12" class="scroll-mt-12">
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-800 mb-2">Aufgabe 12 – Nationalitäten</h2>
+                            <p class="text-sm text-gray-600 mb-4">Ergänzen Sie die Nationalitäten. Achten Sie auf die Deklination. Die Deutschen lesen gern, am liebsten lesen sie Krimis. Hier finden Sie einige beliebte Autoren.</p>
+                            <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-3">
+                                <li>Bücher von Donna Leon verkaufen sich in Deutschland sehr gut. Die <strong>US-Amerikanerin</strong> (1) lebt in Venedig. Ihre Hauptfigur ist ein <strong>italienischer</strong> (2) Kommissar Brunetti, der in der Lagunenstadt Verbrecher jagt.</li>
+                                <li>Der <strong>griechische</strong> (1) Petros Markaris gilt als Vertreter der neuen griechischen Literatur. Er wurde in Istanbul geboren, sein Vater ist <strong>Armenier</strong> (2), seine Mutter ist <strong>Griechin</strong> (3). In seinen Krimis beschreibt er das Leben der <strong>Griechen</strong> (4, Pl.) auf wunderbare Weise.</li>
+                                <li>Viele Tote gibt es in den Romanen des <strong>österreichischen</strong> Andreas Gruber. Der Autor war in seiner Jugend Horrorfan, heute schreibt er spannende Thriller.</li>
+                                <li>Die Krimis des <strong>Schweizers</strong> Martin Suter sind Bestseller. Der bekannte Schriftsteller aus der Schweiz hat schon viele Preise gewonnen.</li>
+                                <li>Die Bücher des <strong>Dänen</strong> Jussi Adler-Olsen zählen zu den meistverkauften Krimis in Deutschland. Sie wurden in mehr als 40 Sprachen übersetzt.</li>
+                                <li>Der <strong>Schwede</strong> (1) Stieg Larsson wurde nur 50 Jahre alt. Er rauchte 60 Zigaretten am Tag und war ein Workaholic. Der vielleicht berühmteste Roman des <strong>Schweden</strong> (2) heißt „Verblendung“ und wurde in Hollywood verfilmt.</li>
+                                <li>Unter dem Namen Jean-Luc Bannalec hat dieser Autor mehrere Krimis veröffentlicht, die in der Bretagne spielen. Man denkt bei diesem Namen sofort an einen <strong>Franzosen</strong>, aber es ist nur ein Pseudonym eines deutschen Autors.</li>
+                                <li>Der 2003 verstorbene <strong>Spanier</strong> (1) Manuel Vázquez Montalbán ist der erfolgreichste Vertreter der <strong>spanischen</strong> (2) Kriminalliteratur. Sein Protagonist, der Privatdetektiv Pepe Carvalho, klärt in Büchern wie „Carvalho und der Mittelstürmer“ in Barcelona Verbrechen auf.</li>
+                                <li>Es gibt nur einen <strong>Portugiesen</strong> (1), der bisher Krimis in deutscher Sprache veröffentlicht hat: Francisco José Viegas. Neben dem Kriminalfall und seiner Lösung durch zwei Kommissare steht die Mentalität der <strong>Portugiesen</strong> (2) im Mittelpunkt der Romane.</li>
+                            </ol>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-800 mb-2">Aufgabe 13 – Klassenspaziergang</h2>
+                            <p class="text-sm text-gray-600 mb-4">Fragen Sie möglichst viele Kursteilnehmer und berichten Sie anschließend über fremde Länder.</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 text-sm">
+                                <h4 class="font-bold text-brand-700 mb-2">Bericht: Klassenspaziergang "Fremde Länder"</h4>
+                                <p class="mb-3">Hallo zusammen! Ich habe mit verschiedenen Teilnehmern aus unserem Kurs gesprochen. Es war sehr interessant zu hören, welche Pläne, Reiseziele und Träume sie haben. Hier sind meine Ergebnisse:</p>
+                                
+                                <strong class="block text-gray-800 mt-2 mb-1">1. Urlaubsziele und Sehenswürdigkeiten</strong>
+                                <ul class="list-disc pl-5 mb-3 text-gray-700">
+                                    <li><strong>Maria</strong> möchte bei ihrer nächsten großen Reise unbedingt nach Japan fliegen. Sie träumt davon, zur Zeit der Kirschblüte dorthin zu reisen und die historischen Tempel in Kyoto zu besichtigen.</li>
+                                    <li><strong>Lukas</strong> zieht es nach Südamerika, genauer gesagt nach Peru. Sein größter Traum ist es, eine Trekkingtour zu machen und die berühmte Inka-Ruinenstadt Machu Picchu mit eigenen Augen zu sehen.</li>
+                                    <li><strong>Amina</strong> plant eine Reise nach Australien. Das Great Barrier Reef und das Sydney Opera House stehen bei ihr ganz oben auf der Liste.</li>
+                                </ul>
+
+                                <strong class="block text-gray-800 mt-2 mb-1">2. Im Ausland leben, arbeiten oder studieren</strong>
+                                <ul class="list-disc pl-5 mb-3 text-gray-700">
+                                    <li><strong>Maria</strong> würde gerne für ein paar Jahre in den USA arbeiten (Job im Silicon Valley).</li>
+                                    <li><strong>Lukas</strong> möchte seinen Masterabschluss in Schweden machen (exzellenter Ruf, Natur).</li>
+                                    <li><strong>Amina</strong> könnte sich sehr gut vorstellen, für eine Weile in Spanien zu leben (warmes Klima, Lebensfreude).</li>
+                                </ul>
+
+                                <strong class="block text-gray-800 mt-2 mb-1">3. Neue Sprachen lernen</strong>
+                                <ul class="list-disc pl-5 mb-3 text-gray-700">
+                                    <li><strong>Maria:</strong> Lernt zurzeit schon Japanisch.</li>
+                                    <li><strong>Lukas:</strong> Möchte unbedingt Schwedisch lernen zur besseren Integration.</li>
+                                    <li><strong>Amina:</strong> Spricht schon etwas Spanisch, möchte aber auf ein fließendes Niveau kommen.</li>
+                                </ul>
+                                
+                                <div class="bg-yellow-100 p-3 rounded text-yellow-800 mt-4 text-xs">
+                                    <strong>Tipp für Ihren Unterricht:</strong> Wenn Sie Ihren eigenen Bericht vor der Klasse halten, versuchen Sie, die Sätze gut miteinander zu verbinden (z. B. mit Wörtern wie außerdem, währenddessen, dagegen). Sprechen Sie möglichst frei und halten Sie Augenkontakt.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-15" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-t-4 border-t-brand-600 p-8 mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Aufgabe 15 – Smalltalk muss man üben</h2>
+                        <p class="text-sm text-gray-600 mb-6">Führen Sie mit Ihrer Nachbarin/Ihrem Nachbarn ein Gespräch über diese Themen. Denken Sie beim Smalltalk daran: Wer fragt, führt das Gespräch!</p>
+
+                        <div class="grid grid-cols-1 gap-6 mb-8 text-sm text-gray-700">
+                            <div>
+                                <h4 class="font-bold border-b pb-1 mb-2">Begrüßung & Wetter</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Hallo …, wie geht es Ihnen? Lange nicht gesehen.</li>
+                                    <li>Wir haben ja wieder wunderbares/schlechtes Wetter heute.</li>
+                                    <li>Ich hoffe, dass das Wetter in den nächsten Tagen so bleibt/besser wird.</li>
+                                    <li>Regnet es bei Ihnen auch so oft?</li>
+                                    <li>Wie ist das Wetter in …?</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold border-b pb-1 mb-2">Essen & Arbeit/Sport</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Kennen Sie sich hier aus? Gibt es in der Nähe ein gutes Restaurant?</li>
+                                    <li>Waren Sie schon mal in dem Restaurant in der Konradstraße?</li>
+                                    <li>Essen Sie gern (deutsche Gerichte)?</li>
+                                    <li>Haben Sie schon mal (ein Weißbier) probiert?</li>
+                                    <li>Wo arbeiten Sie? Arbeiten Sie noch bei …?</li>
+                                    <li>Interessieren Sie sich für (Fußball)?</li>
+                                    <li>Was machen Sie, um fit zu bleiben?</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold border-b pb-1 mb-2">Städte & Kultur</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Woher kommen Sie? Was ist Ihre Heimatstadt?</li>
+                                    <li>Kennen Sie (München) schon? Waren Sie schon oft da?</li>
+                                    <li>Hatten Sie schon Gelegenheit, (das Rathaus) zu besichtigen?</li>
+                                    <li>Es gibt zurzeit eine ganz tolle Ausstellung (im Kunstmuseum).</li>
+                                    <li>Interessieren Sie sich für (Opern)?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-bold text-gray-800 uppercase tracking-wider mb-4">Zu Aufgabe 15: Simulierter Smalltalk-Dialog</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Hallo, wie geht es Ihnen? Lange nicht gesehen!</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Hallo! Mir geht es gut, danke. Und Ihnen?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Auch gut, danke. Wir haben ja wieder wunderbares Wetter heute, oder?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ja, wirklich! Ich hoffe, dass das Wetter in den nächsten Tagen so bleibt.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Kennen Sie sich hier in der Stadt schon gut aus? Gibt es in der Nähe ein gutes Restaurant?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ja, waren Sie schon mal in dem Restaurant in der Konradstraße? Da gibt es fantastisches Essen.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Nein, noch nicht, aber das probiere ich gern aus. Übrigens, wo arbeiten Sie eigentlich?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich arbeite noch bei der gleichen Firma wie letztes Jahr. Und Sie, interessieren Sie sich für Fußball? Haben Sie das Endspiel gesehen?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ja, das war ein spannendes Spiel! Woher kommen Sie eigentlich ursprünglich?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich komme aus München. Kennen Sie München schon?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ja, ich war schon oft da. Hatten Sie schon Gelegenheit, das Rathaus zu besichtigen?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ja, das ist wirklich sehenswürdig! Übrigens, es gibt zurzeit eine ganz tolle Ausstellung im Kunstmuseum – die müssen Sie unbedingt sehen.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Aufgabe 16 – Grammatik & Empfehlungen</h2>
+                        
+                        <h3 class="font-bold text-brand-600 mb-2">Zu Aufgabe 16b: Lösungen – Infinitiv mit zu</h3>
+                        <ul class="list-disc pl-5 text-sm text-gray-700 mb-6 space-y-1">
+                            <li>Es ist nicht erwünscht, Witze über den Präsidenten zu machen.</li>
+                            <li>Es ist schwer, den Termin einzuhalten.</li>
+                            <li>Es gehört zur Kultur, bei der Begrüßung zu lächeln.</li>
+                            <li>Ich habe keine Zeit, die Gäste vom Flughafen abzuholen.</li>
+                            <li>Maxi hat die Absicht, ihr Französisch zu verbessern.</li>
+                            <li>Otto hat den Wunsch, in Japan zu studieren.</li>
+                            <li>Ich habe vor, das Projekt erfolgreich zu beenden.</li>
+                            <li>Ich freue mich, Sie kennenzulernen.</li>
+                            <li>Ich empfehle dir, immer höflich zu sein.</li>
+                            <li>Ich versuche, mich auf die Reise gut vorzubereiten.</li>
+                        </ul>
+
+                        <h3 class="font-bold text-brand-600 mb-2">Zu Aufgabe 16c: Lösungen – Empfehlungen zum Smalltalk</h3>
+                        <ul class="list-disc pl-5 text-sm text-gray-700 mb-6 space-y-1">
+                            <li>Experten empfehlen, beim Smalltalk in China etwas über das Privatleben zu erzählen.</li>
+                            <li>Experten empfehlen, sich in den Niederlanden bei Geschäftsterminen nicht zu verspäten.</li>
+                            <li>Experten empfehlen, sich in Frankreich nicht selbst zu loben.</li>
+                            <li>Experten empfehlen, in den Vereinigten Staaten die eigenen Leistungen nicht hervorzuheben.</li>
+                        </ul>
+
+                        <h3 class="font-bold text-brand-600 mb-2">Zu Aufgabe 16d: Simulierte Empfehlungen für Ägypten</h3>
+                        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                            <li>In Ägypten ist es üblich, sich vor dem eigentlichen Gespräch nach der Familie zu erkundigen.</li>
+                            <li>Es ist ratsam, beim ersten Treffen nicht direkt über Geld zu sprechen.</li>
+                            <li>Ich empfehle Ihnen, sich beim Tee-Trinken Zeit zu nehmen, statt das Gespräch zu hetzen.</li>
+                            <li>Beim Smalltalk in Ägypten ist es wichtig, Gastfreundschaft nicht abzulehnen.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="smalltalk-praxis" class="scroll-mt-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><i class="fa-solid fa-comments text-brand-500 mr-3"></i> Praxis: Smalltalk Situationen</h2>
+                    
+                    <div class="space-y-6">
+                        <!-- Situation 1 -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">1. Begrüßung</h3>
+                            <p class="text-sm text-gray-600 mb-4">Smalltalk beginnt mit einer freundlichen Begrüßung. Wichtig: immer eine Gegenfrage stellen!</p>
+                            
+                            <div class="bg-green-50 p-4 rounded mb-3">
+                                <p class="text-sm font-bold text-green-800">Situation A – Es geht mir gut</p>
+                                <p class="text-sm mt-1">❓ „Hallo … wie geht es Ihnen? Lange nicht gesehen."</p>
+                                <p class="text-sm mt-2 text-green-900 bg-white p-2 rounded border border-green-200"><strong>MUSTERANTWORT:</strong> Danke, es geht mir wirklich gut! Ich war in letzter Zeit sehr beschäftigt mit der Arbeit, aber jetzt habe ich endlich etwas mehr Zeit. Und Ihnen? Was gibt es Neues bei Ihnen?</p>
+                            </div>
+                            
+                            <div class="bg-orange-50 p-4 rounded">
+                                <p class="text-sm font-bold text-orange-800">Situation B – Es geht so</p>
+                                <p class="text-sm mt-1">❓ „Hallo … wie geht es Ihnen? Lange nicht gesehen."</p>
+                                <p class="text-sm mt-2 text-orange-900 bg-white p-2 rounded border border-orange-200"><strong>MUSTERANTWORT:</strong> Na ja, es geht so. Die letzten Wochen waren etwas stressig, aber ich hoffe, dass es bald besser wird. Aber erzählen Sie – wie war Ihr Sommer?</p>
+                            </div>
+                        </div>
+
+                        <!-- Situation 2 -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">2. Wetter</h3>
+                            <p class="text-sm text-gray-600 mb-4">Wetter ist das klassische Smalltalk-Thema. Reagieren Sie mit einer persönlichen Erfahrung.</p>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-sm">❓ <strong>Wunderbares Wetter:</strong> „Wir haben ja wirklich wunderbares Wetter heute!"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ja, stimmt! Das Wetter ist heute wirklich schön. Ich habe heute Morgen eine Runde im Park gedreht – es war herrlich. Solche Tage muss man genießen.</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm">❓ <strong>Hoffnung auf besseres Wetter:</strong> „Ich hoffe, dass das Wetter in den nächsten Tagen so bleibt / besser wird."</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Das hoffe ich auch! Ich habe vor, am Wochenende einen Ausflug zu machen, also wäre schönes Wetter perfekt. Haben Sie auch etwas geplant?</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm">❓ <strong>Vergleich mit Heimatland:</strong> „Regnet es bei Ihnen auch so oft? / Wie ist das Wetter in …?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> In meiner Heimatstadt regnet es im Herbst ziemlich oft – eigentlich noch mehr als hier. Daran muss ich mich hier noch gewöhnen!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Situation 3, 4, 5, 6 Grid -->
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">3. Essen</h3>
+                                <div class="space-y-3">
+                                    <p class="text-sm">❓ „Gibt es in der Nähe ein gutes Restaurant?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ja, ich war letzte Woche in einem tollen italienischen Restaurant um die Ecke. Die Pasta war ausgezeichnet und der Service sehr freundlich. Ich kann es wirklich empfehlen!</p>
+                                    
+                                    <p class="text-sm mt-3">❓ „Essen Sie gern deutsche Gerichte?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ja, ich mag die deutsche Küche sehr gern. Besonders Schnitzel und Kartoffelgerichte finde ich lecker. Ich versuche auch, manchmal selbst zu kochen – nicht immer mit Erfolg! (lacht)</p>
+
+                                    <p class="text-sm mt-3">❓ „Haben Sie schon mal ein Weißbier probiert?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ja, einmal – das war gar nicht schlecht! Ich bin eigentlich kein großer Biertrinker, aber das Weißbier hat mir überraschend gut geschmeckt. Was ist Ihr Lieblingsgetränk?</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">4. Arbeit & Sport</h3>
+                                <div class="space-y-3">
+                                    <p class="text-sm">❓ „Wo arbeiten Sie?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ich arbeite als Dozent an einer Hochschule – ich unterrichte Pflegewissenschaften. Die Arbeit macht mir viel Spaß, auch wenn es manchmal sehr anstrengend ist.</p>
+                                    
+                                    <p class="text-sm mt-3">❓ „Interessieren Sie sich für Fußball?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ja, ich schaue manchmal Fußball. Das Endspiel war wirklich spannend – ich habe es mit ein paar Freunden zusammen angeschaut. Sind Sie selbst Fußballfan?</p>
+
+                                    <p class="text-sm mt-3">❓ „Was machen Sie, um fit zu bleiben?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ich versuche dreimal in der Woche joggen zu gehen. Außerdem mache ich manchmal Yoga zu Hause – das hilft mir sehr beim Stressabbau. Haben Sie auch einen Sport, den Sie regelmäßig machen?</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">5. Städte & Heimatstadt</h3>
+                                <div class="space-y-3">
+                                    <p class="text-sm">❓ „Woher kommen Sie? Was ist Ihre Heimatstadt?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ich komme aus Alexandria in Ägypten – das ist eine wunderschöne Küstenstadt am Mittelmeer. Sie ist bekannt für ihre reiche Geschichte und die tolle Atmosphäre am Meer.</p>
+                                    
+                                    <p class="text-sm mt-3">❓ „Kennen Sie München schon?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Ich war noch nicht oft dort, aber ich würde es sehr gerne besuchen. Ich habe gehört, dass München besonders im Frühling sehr schön ist. Würden Sie die Stadt empfehlen?</p>
+
+                                    <p class="text-sm mt-3">❓ „Hatten Sie schon Gelegenheit, das Rathaus zu besichtigen?"</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Noch nicht, leider. Aber das steht auf meiner Liste! Ich interessiere mich sehr für historische Gebäude. Gibt es noch andere Sehenswürdigkeiten, die Sie mir empfehlen würden?</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">6. Kunst & Kultur</h3>
+                                <div class="space-y-3">
+                                    <p class="text-sm">❓ „Es gibt zurzeit eine tolle Ausstellung. Die müssen Sie unbedingt sehen."</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Oh, das klingt interessant! Ich gehe sehr gerne in Ausstellungen. Worum geht es denn? Moderne Kunst oder eher klassische Gemälde? Ich werde es mir auf jeden Fall merken.</p>
+                                    
+                                    <p class="text-sm mt-3">❓ „Interessieren Sie sich für Opern? Dann sollten Sie mal nach Bregenz fahren."</p>
+                                    <p class="text-sm text-gray-700 bg-gray-50 p-2 rounded mt-1"><strong>MUSTERANTWORT:</strong> Das klingt wunderbar! Ich habe noch keine Oper live erlebt, aber ich wäre sehr neugierig darauf. Ein Open-Air-Konzert am See muss eine besondere Atmosphäre haben. Waren Sie selbst schon dort?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="email-tipps" class="scroll-mt-12">
+                    <div class="bg-gray-800 text-white rounded-2xl shadow-xl overflow-hidden mt-8">
+                        <div class="px-8 py-6 border-b border-gray-700">
+                            <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-envelope-open-text text-brand-400 mr-3"></i> 7. E-Mail: Smalltalk-Kurs & B1 Tipps</h2>
+                            <p class="text-gray-300 mt-2 text-sm">Aufgabe (Übung 16): Eine Freundin / ein Freund hat an der Volkshochschule den folgenden Kurs gefunden und fragt, ob Sie mitkommen wollen. Kursdetails: „Plaudern statt Prahlen!", Samstag, 6. & 13. Oktober, 10:00–13:00 Uhr, 50 Euro.</p>
+                        </div>
+                        
+                        <div class="p-8 grid grid-cols-1 gap-8">
+                            <div>
+                                <h3 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-sm"><i class="fa-solid fa-check-circle mr-1"></i> Muster-E-Mail 1 — Zusage</h3>
+                                <div class="bg-white text-gray-800 p-5 rounded-lg text-sm font-serif shadow-inner">
+                                    <p>Liebe Sarah,</p>
+                                    <p class="mt-2">vielen Dank für den Hinweis auf diesen Kurs! „Plaudern statt Prahlen" klingt wirklich interessant. Ich finde es manchmal schwierig, lockere Gespräche auf Deutsch zu führen, deshalb würde mir so ein Kurs sicher sehr helfen.</p>
+                                    <p class="mt-2">Ich würde sehr gerne mitkommen! Der Termin passt mir gut – an beiden Samstagen habe ich Zeit. Auch der Preis von 50 Euro ist für mich in Ordnung.</p>
+                                    <p class="mt-2">Meine eigenen Smalltalk-Erfahrungen sind noch sehr begrenzt. Wenn ich Deutsche treffe, fühle ich mich manchmal etwas unsicher, weil ich nicht weiß, welche Themen passend sind. Ich hoffe, dass ich durch diesen Kurs mehr Sicherheit bekomme.</p>
+                                    <p class="mt-2">Bis bald und viele Grüße,<br>[Ihr Name]</p>
+                                </div>
+
+                                <h3 class="text-red-400 font-bold mt-6 mb-3 uppercase tracking-wider text-sm"><i class="fa-solid fa-times-circle mr-1"></i> Muster-E-Mail 2 — Absage</h3>
+                                <div class="bg-white text-gray-800 p-5 rounded-lg text-sm font-serif shadow-inner">
+                                    <p>Liebe Sarah,</p>
+                                    <p class="mt-2">vielen Dank, dass du an mich gedacht hast! Der Kurs klingt wirklich toll und das Thema ist sehr wichtig für mich. Leider kann ich an diesen Samstagen nicht, weil ich schon andere Pläne habe.</p>
+                                    <p class="mt-2">Gibt es vielleicht einen ähnlichen Kurs zu einem anderen Termin? Ich würde gerne das nächste Mal dabei sein.</p>
+                                    <p class="mt-2">Liebe Grüße und viel Spaß beim Kurs!<br>[Ihr Name]</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-700 p-6 rounded-lg border border-gray-600">
+                                <h3 class="text-yellow-400 font-bold mb-4 text-lg"><i class="fa-solid fa-lightbulb mr-2"></i> Tipps für B1-Niveau Smalltalk</h3>
+                                <p class="text-sm text-gray-300 mb-4">Diese Merkmale machen Ihre Antworten authentisch und B1-gerecht:</p>
+                                
+                                <ul class="space-y-4 text-sm">
+                                    <li class="flex items-start">
+                                        <i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong class="text-white block">Gegenfrage stellen</strong>
+                                            <span class="text-gray-300">Beenden Sie nie eine Antwort ohne Gegenfrage. „Und Sie? / Haben Sie auch …? / Würden Sie empfehlen …?" Das zeigt Interesse und hält das Gespräch am Laufen.</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong class="text-white block">Modalpartikeln verwenden</strong>
+                                            <span class="text-gray-300">Wörter wie <em>wirklich, eigentlich, doch, ja, aber, na ja</em> machen Ihre Sprache natürlicher und zeigen Gefühle. „Das ist ja toll!" / „Na ja, es geht so."</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong class="text-white block">Konjunktiv II für Höflichkeit</strong>
+                                            <span class="text-gray-300">Benutzen Sie <em>würde/könnte/wäre</em> für höfliche Aussagen: „Das wäre schön." / „Ich würde es gerne besuchen."</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong class="text-white block">Nebensätze mit weil/dass/wenn</strong>
+                                            <span class="text-gray-300">B1 verlangt komplexe Sätze: „Ich finde es schwierig, <em>weil</em> ich nicht weiß, welche Themen passend sind." / „Ich hoffe, <em>dass</em> das Wetter besser wird."</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong class="text-white block">Persönliche Details einbringen</strong>
+                                            <span class="text-gray-300">Antworten Sie nicht nur mit Ja/Nein. Fügen Sie eine kleine persönliche Geschichte oder Erfahrung hinzu – das macht Smalltalk lebendig.</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i>
+                                        <div>
+                                            <strong class="text-white block">Rückfragen mit "denn"</strong>
+                                            <span class="text-gray-300">„Waren Sie selbst schon dort?" ist gut. „Waren Sie <em>denn</em> selbst schon dort?" klingt noch natürlicher und typisch deutsch.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Kapitel 7. Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mainScrollArea = document.getElementById('main-scroll-area');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons or tooltips)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i') {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free MyMemory Translation API (no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                            translation = "[No trans]";
+                        }
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+    
+        });
+    </script>
+</body>
+</html>

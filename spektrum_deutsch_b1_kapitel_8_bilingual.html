@@ -1,0 +1,1195 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 8: Produkte und Konsum - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        .translatable-word {
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .translatable-word:hover {
+            background-color: #ccfbf1;
+            color: #0f766e;
+            border-radius: 2px;
+        }
+
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            user-select: none;
+            -webkit-user-select: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    
+        .english-text {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Spektrum Deutsch
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 8: Produkte und Konsum</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li><a href="#aufgabe-1" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> Aufgabe 1: Konsum-Interview</a></li>
+                <li><a href="#aufgabe-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-clipboard-list w-5 text-center mr-2 text-gray-400"></i> Aufgabe 2: Inventur (Judith)</a></li>
+                <li><a href="#aufgabe-3" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-pen-to-square w-5 text-center mr-2 text-gray-400"></i> Aufgabe 3: Forumsbeitrag</a></li>
+                <li><a href="#aufgabe-4" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-screwdriver-wrench w-5 text-center mr-2 text-gray-400"></i> Aufgabe 4: Wortschatz-Rätsel</a></li>
+                <li><a href="#aufgabe-5" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-history w-5 text-center mr-2 text-gray-400"></i> Aufgabe 5: Kult-Produkte</a></li>
+                <li><a href="#aufgabe-6" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-mobile-screen w-5 text-center mr-2 text-gray-400"></i> Aufgabe 6 & 7: Merkur 10</a></li>
+                <li><a href="#aufgabe-8" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-tags w-5 text-center mr-2 text-gray-400"></i> Aufgabe 8: Produktvorstellung</a></li>
+                <li><a href="#aufgabe-9" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-certificate w-5 text-center mr-2 text-gray-400"></i> Aufgabe 9: Beliebte Labels</a></li>
+                <li><a href="#aufgabe-10" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-rectangle-ad w-5 text-center mr-2 text-gray-400"></i> Aufgabe 10 & 11: Werbung</a></li>
+                <li><a href="#aufgabe-13" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-arrow-up-right-dots w-5 text-center mr-2 text-gray-400"></i> Aufgabe 13: Je..., desto...</a></li>
+                <li><a href="#aufgabe-15" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-coins w-5 text-center mr-2 text-gray-400"></i> Aufgabe 15: Geld-Zitate</a></li>
+                <li><a href="#aufgabe-16" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-wand-magic-sparkles w-5 text-center mr-2 text-gray-400"></i> Aufgabe 16-18: Lottotraum</a></li>
+                <li><a href="#aufgabe-19" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-heart w-5 text-center mr-2 text-gray-400"></i> Aufgabe 19 & 20: Wünsche</a></li>
+                <li><a href="#aufgabe-21" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-book w-5 text-center mr-2 text-gray-400"></i> Aufgabe 21: Kurzgeschichte</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 8: Produkte und Konsum</h1>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Nutzen Sie die Desktop-Ansicht für das Navigationsmenü.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-4xl mx-auto space-y-12 pb-20">
+                
+                <!-- Title Block -->
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Extrahierte Texte & Lösungen (Verbatim)</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 8: Produkte und Konsum</h1>
+                    <p class="text-xl text-gray-600">Einkaufsgewohnheiten, Kult-Produkte, Werbung und Konjunktiv II</p>
+                </div>
+
+                <!-- Aufgabe 1 -->
+                <section id="aufgabe-1" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">1</span>
+                                Aufgabe 1 – Partnerinterview: Konsum
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Interviewen Sie zwei Kursteilnehmer und berichten Sie anschließend über die Ergebnisse.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 gap-6 mb-8 text-sm text-gray-700 list-none">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-gray-100">
+                                <ul class="space-y-3">
+                                    <li><strong class="text-brand-600">1.</strong> Kaufen Sie gern ein? Was kaufen Sie am liebsten?</li>
+                                    <li><strong class="text-brand-600">2.</strong> Gehen Sie gern in Geschäfte? Wenn ja, in welche? Mit wem gehen Sie einkaufen?</li>
+                                    <li><strong class="text-brand-600">3.</strong> Was kaufen Sie oft online?</li>
+                                    <li><strong class="text-brand-600">4.</strong> Welche Dinge nutzen Sie am häufigsten?</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-gray-100">
+                                <ul class="space-y-3">
+                                    <li><strong class="text-brand-600">5.</strong> Was machen Sie mit Dingen, die Sie nicht mehr brauchen?</li>
+                                    <li><strong class="text-brand-600">6.</strong> Wie viele Bücher, CDs, Kleidungsstücke, Schuhe, Smartphones, USB-Sticks etc. besitzen Sie?</li>
+                                    <li><strong class="text-brand-600">7.</strong> Besitzen Sie etwas, das Sie nicht mehr brauchen und trotzdem nicht wegwerfen wollen?</li>
+                                    <li><strong class="text-brand-600">8.</strong> Können Sie sich vorstellen, Ihren ganzen Besitz auf ein Minimum zu reduzieren?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Full Simulated Dialogue -->
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                            <h3 class="font-bold text-brand-800 text-sm uppercase tracking-wider mb-4"><i class="fa-solid fa-comments mr-2"></i>Vollständiges Partnerinterview zum Thema Konsum</h3>
+                            
+                            <div class="space-y-6 text-sm">
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 1 – Kaufen Sie gern ein? Was kaufen Sie am liebsten?</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ja, ich kaufe eigentlich sehr gern ein, besonders Kleidung und Bücher. Es macht mir Spaß, verschiedene Geschäfte zu durchsuchen und neue Sachen zu entdecken.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir ist es unterschiedlich. Ich kaufe nicht so gern Kleidung, aber Elektronik und Technikprodukte kaufe ich mit großer Begeisterung.</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 2 – Gehen Sie gern in Geschäfte? Wenn ja, in welche? Mit wem gehen Sie einkaufen?</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ja, ich gehe besonders gern in kleine Boutiquen und auf Flohmärkte, weil man dort einzigartige Dinge findet. Meistens gehe ich mit meiner Schwester einkaufen, weil wir einen ähnlichen Geschmack haben.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich gehe lieber allein einkaufen, weil ich dann in Ruhe vergleichen kann. Elektronikmärkte finde ich am interessantesten.</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 3 – Was kaufen Sie oft online?</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Online kaufe ich vor allem Bücher und manchmal Kosmetikprodukte, weil es dort oft eine größere Auswahl gibt als in normalen Geschäften.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir sind es hauptsächlich technische Geräte wie Kabel, Kopfhörer oder Zubehör für mein Smartphone, weil man online oft bessere Preise findet.</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 4 – Welche Dinge nutzen Sie am häufigsten?</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Am häufigsten benutze ich mein Smartphone und meinen Laptop, fast jeden Tag mehrere Stunden.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir ist es ähnlich, dazu kommt noch mein Fahrrad, das ich fast täglich zur Arbeit benutze.</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 5 – Was machen Sie mit Dingen, die Sie nicht mehr brauchen?</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich gebe Kleidung, die ich nicht mehr trage, meistens an eine Wohltätigkeitsorganisation. Andere Dinge verkaufe ich online, wenn sie noch in gutem Zustand sind.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich werfe Dinge eher selten weg, ich versuche zuerst, sie zu verkaufen oder an Freunde weiterzugeben.</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 6 – Wie viele Dinge besitzen Sie? (Schätzung für zwei Gegenstände)</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich schätze, ich habe etwa 80 Bücher und ungefähr 25 Paar Schuhe. Das ist wahrscheinlich mehr, als ich wirklich brauche.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir sind es vielleicht 15 T-Shirts und 6 USB-Sticks, von denen ich ehrlich gesagt nur zwei regelmäßig benutze.</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 7 – Unnötiger Besitz, von dem man sich trotzdem nicht trennen kann?</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ja, ich habe noch ein altes Tagebuch aus meiner Schulzeit. Ich benutze es nie, aber ich kann mich einfach nicht davon trennen, weil es viele Erinnerungen enthält.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir ist es eine alte Kamera von meinem Vater. Sie funktioniert kaum noch, aber sie hat einen emotionalen Wert für mich.</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">Frage 8 – Können Sie sich vorstellen, Ihren Besitz drastisch zu reduzieren?</h4>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ehrlich gesagt, wäre das für mich sehr schwer, weil ich an vielen Gegenständen emotional hänge. Aber ich finde die Idee des Minimalismus trotzdem interessant.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich könnte mir das eher vorstellen als du, ich glaube, weniger Besitz würde mein Leben sogar einfacher machen.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 2 -->
+                <section id="aufgabe-2" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">2</span>
+                                Aufgabe 2 – Inventur
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">a Ergänzen Sie im Text die Verben in der richtigen Form.</p>
+                            <div class="mt-2 text-xs text-brand-700 bg-brand-50 px-3 py-1.5 rounded-md inline-block">
+                                <strong>Verben:</strong> erstellen • nachdenken • befinden • sein • besitzen • glauben • beweisen • abbrechen • verändern • leben • benutzen • stehen • zählen • brauchen
+                            </div>
+                        </div>
+
+                        <div class="prose prose-sm text-gray-700 leading-relaxed max-w-none space-y-4 bg-slate-50 p-6 rounded-2xl border border-gray-100">
+                            <p>
+                                Als die Studentin Judith irgendwo hörte, dass jeder einzelne Europäer im Schnitt 10 000 Dinge <strong class="text-brand-600">besitzt</strong>, konnte sie es nicht <strong class="text-brand-600">glauben (1)</strong>. Sie kam auf die Idee, ihre eigenen Habseligkeiten* zu <strong class="text-brand-600">zählen (2)</strong> und mit der Zählung das Gegenteil zu <strong class="text-brand-600">beweisen (3)</strong>. Judith <strong class="text-brand-600">erstellte (4)</strong> eine Datenbank, in der sie alles eintrug, was sich in ihrem Studentenzimmer in der WG und ihrem Jugendzimmer im Haus ihrer Mutter <strong class="text-brand-600">befindet (5)</strong>. Gleichzeitig notierte sie, wie oft sie das Stück noch <strong class="text-brand-600">benutzte (6)</strong>. Das Ergebnis war überraschend. Nach kurzer Zeit <strong class="text-brand-600">brach sie (7)</strong> folgende Auflistung ab: 100 Bücher, die Hälfte ungelesen, 251 Kleidungsstücke, 17 Paar Schuhe, 237 Dekorationsgegenstände wie Kerzen und Tischdecken, 122 Nägel und Schrauben, 2 Stofftiere, 6 Scheren, 100 alte Jugendzeitschriften, 21 Kugelschreiber und 8 USB-Sticks.
+                            </p>
+                            <p>
+                                Bei Gegenstand 2 198 <strong class="text-brand-600">brach (8)</strong> sie ihr Experiment ab. Judith weiß also bis heute nicht, wie viele Dinge wirklich in ihrem Besitz <strong class="text-brand-600">sind (9)</strong>. Sie weiß aber, dass sie viele Sachen gar nicht <strong class="text-brand-600">braucht (10)</strong>. Die Masse an Produkten überraschte sie und <strong class="text-brand-600">veränderte (11)</strong> ihr Einkaufsverhalten. Judith ist vorsichtiger geworden und denkt öfter darüber <strong class="text-brand-600">nach (12)</strong>, ob ihre Einkäufe wirklich sinnvoll und notwendig sind. Eine Anhängerin der Minimalismus-Bewegung, die dafür wirbt, nur mit 100 Gegenständen zu <strong class="text-brand-600">leben (13)</strong>, will sie aber nicht werden. Für einen solchen Schritt ist ihre Vorliebe für Kleider und Schuhe zu groß.
+                            </p>
+                            <p class="text-xs text-gray-400 italic mt-4 border-t pt-2">* Habseligkeiten: Besitz</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 3 -->
+                <section id="aufgabe-3" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">3</span>
+                                Aufgabe 3 – Schriftlicher Kommentar
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Verfassen Sie einen kurzen Beitrag zum Thema in einem Online-Forum.</p>
+                        </div>
+
+                        <div class="bg-amber-50 border border-amber-100 p-4 rounded-xl text-xs text-amber-800 mb-6 space-y-1">
+                            <p class="font-bold">Redemittel:</p>
+                            <ul class="list-disc pl-4 space-y-1">
+                                <li>In dem Artikel wird über … berichtet / geht es um …</li>
+                                <li>Ich fand es besonders interessant, dass …</li>
+                                <li>Mich hat überrascht, dass …</li>
+                                <li>Ich persönlich … / Was mich betrifft, … / Meinen Erfahrungen nach …</li>
+                                <li>Wenn ich an meine Wohnung denke, muss ich zugeben, dass …</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-brand-50 border border-brand-100 p-6 rounded-2xl">
+                            <h3 class="font-bold text-brand-800 text-sm uppercase tracking-wider mb-3"><i class="fa-solid fa-pen-nib mr-2"></i>Vollständiger Forumsbeitrag (ca. 80 Wörter)</h3>
+                            <p class="text-gray-800 text-sm leading-relaxed font-serif bg-white p-4 rounded-xl border border-brand-100 shadow-sm">
+                                Ich habe gerade den Artikel über Judith und ihr Experiment gelesen. Mich hat besonders überrascht, wie viele Gegenstände sie tatsächlich besaß, obwohl sie in einem relativ kleinen Zimmer wohnt. Ich persönlich besitze wahrscheinlich auch viel mehr Dinge, als ich denke, vor allem Kleidung und Bücher, die ich kaum noch benutze. Wenn ich an mein Regal denke, muss ich zugeben, dass die Hälfte davon eigentlich unnötig ist. Beim Einkaufen achte ich seit diesem Artikel stärker darauf, ob ich ein Produkt wirklich brauche.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 4 -->
+                <section id="aufgabe-4" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">4</span>
+                                Aufgabe 4 – Wortschatz: Wie heißen die Produkte?
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Vollständige Produktbezeichnungen mit Artikeln und korrekt ergänzten Vokalen.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <h3 class="font-bold text-brand-600 mb-3 border-b border-gray-200 pb-1">Haushaltsgeräte</h3>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li>die Kaffeemaschine</li>
+                                    <li><span class="text-gray-400">der</span> St<strong class="text-brand-600">au</strong>bs<strong class="text-brand-600">au</strong>ger</li>
+                                    <li><span class="text-gray-400">der</span> Gesch<strong class="text-brand-600">i</strong>rrsp<strong class="text-brand-600">ü</strong>l<strong class="text-brand-600">e</strong>r</li>
+                                    <li><span class="text-gray-400">das</span> Büg<strong class="text-brand-600">e</strong>l<strong class="text-brand-600">ei</strong>sen</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <h3 class="font-bold text-brand-600 mb-3 border-b border-gray-200 pb-1">Entertainment</h3>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li><span class="text-gray-400">der</span> F<strong class="text-brand-600">e</strong>rnseh<strong class="text-brand-600">e</strong>r</li>
+                                    <li><span class="text-gray-400">die</span> Sp<strong class="text-brand-600">ie</strong>lkonsole</li>
+                                    <li><span class="text-gray-400">der</span> L<strong class="text-brand-600">au</strong>tsprech<strong class="text-brand-600">e</strong>r</li>
+                                    <li><span class="text-gray-400">das</span> Sm<strong class="text-brand-600">a</strong>rtph<strong class="text-brand-600">o</strong>n<strong class="text-brand-600">e</strong></li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <h3 class="font-bold text-brand-600 mb-3 border-b border-gray-200 pb-1">Dekoration</h3>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li><span class="text-gray-400">die</span> K<strong class="text-brand-600">e</strong>rze</li>
+                                    <li><span class="text-gray-400">die</span> Z<strong class="text-brand-600">i</strong>mm<strong class="text-brand-600">e</strong>rpfl<strong class="text-brand-600">a</strong>nze</li>
+                                    <li><span class="text-gray-400">das</span> S<strong class="text-brand-600">o</strong>fakiss<strong class="text-brand-600">e</strong>n</li>
+                                    <li><span class="text-gray-400">der</span> B<strong class="text-brand-600">i</strong>ld<strong class="text-brand-600">e</strong>rr<strong class="text-brand-600">a</strong>hmen</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <h3 class="font-bold text-brand-600 mb-3 border-b border-gray-200 pb-1">Kleidung</h3>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li><span class="text-gray-400">die</span> R<strong class="text-brand-600">e</strong>g<strong class="text-brand-600">e</strong>nj<strong class="text-brand-600">a</strong>cke</li>
+                                    <li><span class="text-gray-400">der</span> <strong class="text-brand-600">A</strong>nz<strong class="text-brand-600">u</strong>g</li>
+                                    <li><span class="text-gray-400">die</span> Bl<strong class="text-brand-600">u</strong>se</li>
+                                    <li><span class="text-gray-400">die</span> Kr<strong class="text-brand-600">a</strong>w<strong class="text-brand-600">a</strong>tte</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <h3 class="font-bold text-brand-600 mb-3 border-b border-gray-200 pb-1">Werkzeug</h3>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li><span class="text-gray-400">der</span> N<strong class="text-brand-600">a</strong>gel</li>
+                                    <li><span class="text-gray-400">der</span> H<strong class="text-brand-600">a</strong>mm<strong class="text-brand-600">e</strong>r</li>
+                                    <li><span class="text-gray-400">der</span> Akkuschr<strong class="text-brand-600">au</strong>ber</li>
+                                    <li><span class="text-gray-400">der</span> B<strong class="text-brand-600">o</strong>hr<strong class="text-brand-600">e</strong>r</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <h3 class="font-bold text-brand-600 mb-3 border-b border-gray-200 pb-1">Büroartikel</h3>
+                                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                    <li><span class="text-gray-400">die</span> Bürokl<strong class="text-brand-600">a</strong>mm<strong class="text-brand-600">e</strong>r</li>
+                                    <li><span class="text-gray-400">die</span> Sch<strong class="text-brand-600">e</strong>r<strong class="text-brand-600">e</strong></li>
+                                    <li><span class="text-gray-400">der</span> L<strong class="text-brand-600">o</strong>cher</li>
+                                    <li><span class="text-gray-400">das</span> Dr<strong class="text-brand-600">u</strong>ck<strong class="text-brand-600">e</strong>rp<strong class="text-brand-600">a</strong>papier</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 5 -->
+                <section id="aufgabe-5" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">5</span>
+                                Aufgabe 5 – Lösungen: Kult-Produkte der Geschichte
+                            </h2>
+                        </div>
+
+                        <div class="space-y-6 text-sm text-gray-700">
+                            <!-- A -->
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">A) Der Zauberwürfel</h3>
+                                <ol class="list-decimal pl-5 space-y-1 text-xs">
+                                    <li>Er gab dem Würfel den Namen „Zauberwürfel“.</li>
+                                    <li>1980 kaufte ein amerikanischer Spielwarenhersteller die Lizenz.</li>
+                                    <li>Seit dieser Zeit wurden mehr als 350 Millionen Würfel verkauft.</li>
+                                </ol>
+                            </div>
+                            <!-- B -->
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">B) Billy Bücherregal (IKEA)</h3>
+                                <ol class="list-decimal pl-5 space-y-1 text-xs">
+                                    <li>Der Designer Gillis Lundgren entwarf in den 1970er-Jahren das Bücherregal Billy für die schwedische Möbelfirma Ikea.</li>
+                                    <li>Das schlichte Regal wurde zum Kultobjekt.</li>
+                                    <li>Es entwickelte sich zum meistverkauften Möbelstück in Deutschland.</li>
+                                </ol>
+                            </div>
+                            <!-- C -->
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">C) Michael Jackson - Thriller</h3>
+                                <ol class="list-decimal pl-5 space-y-1 text-xs">
+                                    <li>Michael Jackson stieg mit diesem Album aus dem Jahr 1982 in die Liga der größten Popstars auf.</li>
+                                    <li>In den Musikvideos zum Album revolutionierte Jackson mit seinem Stil den modernen Tanz.</li>
+                                    <li>Diverse Musikzeitschriften wählten „Thriller“ zum größten Album aller Zeiten.</li>
+                                </ol>
+                            </div>
+                            <!-- D -->
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">D) Sony Playstation</h3>
+                                <ol class="list-decimal pl-5 space-y-1 text-xs">
+                                    <li>1994 kam die erste Playstation auf den Markt.</li>
+                                    <li>Mit der Konsole wurde Hersteller Sony zum Marktführer im Bereich Videospiele.</li>
+                                    <li>Besonders hilfreich für den Erfolg war die direkte Bindung beliebter Spiele an die Konsole.</li>
+                                    <li>Die erste Playstation wurde in der Zwischenzeit durch neuere Varianten ersetzt.</li>
+                                </ol>
+                            </div>
+                            <!-- E -->
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">E) Apple iPhone</h3>
+                                <ol class="list-decimal pl-5 space-y-1 text-xs">
+                                    <li>2007 führte die Firma Apple das iPhone auf dem Markt ein.</li>
+                                    <li>Das new Mobiltelefon trug mit mehr als 250 Millionen verkauften Geräten wesentlich zum Erfolg der Firma bei.</li>
+                                    <li>Es veränderte unsere Art der Kommunikation und machte das Smartphone mit seinen vielen Anwendungsmöglichkeiten massentauglich.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 6 & 7 -->
+                <section id="aufgabe-6" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">6</span>
+                                Aufgabe 6 & 7 – Ein neues Smartphone „Merkur 10“
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Lückentext-Lösungen und passive Grammatikkonstruktionen.</p>
+                        </div>
+
+                        <div class="prose prose-sm text-gray-700 max-w-none space-y-4 mb-8 bg-slate-50 p-6 rounded-2xl border border-gray-100">
+                            <p>
+                                Das neue „Merkur 10“ ist seit einer Woche auf dem <strong class="text-brand-600">Markt (1)</strong>. Es hat ein spektakuläres <strong class="text-brand-600">Design (2)</strong>. Die <strong class="text-brand-600">Vorderseite (3)</strong> und die Rückseite sind aus Glas. Es handelt sich um ein ganz besonderes <strong class="text-brand-600">Material (4)</strong>, das nicht so schnell beschädigt werden kann. Das <strong class="text-brand-600">Gehäuse (5)</strong> wird durch einen Metallrahmen zusammengehalten. 
+                            </p>
+                            <p>
+                                Das Smartphone liegt sehr gut in der <strong class="text-brand-600">Hand (6)</strong>. Der Bildschirm ist größer als bei anderen Modellen (7) und der Kontrast ist sensationell. Das Display ist bei <strong class="text-brand-600">Tageslicht (8)</strong> hell und gut brillant.
+                            </p>
+                            <p>
+                                Das Gerät verfügt über 32 Gigabyte <strong class="text-brand-600">Speicherplatz (9)</strong>. Die Kamera hat 12 Megapixel, das ist etwas weniger als beim Vorgängermodell (10). Trotzdem sind die Fotos deutlich schärfer. Vor allem die Qualität der Fotos bei <strong class="text-brand-600">Farben (11)</strong> wurde in Tests sehr gut beurteilt. Ein wesentlicher Grund dafür ist das neue <strong class="text-brand-600">Objektiv (12)</strong>.
+                            </p>
+                            <p>
+                                Insgesamt ist das neue Gerät viel leistungsstärker. Der Akku hat eine <strong class="text-brand-600">Laufzeit (13)</strong> von neun Stunden. Wenn Sie das Gerät an das <strong class="text-brand-600">Netzteil (14)</strong> anschließen, ist der Akku nach einer halben Stunde wieder halb voll.
+                            </p>
+                            <p>
+                                Das „Merkur 10“ kann mit einem Passwort und Ihrem <strong class="text-brand-600">Fingerabdruck (15)</strong> gesichert werden. Mit einem Preis von 699 Euro bietet das neue Smartphone ein sehr gutes <strong class="text-brand-600">Preis-Leistungs-Verhältnis (16)</strong>.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-100 p-4 rounded-xl text-xs text-gray-700 mb-6">
+                            <strong class="text-brand-700">Zu Aufgabe 6a (Richtig/Falsch) & 6c (Adjektive):</strong><br>
+                            1. richtig • 2. falsch • 3. falsch • 4. falsch • 5. richtig • 6. richtig • 7. richtig • 8. richtig • 9. richtig.<br>
+                            Adjektive: (1) mit scharfen Fotos • (2) mit brillanten Farben • (3) mit einem leichten Gehäuse • (4) mit einem leistungsstarken Akku • (5) mit einem guten Preis-Leistungs-Verhältnis.
+                        </div>
+
+                        <div class="bg-brand-50 p-6 rounded-xl border border-brand-100">
+                            <h3 class="font-bold text-brand-800 text-sm mb-3">Lösungen zu Aufgabe 7b (Passivumschreibungen)</h3>
+                            <ul class="space-y-3 text-xs text-gray-700">
+                                <li><strong>1.</strong> a) Das Gerät kann schnell aufgeladen werden. <br>b) Es ist gut, dass das Gerät schnell aufgeladen werden kann.</li>
+                                <li><strong>2.</strong> a) Der PC muss mit einem Passwort gesichert werden. <br>b) Jeder Mitarbeiter weiß, dass der PC mit einem Passwort gesichert werden muss.</li>
+                                <li><strong>3.</strong> a) Der Speicherplatz kann später erweitert werden. <br>b) Es ist gut, dass der Speicherplatz später erweitert werden kann.</li>
+                                <li><strong>4.</strong> a) Das Smartphone darf nicht mit Kleidung in der Waschmaschine gewaschen werden. <br>b) Es steht in den Sicherheitshinweisen, dass das Smartphone nicht mit Kleidung in der Waschmaschine gewaschen werden darf.</li>
+                                <li><strong>5.</strong> a) Das neue Modell kann nur mit dem Fingerabdruck oder einem Code eingeschaltet werden. <br>b) Es dient der Sicherheit, dass das neue Modell nur mit dem Fingerabdruck oder einem Code eingeschaltet werden kann.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 8 -->
+                <section id="aufgabe-8" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">8</span>
+                                Aufgabe 8 – Eine Produktvorstellung
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Detaillierte Vorstellung eines Produkts anhand der Leitfragen.</p>
+                        </div>
+
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-gray-200">
+                            <h3 class="font-bold text-brand-800 text-sm uppercase tracking-wider mb-4"><i class="fa-solid fa-circle-info mr-2"></i>Vollständige simulierte Produktvorstellung (Samsung Galaxy S23)</h3>
+                            
+                            <div class="space-y-4 text-sm text-gray-700">
+                                <p>Ich möchte mein <strong class="text-brand-700">Smartphone</strong> vorstellen, das ich fast jeden Tag benutze.</p>
+                                
+                                <ul class="space-y-3">
+                                    <li><strong class="text-gray-900">Was ist das für ein Produkt?</strong><br>Es ist ein Smartphone der Marke Samsung, Modell Galaxy S23.</li>
+                                    <li><strong class="text-gray-900">Wo wird das Produkt hergestellt? Stellt es nur eine Firma her?</strong><br>Es wird von der südkoreanischen Firma Samsung hergestellt, hauptsächlich in Fabriken in Vietnam und Südkorea. Natürlich stellen auch andere Firmen wie Apple oder Xiaomi vergleichbare Smartphones her.</li>
+                                    <li><strong class="text-gray-900">Wozu wird das Produkt benutzt?</strong><br>Ich benutze es zum Telefonieren, für Nachrichten, zum Fotografieren und für die Arbeit, zum Beispiel für E-Mails.</li>
+                                    <li><strong class="text-gray-900">Welche Eigenschaften hat das Produkt?</strong><br>Es hat einen großen, hellen Bildschirm, eine sehr gute Kamera mit drei Objektiven und einen leistungsstarken Akku, der fast zwei Tage hält.</li>
+                                    <li><strong class="text-gray-900">Wie ist das Design?</strong><br>Das Design ist modern und schlicht, mit einem Metallrahmen und einer Glasrückseite. Es liegt gut in der Hand.</li>
+                                    <li><strong class="text-gray-900">Wem würden Sie dieses Produkt empfehlen?</strong><br>Ich würde es Menschen empfehlen, die viel fotografieren und ein zuverlässiges Gerät für die Arbeit brauchen.</li>
+                                    <li><strong class="text-gray-900">Was kostet das Produkt?</strong><br>Es kostet ungefähr 899 Euro, je nach Speicherplatz.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 9 -->
+                <section id="aufgabe-9" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">9</span>
+                                Aufgabe 9 – Beliebte Labels (Made in Germany)
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Ergänzen Sie die passenden Adjektive.</p>
+                        </div>
+
+                        <div class="prose prose-sm text-gray-700 max-w-none space-y-4 bg-slate-50 p-6 rounded-2xl border border-gray-100">
+                            <p>
+                                Wenn es nur nach den Zahlen geht, ist das Label „Made in Germany“ das <strong class="text-brand-600">beliebteste (1)</strong> der Welt. Das sind jedenfalls die Ergebnisse einer Studie, in der das Marktforschungsportal Statista gemeinsam mit einem <strong class="text-brand-600">internationalen (2)</strong> Marktforschungsunternehmen rund 43 000 Verbraucher in 52 Ländern nach ihren Vorlieben befragt hat.
+                            </p>
+                            <p>
+                                Bei den Produkten, die in Deutschland hergestellt werden, folgen die Produkte aus der Schweiz auf Platz zwei. Der <strong class="text-brand-600">dritte (3)</strong> Platz ging an die EU. Die Verbraucher lobten die <strong class="text-brand-600">deutschen (4)</strong> Produkte vor allem in den Bereichen „Qualität“ und „Sicherheitsstandards“.
+                            </p>
+                            <p>
+                                Die Schweiz konnte <strong class="text-brand-600">hervorragende (5)</strong> Resultate in den Kategorien „Statussymbol“ und „Authentizität“ erzielen. Italien siegte im <strong class="text-brand-600">positiven (6)</strong> Bereich „Design“ und Japan in der <strong class="text-brand-600">kreativen (7)</strong> Kategorie „Spitzentechnologie“. China konnte beim Preis-Leistungsverhältnis überzeugen.
+                            </p>
+                            <p>
+                                Die Herkunftsbezeichnung „Made in Germany“ wurde Ende des 19. Jahrhunderts von Großbritannien eingeführt. Ziel der Etikettierung war die <strong class="text-brand-600">britische (8)</strong> Absicht, Verbraucher vor minderwertigen Produkten aus Deutschland zu warnen. Die <strong class="text-brand-600">innovative (9)</strong> Entwicklung des Labels überraschte nicht nur die Briten.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 10 & 11 -->
+                <section id="aufgabe-10" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">10</span>
+                                Aufgabe 10 & 11 – Werbung und ihr Image
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Klassenspaziergang zur Werbung und Forumsbeitrag zur wissenschaftlichen Beliebtheitsstudie.</p>
+                        </div>
+
+                        <!-- Klassenspaziergang -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-gray-100 mb-8">
+                            <h3 class="font-bold text-gray-800 text-sm uppercase tracking-wider mb-4"><i class="fa-solid fa-users mr-2"></i>Zu Aufgabe 10: Vollständiger Klassenspaziergang – Werbung</h3>
+                            
+                            <div class="space-y-4 text-xs text-gray-700">
+                                <div>
+                                    <strong class="block text-brand-700 mb-1">Frage 1 – Sehen/Lesen Sie manchmal Werbung?</strong>
+                                    <p>• <strong>Teilnehmer 1:</strong> Ja, fast täglich, vor allem im Internet und auf Social Media.</p>
+                                    <p>• <strong>Teilnehmer 2:</strong> Ich sehe eher wenig Werbung, weil ich einen Werbeblocker benutze.</p>
+                                    <p>• <strong>Teilnehmer 3:</strong> Ja, besonders im Fernsehen, wenn ich abends Serien schaue.</p>
+                                </div>
+                                <div>
+                                    <strong class="block text-brand-700 mb-1">Frage 2 – Welche Werbung nervt Sie?</strong>
+                                    <p>• <strong>Teilnehmer 1:</strong> Am meisten nervt mich Werbung, die Videos im Internet unterbricht, besonders wenn man sie nicht wegklicken kann.</p>
+                                    <p>• <strong>Teilnehmer 2:</strong> Mich stört Radiowerbung, die immer wieder in derselben Sendung wiederholt wird.</p>
+                                    <p>• <strong>Teilnehmer 3:</strong> Ich finde Popup-Werbung auf Webseiten besonders lästig.</p>
+                                </div>
+                                <div>
+                                    <strong class="block text-brand-700 mb-1">Frage 3 – Gibt es eine Werbung, die Ihnen gut gefällt?</strong>
+                                    <p>• <strong>Teilnehmer 1:</strong> Ja, ich finde die Weihnachtswerbung von Coca-Cola jedes Jahr sehr schön gemacht.</p>
+                                    <p>• <strong>Teilnehmer 2:</strong> Mir gefällt Werbung, die humorvoll ist und eine kleine Geschichte erzählt, zum Beispiel manche Autowerbungen.</p>
+                                    <p>• <strong>Teilnehmer 3:</strong> Ich mag Werbung, die kreativ mit Musik arbeitet.</p>
+                                </div>
+                                <div>
+                                    <strong class="block text-brand-700 mb-1">Frage 4 – Haben Sie schon einmal aufgrund von Werbung etwas gekauft?</strong>
+                                    <p>• <strong>Teilnehmer 1:</strong> Ja, ich habe mir einmal einen Staubsauger gekauft, nachdem ich eine überzeugende Werbung im Fernsehen gesehen hatte.</p>
+                                    <p>• <strong>Teilnehmer 2:</strong> Bei mir war es ein Parfum, dessen Werbung mich sehr angesprochen hat.</p>
+                                    <p>• <strong>Teilnehmer 3:</strong> Nein, bei mir hat Werbung noch nie direkt zu einem Kauf geführt, ich informiere mich lieber selbst.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Forumsbeitrag -->
+                        <div class="bg-brand-50 p-6 rounded-xl border border-brand-100">
+                            <h3 class="font-bold text-brand-800 text-sm mb-3">Zu Aufgabe 11b: Vollständiger Forumsbeitrag zur Studie</h3>
+                            <p class="text-xs text-gray-700 leading-relaxed font-serif bg-white p-4 rounded shadow-sm border border-brand-100">
+                                In der Nachricht wird über eine Studie berichtet, die zeigt, dass Online-Werbung weltweit den schlechtesten Ruf hat, weil viele Menschen sie als lästig und aufdringlich empfinden. Ich fand es besonders interessant, dass Printmedien im Vergleich das beste Image haben. Mich hat nicht überrascht, dass Verbraucher sich über Werbeunterbrechungen beim Surfen ärgern, denn ich empfinde das genauso. Persönlich stört mich vor allem Werbung, die plötzlich aufpoppt, während ich ein Video anschauen möchte. Meinen Erfahrungen nach ist Werbung auf Plakaten weniger störend, weil man sie einfach ignorieren kann, ohne unterbrochen zu werden.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 13 -->
+                <section id="aufgabe-13" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">13</span>
+                                Aufgabe 13 – Sätze mit doppeltem Komparativ & Präsentation
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Lösungen zu Grammatikübungen mit „je..., desto...“ sowie eine simulierte Präsentation über Werbung.</p>
+                        </div>
+
+                        <!-- Grammatik -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-gray-100 mb-8">
+                            <h3 class="font-bold text-gray-800 text-sm uppercase tracking-wider mb-4"><i class="fa-solid fa-code mr-2"></i>Lösungen zu Aufgabe 13b</h3>
+                            <ul class="space-y-3 text-xs text-gray-700">
+                                <li><strong>1.</strong> Je brillanter die Farben sind, desto schöner finden die Menschen die Fotos.</li>
+                                <li><strong>2.</strong> Je hochwertiger die Materialien sind, desto teurer kann man das Produkt verkaufen.</li>
+                                <li><strong>3.</strong> Je schneller ein Prozessor arbeitet, desto zufriedener sind die Kunden.</li>
+                                <li><strong>4.</strong> Je moderner das Produkt gestaltet ist, desto attraktiver wird es für junge Leute.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Presentation Slides -->
+                        <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100">
+                            <h3 class="font-bold text-brand-800 text-sm uppercase tracking-wider mb-4"><i class="fa-solid fa-desktop mr-2"></i>Vollständige Präsentation: „Werbung und ihr Image“</h3>
+                            
+                            <div class="space-y-6 text-xs text-gray-700">
+                                <div class="bg-white p-4 rounded-lg border border-brand-100 shadow-sm">
+                                    <strong class="block text-brand-700 mb-1">Folie 1 – Thema und Struktur</strong>
+                                    <p>Guten Tag zusammen, mein Thema heute ist Werbung und ihr Image. Ich werde zuerst kurz von meiner eigenen Erfahrung mit Werbung berichten, dann die Situation in meinem Heimatland beschreiben, anschließend Vor- und Nachteile von Werbung im Netz und in Printmedien vergleichen, und am Ende fasse ich alles zusammen und bedanke mich bei Ihnen.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-brand-100 shadow-sm">
+                                    <strong class="block text-brand-700 mb-1">Folie 2 – Persönliche Erfahrungen</strong>
+                                    <p>Ich persönlich sehe fast jeden Tag Werbung, vor allem auf Social Media und beim Streamen von Videos. Am meisten stört mich Werbung, die ein Video unterbricht und die ich nicht überspringen kann. Einmal habe ich mir aber tatsächlich ein Produkt gekauft, weil mir die Werbung sehr gut gefallen hat – es war eine kreative und witzige Werbung für eine Kaffeemaschine.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-brand-100 shadow-sm">
+                                    <strong class="block text-brand-700 mb-1">Folie 3 – Situation im Heimatland</strong>
+                                    <p>In meinem Heimatland ist Werbung im Fernsehen und auf großen Plakaten in der Stadt sehr beliebt. Besonders während beliebter Fernsehsendungen wird viel Werbung gezeigt, und auch Influencer-Werbung auf Social Media wird immer wichtiger, vor allem bei jungen Leuten.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-brand-100 shadow-sm">
+                                    <strong class="block text-brand-700 mb-1">Folie 4 – Vor- und Nachteile im Vergleich</strong>
+                                    <p>Werbung im Internet hat den Vorteil, dass sie genau auf die Interessen der Nutzer zugeschnitten werden kann und sehr viele Menschen gleichzeitig erreicht. Der Nachteil ist, dass sie oft als aufdringlich empfunden wird, besonders wenn sie Inhalte unterbricht. Werbung in Printmedien wirkt dagegen ruhiger und seriöser, erreicht aber weniger Menschen und ist oft teurer zu produzieren. Meiner Meinung nach ist eine Kombination aus beiden Formen am effektivsten.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-brand-100 shadow-sm">
+                                    <strong class="block text-brand-700 mb-1">Folie 5 – Abschluss und Dank</strong>
+                                    <p>Zusammenfassend kann man sagen, dass Werbung im Internet zwar effizient, aber oft unbeliebt ist, während Printwerbung ein besseres Image hat, aber weniger Reichweite. Vielen Dank für Ihre Aufmerksamkeit, ich freue mich auf Ihre Fragen.</p>
+                                </div>
+                                <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                                    <strong class="block text-amber-800 mb-1">Interaktion / Fragen der Kursteilnehmer:</strong>
+                                    <p class="mb-2"><strong>Q1:</strong> Glauben Sie, dass Werbung auf Social Media in Zukunft noch wichtiger wird?<br><strong>Antwort:</strong> Ja, ich denke, dass Social-Media-Werbung weiter zunehmen wird, weil immer mehr Menschen, besonders junge Leute, ihre Zeit dort verbringen.</p>
+                                    <p><strong>Q2:</strong> Haben Sie persönlich schon einmal Werbung als täuschend empfunden?<br><strong>Antwort:</strong> Ja, manchmal versprechen Werbespots mehr, als das Produkt am Ende wirklich kann, das finde ich problematisch.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 15 -->
+                <section id="aufgabe-15" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">15</span>
+                                Aufgabe 15 – Vollständige Diskussion über Geld
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Simulierte Debatten zu den berühmten Zitaten und Gewohnheiten beim Thema Geld.</p>
+                        </div>
+
+                        <div class="space-y-6 text-sm">
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-indigo-800 mb-3">Zitat 1: „Reich an Geld heißt arm an Freuden.“ (Pythagoras)</h3>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich finde, dieser Satz stimmt heute nur teilweise. Es gibt sicher reiche Menschen, die trotzdem unglücklich sind, aber Geld kann auch Freiheit und Möglichkeiten schaffen, die zu mehr Freude führen.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich sehe das ähnlich. Ich glaube, ab einem bestimmten Lebensstandard macht mehr Geld nicht automatisch mehr glücklich, aber völlige Armut macht sicher unglücklich.</div>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-indigo-800 mb-3">Zitat 2: „Über Geld spricht man nicht.“</h3>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> In meinem Heimatland gilt diese Redewendung tatsächlich noch sehr stark. Man spricht praktisch nie über sein Gehalt, nicht einmal mit engen Freunden.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Bei mir ist es ähnlich, allerdings sprechen jüngere Menschen mittlerweile offener darüber, besonders unter guten Freunden oder in der Familie.</div>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-indigo-800 mb-3">Zitat 3: „Geld allein macht nicht glücklich, aber es ist besser, in einem Taxi zu weinen...“ (Marcel Reich-Ranicki)</h3>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich finde diesen Satz sehr treffend und witzig zugleich. Er zeigt, dass Geld zwar keine emotionalen Probleme löst, aber das Leben in schwierigen Momenten trotzdem angenehmer machen kann.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ja, ich stimme zu. Geld kann zumindest Komfort und ein bisschen Erleichterung bieten, auch wenn es die eigentlichen Probleme nicht wegnimmt.</div>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-indigo-800 mb-3">Lottospiel: Haben Sie schon einmal Lotto gespielt?</h3>
+                                <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ja, ich habe ein paar Mal Lotto gespielt, aber nie mehr als ein paar Euro gewonnen. Es macht trotzdem Spaß, kurz davon zu träumen, was man mit dem Gewinn machen würde.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich habe noch nie Lotto gespielt, weil ich die Gewinnchancen zu gering finde. Ich würde das Geld lieber sparen oder investieren.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 16-18 -->
+                <section id="aufgabe-16" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">16</span>
+                                Aufgabe 16 bis 18 – Der Traum vom Geld & Lottogewinn
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Lesetext, Grammatik lösungen im Konjunktiv II und das vollständige Lottogewinn-Interview.</p>
+                        </div>
+
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-gray-200 mb-8 text-sm leading-relaxed text-gray-700">
+                            <h3 class="font-bold text-brand-800 mb-2">Lesetext: Der Traum vom Geld</h3>
+                            <p>
+                                Der Kauf eines Lottoscheins ist mit der Hoffnung auf den großen Gewinn verbunden. Die Zeit vom Ankreuzen bis zur Ziehung der Lottozahlen nutzen viele Lottospieler, um ein bisschen zu träumen. Was würde passieren, wenn ich gewinnen würde? Würde ich jemandem vom Gewinn erzählen? Was würde ich mir kaufen? Wem würde ich etwas vom Geld abgeben? Wohin würde ich zuerst reisen? In der Regel platzen diese Träume spätestens mit der Bekanntgabe der Lottozahlen.
+                            </p>
+                            <p class="mt-3 font-semibold text-brand-600">
+                                Doch was wäre gewesen, wenn man wirklich alle Zahlen richtig angekreuzt hätte? Wäre man mit viel Geld tatsächlich viel glücklicher geworden? Die Wissenschaft zeigt: Das Glücksgefühl hält nur ca. ein Jahr, danach normalisiert es sich wieder.
+                            </p>
+                        </div>
+
+                        <!-- Aufgabe 18b Solutions -->
+                        <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100 mb-8">
+                            <h3 class="font-bold text-brand-800 text-sm mb-3">Lösungen zu Aufgabe 18b (Konjunktiv II in der Gegenwart)</h3>
+                            <ul class="space-y-2 text-xs text-gray-700">
+                                <li><strong>1.</strong> Eva würde ihren Job kündigen und ein Buch schreiben.</li>
+                                <li><strong>2.</strong> Piet würde einfach glücklich sein und nichts tun.</li>
+                                <li><strong>3.</strong> Max würde als Erstes seine Schulden bezahlen müssen.</li>
+                                <li><strong>4.</strong> Beate würde die Hälfte des Geldes spenden.</li>
+                                <li><strong>5.</strong> Andrea würde überhaupt nichts verändern.</li>
+                                <li><strong>6.</strong> Moritz würde sein Geld gut anlegen.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 18a Dialogue -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-xs">
+                            <h3 class="font-bold text-gray-800 mb-4 uppercase tracking-wider">Zu Aufgabe 18a: Vollständiges simuliertes Partnerinterview – Lottogewinn</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <strong class="text-brand-700">Frage – Was würden Sie als Erstes machen?</strong>
+                                    <div class="dialogue-a">A: Ich würde als Erstes tief durchatmen und versuchen, ruhig zu bleiben, bevor ich überhaupt etwas plane.</div>
+                                    <div class="dialogue-b">B: Ich würde sofort meine Familie anrufen, um die Neuigkeit zu teilen.</div>
+                                </div>
+                                <div>
+                                    <strong class="text-brand-700">Frage – Würden Sie jemandem von dem Gewinn erzählen?</strong>
+                                    <div class="dialogue-a">A: Ich würde es nur meiner engsten Familie erzählen, nicht der ganzen Welt, um Probleme zu vermeiden.</div>
+                                    <div class="dialogue-b">B: Ich würde es wahrscheinlich niemandem erzählen, um in Ruhe gelassen zu werden.</div>
+                                </div>
+                                <div>
+                                    <strong class="text-brand-700">Frage – Was würden Sie sich kaufen?</strong>
+                                    <div class="dialogue-a">A: Ich würde mir eine kleine, gemütliche Wohnung kaufen, mehr nicht.</div>
+                                    <div class="dialogue-b">B: Ich würde mir vielleicht ein neues Auto kaufen, aber sonst nicht viel ändern.</div>
+                                </div>
+                                <div>
+                                    <strong class="text-brand-700">Frage – Wem würden Sie etwas abgeben?</strong>
+                                    <div class="dialogue-a">A: Ich würde meinen Eltern etwas Geld geben, damit sie sich zur Ruhe setzen können.</div>
+                                    <div class="dialogue-b">B: Ich würde etwas an eine Wohltätigkeitsorganisation spenden.</div>
+                                </div>
+                                <div>
+                                    <strong class="text-brand-700">Frage – Wohin würden Sie zuerst reisen?</strong>
+                                    <div class="dialogue-a">A: Ich würde zuerst nach Japan reisen, das war schon immer mein Traum.</div>
+                                    <div class="dialogue-b">B: Ich würde wahrscheinlich einfach eine lange Weltreise planen, ohne festes Ziel.</div>
+                                </div>
+                                <div>
+                                    <strong class="text-brand-700">Frage – Würden Sie weiter arbeiten/studieren?</strong>
+                                    <div class="dialogue-a">A: Ja, ich glaube, ich würde weiterarbeiten, aber vielleicht in Teilzeit.</div>
+                                    <div class="dialogue-b">B: Nein, ich würde wahrscheinlich aufhören und mich ganz meinen Hobbys widmen.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 19 & 20 -->
+                <section id="aufgabe-19" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <div class="border-b pb-4 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                                <span class="bg-brand-500 text-white w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-md text-sm">19</span>
+                                Aufgabe 19 & 20 – Wünsche (Die gute Fee)
+                            </h2>
+                            <p class="text-sm text-gray-500 mt-2">Grammatiklösungen für irrealen Wunschsatz (Hätte ich doch...) und Lückentext zur Statistik.</p>
+                        </div>
+
+                        <!-- 19 Solutions -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-gray-100 mb-8">
+                            <h3 class="font-bold text-gray-800 text-sm mb-3">Lösungen zu Aufgabe 19 (Wunschsätze mit doch)</h3>
+                            <ul class="space-y-2 text-xs text-gray-700">
+                                <li><strong>1.</strong> Würde ich doch ein bisschen Japanisch sprechen!</li>
+                                <li><strong>2.</strong> Könnte Ben doch besser Tennis spielen!</li>
+                                <li><strong>3.</strong> Wäre mein Auto doch nicht kaputt!</li>
+                                <li><strong>4.</strong> Würde der Bus heute doch mal pünktlich kommen!</li>
+                                <li><strong>5.</strong> Hätte ich doch ein schnelleres WLAN!</li>
+                                <li><strong>6.</strong> Würde der Chef doch einmal seine E-Mails lesen!</li>
+                            </ul>
+                        </div>
+
+                        <!-- 20 Text -->
+                        <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100">
+                            <h3 class="font-bold text-brand-800 text-sm mb-3">Lückentext-Lösungen zu Aufgabe 20a (Die gute Fee)</h3>
+                            <p class="text-xs text-gray-700 leading-relaxed bg-white p-4 rounded shadow-sm">
+                                Wenn Sie drei Wünsche frei <strong class="text-brand-600">hätten (1)</strong>, welche <strong class="text-brand-600">würden</strong> Sie sich <strong class="text-brand-600">wünschen (2)</strong>? Diese Frage wurde 2 000 Deutschen gestellt.
+                                Bei den Ergebnissen <strong class="text-brand-600">wäre</strong> sich wohl jede gute Fee <strong class="text-brand-600">bewusst (3)</strong>, denn die Antworten der deutschen Umfrageteilnehmer waren eher alltäglich. Mehr als die Hälfte <strong class="text-brand-600">würde</strong> gern gesund <strong class="text-brand-600">bleiben (4)</strong>. Fast 40 Prozent <strong class="text-brand-600">würden</strong> von finanzieller Sicherheit und nahezu ein Drittel <strong class="text-brand-600">würde</strong> sich eine glückliche Familie <strong class="text-brand-600">wünschen (5)</strong>.
+                            </p>
+                            <p class="text-xs text-gray-700 leading-relaxed bg-white p-4 rounded shadow-sm mt-3">
+                                Rund 30 Prozent <strong class="text-brand-600">würden</strong> gern ein Auto, ein Haus oder andere materielle Dinge <strong class="text-brand-600">gewinnen (6)</strong>. Nur vier Prozent <strong class="text-brand-600">würden</strong> sich von der Fee zum Superreichen <strong class="text-brand-600">machen lassen (7)</strong>. Etwa genauso viele Befragte sagten, sie <strong class="text-brand-600">würden</strong> gern einen ausreichend bezahlten Job <strong class="text-brand-600">haben (8)</strong>. Nur etwa vier Prozent der Menschen <strong class="text-brand-600">würden</strong> an ihrem Leben nichts <strong class="text-brand-600">ändern (9)</strong>: Sie sind wunschlos glücklich.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aufgabe 21 -->
+                <section id="aufgabe-21" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">Aufgabe 21 – Eine Kurzgeschichte</h2>
+                        </div>
+                        
+                        <div class="p-8">
+                            <h3 class="font-bold text-xl text-brand-700 mb-1">Der Wunsch</h3>
+                            <p class="text-sm text-gray-500 mb-6 font-semibold">Franz Hohler</p>
+                            
+                            <div class="prose prose-sm text-gray-700 font-serif max-w-none space-y-4 mb-8 p-6 bg-[#fcfaf5] rounded shadow-inner border border-gray-200">
+                                <p>„Haben Sie noch einen Wunsch?“, fragte der Kellner den Gast, als er den Teller und das Besteck abräumte.</p>
+                                <p>„Ja“, sagte der Gast, „einen Cognac Napoléon, eine Villa am Zürichberg, einen Bentley und eine Frau, mit der man Pferde stehlen kann¹.“</p>
+                                <p>„Das wird ein bisschen viel auf einmal“, sagte der Kellner, „aber wir werden sehen, was wir tun können.“</p>
+                                <p>Und als er wenig später den Cognac servierte, wurde er von einem Notar begleitet, der eine Schenkungsurkunde für eine Villa in der Krönleinstraße mit einem Bentley und eine Frau in der Garage bei sich hatte.</p>
+                                <p>Der Gast bedankte sich und trank einen Schluck, da setzte sich die Frau mit blitzenden Augen an seinen Tisch und stellte sich als bekannte Pferdediebin vor.</p>
+                                <p>Bevor sie zusammen das Lokal verließen, schrieb der Gast in sein Notizbuch: „Essen mittelmäßig, Bedienung erstklassig.“</p>
+                                <p class="text-xs text-gray-500 mt-4 border-t pt-2">¹mit jemandem Pferde stehlen können: sich auf jemanden verlassen können</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-8">
+                                <!-- 21c -->
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-4">Aufgabe 21c – Fragen und Antworten in der Vergangenheit</h4>
+                                    <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-2 mb-6">
+                                        <li>ein Bild von Picasso • sich kaufen → <span class="italic font-semibold text-gray-500">Hättest du dir ein Bild von Picasso gekauft?</span></li>
+                                        <li>drei Jahre • Urlaub machen</li>
+                                        <li>oft • in ferne Länder • reisen</li>
+                                        <li>einen Film • produzieren</li>
+                                        <li>Freunden und Verwandten • viel Geld • schenken</li>
+                                        <li>überhaupt jemandem • von deinem Lottogewinn • erzählen</li>
+                                    </ol>
+                                    
+                                    <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                                        <strong class="block text-brand-700 text-sm mb-2">Lösungen zu Aufgabe 21c</strong>
+                                        <div class="space-y-3 text-xs text-gray-700">
+                                            <p>1. <span class="font-bold">A:</span> Hättest du dir ein Bild von Picasso gekauft? <span class="font-bold">B:</span> Ja, ich hätte mir ein Bild von Picasso gekauft. / Nein, ich hätte mir kein Bild von Picasso gekauft.</p>
+                                            <p>2. <span class="font-bold">B:</span> Hättest du drei Jahre Urlaub gemacht? <span class="font-bold">A:</span> Ja, ich hätte drei Jahre Urlaub gemacht. / Nein, ich hätte nicht drei Jahre Urlaub gemacht.</p>
+                                            <p>3. <span class="font-bold">A:</span> Wärst du oft in ferne Länder gereist? <span class="font-bold">B:</span> Ja, ich wäre oft in ferne Länder gereist. / Nein, ich wäre nicht oft in ferne Länder gereist.</p>
+                                            <p>4. <span class="font-bold">B:</span> Hättest du einen Film produziert? <span class="font-bold">A:</span> Ja, ich hätte einen Film produziert. / Nein, ich hätte keinen Film produziert.</p>
+                                            <p>5. <span class="font-bold">A:</span> Hättest du Freunden und Verwandten viel Geld geschenkt? <span class="font-bold">B:</span> Ja, ich hätte Freunden und Verwandten viel Geld geschenkt. / Nein, ich hätte ihnen kein Geld geschenkt.</p>
+                                            <p>6. <span class="font-bold">B:</span> Hättest du überhaupt jemandem von deinem Lottogewinn erzählt? <span class="font-bold">A:</span> Ja, ich hätte es jemandem erzählt. / Nein, ich hätte es niemandem erzählt.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 21d -->
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-4">Aufgabe 21d – Nach dem Lottogewinn</h4>
+                                    <p class="text-sm text-gray-600 font-semibold italic mb-4">Beispiel: Lucie hat sich neue Freunde gesucht → alte Freunde behalten. Ich hätte mir keine neuen Freunde gesucht. Ich hätte meine alten Freunde behalten.</p>
+                                    <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-2 mb-6">
+                                        <li>Frau Müller – sich von einem Finanzexperten beraten lassen → sich im Internet über Geldanlagen informieren</li>
+                                        <li>Familie Weber hat sich eine Villa auf Mallorca gekauft → eigene Wohnung renovieren</li>
+                                        <li>Aurelia hat ein neues Musiklabel gegründet → Geld in eine Internetfirma investieren</li>
+                                        <li>Beate hat einen Monat in der Präsidentensuite übernachtet → Geld nicht so zum Fenster hinauswerfen</li>
+                                        <li>Sven hat seine Freunde auf eine Reise nach Australien eingeladen → nur mit der Familie nach Australien reisen</li>
+                                        <li>Paul hat den gesamten Lottogewinn in zwei Jahren ausgegeben → Geld sparen oder in Immobilien investieren</li>
+                                    </ol>
+
+                                    <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                                        <strong class="block text-brand-700 text-sm mb-2">Lösungen zu Aufgabe 21d</strong>
+                                        <div class="space-y-2 text-xs text-gray-700">
+                                            <p>1. Frau Müller hätte sich nicht von einem Finanzexperten beraten lassen. Sie hätte sich im Internet über Geldanlagen informiert.</p>
+                                            <p>2. Familie Weber hätte sich keine Villa auf Mallorca gekauft. Sie hätte ihre eigene Wohnung renoviert.</p>
+                                            <p>3. Aurelia hätte kein neues Musiklabel gegründet. Sie hätte ihr Geld in eine Internetfirma investiert.</p>
+                                            <p>4. Beate hätte keinen Monat in der Präsidentensuite übernachtet. Sie hätte ihr Geld nicht so zum Fenster hinausgeworfen.</p>
+                                            <p>5. Sven hätte seine Freunde nicht auf eine Reise nach Australien eingeladen. Er wäre nur mit der Familie nach Australien gereist.</p>
+                                            <p>6. Paul hätte den gesamten Lottogewinn nicht in zwei Jahren ausgegeben. Er hätte das Geld gespart oder in Immobilien investiert.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Kapitel 8. Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            // Select the scroll area by ID, or fallback to the main scrolling container if the ID is missing
+            const mainScrollArea = document.getElementById('main-scroll-area') || document.querySelector('.overflow-y-auto.flex-1');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            if (mainScrollArea) {
+                let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+            }
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons or tooltips)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i') {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free MyMemory Translation API (no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                            translation = "[No trans]";
+                        }
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+    
+        });
+    </script>
+</body>
+</html>

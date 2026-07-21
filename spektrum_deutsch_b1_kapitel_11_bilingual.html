@@ -1,0 +1,998 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapitel 11: Geschichte und Politik - Spektrum Deutsch B1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
+        
+        html { scroll-behavior: smooth; }
+        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+
+        .translatable-word {
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .translatable-word:hover {
+            background-color: #ccfbf1;
+            color: #0f766e;
+            border-radius: 2px;
+        }
+
+        .translatable-word.loading {
+            background-color: #e2e8f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .word-tooltip {
+            user-select: none;
+            -webkit-user-select: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-5px);
+            background-color: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+        
+        .word-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .translatable-word.show-tooltip .word-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    
+        .english-text {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    
+        .para-translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #0d9488;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .para-translate-btn:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+        .para-translate-btn.translated {
+            background: #f0fdfa;
+            border-color: #99f6e4;
+        }
+        .para-translation {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-style: italic;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #14b8a6;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.6;
+        }
+    
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
+        <div class="p-6 border-b border-gray-100">
+            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
+            </a>
+            <h1 class="text-xl font-bold text-gray-800 leading-tight">
+                <i class="fa-solid fa-landmark text-brand-500 mr-2"></i>Goethe B1/B2
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Kapitel 11: Geschichte und Politik</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
+            <ul class="space-y-1 px-3">
+                <li><a href="#aufgabe-3" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-city w-5 text-center mr-2 text-gray-400"></i> 3. Berlin Geschichte</a></li>
+                <li><a href="#aufgabe-5" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-handshake w-5 text-center mr-2 text-gray-400"></i> 5. Partnerarbeit</a></li>
+                <li><a href="#aufgabe-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-earth-africa w-5 text-center mr-2 text-gray-400"></i> 2. Mein Heimatland</a></li>
+                <li><a href="#aufgabe-4" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-file-lines w-5 text-center mr-2 text-gray-400"></i> 4. Textarbeit</a></li>
+                <li><a href="#aufgabe-8" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> 8. Interview: Geschichte</a></li>
+                <li><a href="#aufgabe-9" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-headphones w-5 text-center mr-2 text-gray-400"></i> 9. Wiener Hofburg</a></li>
+                <li><a href="#aufgabe-11" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-map-location-dot w-5 text-center mr-2 text-gray-400"></i> 11. Tag in der Heimatstadt</a></li>
+                <li><a href="#aufgabe-12" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-spell-check w-5 text-center mr-2 text-gray-400"></i> 12. Adjektive mit Präp.</a></li>
+                <li><a href="#aufgabe-7" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-clock w-5 text-center mr-2 text-gray-400"></i> 7. Temporale Nebensätze</a></li>
+                <li><a href="#aufgabe-6" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-person-booth w-5 text-center mr-2 text-gray-400"></i> 6. Frauenwahlrecht</a></li>
+                <li><a href="#aufgabe-14" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-link w-5 text-center mr-2 text-gray-400"></i> 14. aber und sondern</a></li>
+                <li><a href="#aufgabe-15" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-users w-5 text-center mr-2 text-gray-400"></i> 15. Politiker</a></li>
+                <li><a href="#aufgabe-13" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-building-columns w-5 text-center mr-2 text-gray-400"></i> 13. Wer bestimmt Politik?</a></li>
+                <li><a href="#aufgabe-16" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-font w-5 text-center mr-2 text-gray-400"></i> 16. Nominalisierung</a></li>
+                <li><a href="#aufgabe-17" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-envelope-open-text w-5 text-center mr-2 text-gray-400"></i> 17. Bewerbung</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
+        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
+            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 11: Geschichte und Politik</h1>
+            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+            <div class="max-w-4xl mx-auto space-y-12 pb-20">
+                
+                <!-- Title Block -->
+                <div class="text-center mb-12">
+                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Lektion & Übungen</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 11: Geschichte und Politik</h1>
+                    <p class="text-xl text-gray-600">Politik, Geschichte, Traditionen und Partizipialattribute</p>
+                </div>
+
+                <section id="aufgabe-3" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 pb-2 border-b">3. Auf den Spuren der deutsch-deutschen Geschichte in Berlin</h2>
+                        <p class="text-gray-700 leading-relaxed mb-6">
+                            Berlin war nach dem Zweiten Weltkrieg über 40 Jahre eine geteilte Stadt. Sie besuchen gerade die deutsche Hauptstadt und interessieren sich für Angebote, die sich mit der deutsch-deutschen Geschichte beschäftigen. Lesen und hören Sie die Texte.
+                        </p>
+
+                        <div class="grid grid-cols-1 gap-6 mb-8">
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">1. Gedenkstätte Berliner Mauer</h3>
+                                <p class="text-sm text-gray-700">An der zentralen Gedenkstätte Berliner Mauer in der Bernauer Straße können Besucher die Dauerausstellung „1961–1989. Die Berliner Mauer“ sehen. Die multimediale Ausstellung präsentiert die Geschichte der Berliner Mauer von der Teilung der Stadt bis zur Wiedervereinigung. Im Mittelpunkt stehen folgende Fragen: Wie kam es zum Mauerbau? Wieso stand die Mauer so lange? Warum fiel sie 1989? Anhand biografischer Dokumente wird dargestellt, welche Auswirkungen die Teilung Berlins auf das Leben der Menschen hatte.</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">2. Museum in der Kulturbrauerei</h3>
+                                <p class="text-sm text-gray-700">Dem Alltag in der DDR widmet sich die Dauerausstellung im Museum in der Kulturbrauerei im Berliner Stadtbezirk Prenzlauer Berg. Die Ausstellung zeigt, wie die Menschen in der DDR wirklich gelebt haben. Besucher können sich über Themen wie politische Herrschaft, Arbeitsalltag, Konsum und Freizeitgestaltung informieren. Konzipiert wurde die Ausstellung von der Stiftung Haus der Geschichte der Bundesrepublik Deutschland.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">3. Eine Stadtrundfahrt durch Berlin</h3>
+                                <p class="text-sm text-gray-700">Die Stadtrundfahrt City Circle Tour PURPLE im gelben Doppeldeckerbus folgt dem Verlauf der Berliner Mauer und präsentiert das trendige Berlin von heute. Bei der zweistündigen Tour fahren die Teilnehmer nicht nur dort entlang, wo die Berliner Mauer einst stand, sie sehen auch lebendige Berliner Bezirke wie Prenzlauer Berg, Kreuzberg oder Friedrichshain. Hier wohnen und arbeiten viele Künstler. Außerdem sind hier beliebte Clubs und Bars zu finden. Weitere Stationen sind die Hackeschen Höfe und die schönste Brücke Berlins, die Oberbaumbrücke. Man kann die vollen zwei Stunden im Bus bleiben oder die Tour unterbrechen, wenn man an einer Haltestelle aussteigen und die Tour später fortsetzen will.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-brand-700 mb-2">4. Rathaus Schöneberg</h3>
+                                <p class="text-sm text-gray-700">„Ich bin ein Berliner“ – diesen berühmten Satz sagte John F. Kennedy bei seinem Berlin-Besuch 1963 vor dem Rathaus Schöneberg. Kennedys Rede ist wohl die bekannteste Szene deutsch-deutscher Geschichte rund um das Rathaus Schöneberg. Eine ebenso große Symbolkraft hat die Freiheitsglocke im Rathausturm. Die Glocke wurde 1950 von amerikanischen Bürgern über Spenden finanziert. Sie gilt als Zeichen für die Freiheit und erklingt täglich mittags um 12.00 Uhr. Am 3. Oktober 1990 läutete die Freiheitsglocke die Wiedervereinigung Deutschlands ein.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 ">
+                                <h3 class="font-bold text-brand-700 mb-2">5. Hinterm Horizont</h3>
+                                <p class="text-sm text-gray-700">Das rasante Berliner Musical „Hinterm Horizont“ im Stage Theater am Potsdamer Platz erzählt mit 20 Songs des deutschen Rockstars Udo Lindenberg eine Ost-West-Liebesgeschichte in Zeiten der geteilten Stadt. Die Handlung des Musicals beschreibt die Begegnung des jungen Udo Lindenberg mit einem Mädchen aus Ostberlin. Beide verlieben sich ineinander und daraus entstehen jede Menge Probleme. Das Musical mit authentischem Hintergrund lebt neben der Story vor allem von bekannten Lindenberg-Hits wie „Mädchen aus Ost-Berlin“ oder „Sonderzug nach Pankow“.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-50 p-6 rounded-xl border border-brand-200">
+                            <h4 class="font-bold text-gray-800 mb-4">Welche Informationen finden Sie in den Texten?</h4>
+                            <div class="space-y-4 text-sm text-gray-800">
+                                <p><strong>→ Lösung:</strong> In den Texten finde ich viele interessante Informationen über die deutsch-deutsche Geschichte in Berlin. Zur Gedenkstätte Berliner Mauer: Die Ausstellung zeigt die Geschichte der Mauer von 1961 bis 1989. Sie erklärt, warum die Mauer gebaut wurde, warum sie so lange stand und warum sie 1989 fiel. Besonders interessant finde ich, dass biografische Dokumente gezeigt werden, die zeigen, wie die Teilung das Leben der Menschen beeinflusst hat.</p>
+                                <p><strong>→ Lösung:</strong> Zum Museum in der Kulturbrauerei: Hier geht es um den Alltag in der DDR. Die Ausstellung zeigt, wie die Menschen wirklich gelebt haben – bei der Arbeit, beim Konsum und in der Freizeit. Das finde ich sehr authentisch.</p>
+                                <p><strong>→ Lösung:</strong> Zur Stadtrundfahrt: Die City Circle Tour PURPLE dauert zwei Stunden und fährt im gelben Doppeldeckerbus. Man sieht nicht nur den Verlauf der Mauer, sondern auch moderne Bezirke wie Prenzlauer Berg und Friedrichshain. Mir gefällt die Idee, dass man die Tour unterbrechen und später fortsetzen kann.</p>
+                                <p><strong>→ Lösung:</strong> Zum Rathaus Schöneberg: Hier sagte John F. Kennedy 1963 seinen berühmten Satz „Ich bin ein Berliner“. Die Freiheitsglocke im Turm wurde 1950 von amerikanischen Bürgern finanziert und läutet täglich um 12 Uhr. Am 3. Oktober 1990 läutete sie die Wiedervereinigung ein.</p>
+                                <p><strong>→ Lösung:</strong> Zum Musical „Hinterm Horizont“: Es erzählt eine Ost-West-Liebesgeschichte mit 20 Songs von Udo Lindenberg. Es geht um einen jungen Mann, der sich in ein Mädchen aus Ostberlin verliebt. Bekannte Hits wie „Mädchen aus Ost-Berlin“ machen das Musical besonders.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-5" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">5. Partnerarbeit: Etwas aushandeln</h2>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-gray-800 mb-2">5a. Was möchten Sie in Berlin besuchen?</h3>
+                            <p class="text-sm text-gray-600 mb-2">Entscheiden Sie sich für ein Angebot aus Aufgabe 3. Arbeiten Sie zu zweit. Vergleichen Sie Ihre Entscheidung mit anderen Kursteilnehmern.</p>
+                            <p class="text-xs text-brand-600 mb-4 italic">Redemittel: Wir haben uns für ... entschieden, weil ... / Wir bevorzugen ..., denn ... / Am interessantesten finden wir ... / Wir interessieren uns für ... Deshalb ...</p>
+                            
+                            <div class="bg-green-50 border border-green-100 p-4 rounded-lg mb-8 text-sm text-gray-800">
+                                <p><strong>→ Lösung:</strong> Wir haben uns für die Gedenkstätte Berliner Mauer entschieden, weil sie ein sehr wichtiger historischer Ort ist. Die Mauer war über 28 Jahre lang ein Symbol der Teilung Deutschlands und Europas. Wir finden es wichtig, diese Geschichte kennenzulernen und zu verstehen, wie die Menschen damals gelebt haben. Außerdem möchten wir den Checkpoint Charlie besuchen, denn er war der bekannteste Grenzübergang zwischen Ost- und West-Berlin. Dort kann man viel über die Fluchtversuche und die Spannungen des Kalten Krieges lernen. Am interessantesten finden wir die East Side Gallery, weil sie Kunst und Geschichte auf einzigartige Weise verbindet. Künstler aus der ganzen Welt haben die Mauer bemalt und ihre Hoffnungen und Träume von Freiheit ausgedrückt. Wir interessieren uns auch für das Museum in der Kulturbrauerei. Deshalb möchten wir dorthin gehen, um mehr über den Alltag in der DDR zu erfahren.</p>
+                            </div>
+
+                            <h3 class="font-bold text-gray-800 mb-2">5b. Gespräch mit Zeitzeugen planen</h3>
+                            <p class="text-sm text-gray-600 mb-4">Sie planen im Rahmen Ihres Deutschkurses ein Gespräch mit Menschen, die den Fall der Mauer in Berlin direkt miterlebt haben. Sie und Ihre Partnerin/Ihr Partner sollen das Gespräch organisieren.</p>
+                            
+                            <div class="space-y-3 text-sm">
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> Ich schlage vor, dass wir das Gespräch am Samstag, den 15. November um 14.00 Uhr führen. Was hältst du davon?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> Den Vorschlag finde ich gut. Samstag ist perfekt, weil dann die meisten Kursteilnehmer Zeit haben. Und wo soll das Gespräch stattfinden?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> Wir könnten die Gedenkstätte Berliner Mauer als Ort wählen. Das wäre wirklich besser als ein Klassenzimmer, weil die Atmosphäre dort authentisch ist.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> Das finde ich prima! Die Gedenkstätte ist ein sehr passender Ort für dieses Thema. Sollen wir ein kleines Rahmenprogramm planen?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> Ja, gute Idee! Wir könnten das Gespräch mit einem kurzen Rundgang durch die Gedenkstätte beginnen. Danach können wir bei einem Glas Wein oder Kaffee über persönliche Erfahrungen sprechen und uns besser kennenlernen.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> Das wäre wirklich besser! So haben die Teilnehmer die Möglichkeit, auch nach dem offiziellen Teil noch Fragen zu stellen. Sollen wir auch Teilnehmer aus anderen Deutschkursen einladen?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> Auf jeden Fall! Wir könnten auch Freunde und Bekannte einladen, die sich für deutsche Geschichte interessieren. Je mehr Leute kommen, desto interessanter wird die Diskussion.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> Ich schlage vor, dass wir Werbung im Deutschkurs machen und vielleicht auch einen Aushang in der Sprachschule erstellen. Wir könnten auch soziale Medien nutzen.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Person A:</strong> Das ist eine ausgezeichnete Idee! So erreichen wir mehr Menschen. Ich kümmere mich um den Kontakt zur Gedenkstätte und du machst die Werbung?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Person B:</strong> Einverstanden! Das klingt nach einem guten Plan.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-2" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">2. Mein Heimatland</h2>
+                        <p class="text-sm text-gray-600 mb-6">Nennen Sie fünf interessante Fakten aus Geschichte und/oder Politik über Ihr Heimatland, z. B. Gründungsjahr, Amtssprachen, Nationalfeiertag, ein wichtiges historisches Ereignis, eine wichtige historische Persönlichkeit, wichtige Politiker.</p>
+                        
+                        <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-xl">
+                            <h4 class="font-bold text-yellow-800 mb-4 text-lg">→ Lösung: Fünf interessante Fakten über Ägypten</h4>
+                            <ol class="list-decimal pl-5 space-y-3 text-sm text-gray-800">
+                                <li><strong>Gründungsjahr:</strong> Ägypten ist eines der ältesten Länder der Welt. Die moderne Arabische Republik Ägypten wurde 1953 gegründet, nach der Revolution von 1952.</li>
+                                <li><strong>Amtssprache:</strong> Die Amtssprache ist Arabisch. Ägypten ist das bevölkerungsreichste arabischsprachige Land der Welt mit über 100 Millionen Einwohnern.</li>
+                                <li><strong>Nationalfeiertag:</strong> Der Nationalfeiertag ist am 23. Juli. Er erinnert an die Revolution von 1952, die die Monarchie beendete und die Republik einführte.</li>
+                                <li><strong>Wichtiges historisches Ereignis:</strong> Der Bau der Pyramiden von Gizeh vor über 4500 Jahren ist eines der wichtigsten historischen Ereignisse. Die Pyramiden sind eines der sieben Weltwunder der Antike.</li>
+                                <li><strong>Wichtige historische Persönlichkeit:</strong> Gamal Abdel Nasser war ein sehr wichtiger Politiker. Er war von 1956 bis 1970 Präsident von Ägypten und eine führende Persönlichkeit in der arabischen Welt.</li>
+                            </ol>
+                            <p class="mt-4 text-sm text-gray-700 bg-white p-3 rounded shadow-sm"><strong>Weitere Fakten:</strong> Kairo ist die Hauptstadt und die größte Stadt in der arabischen Welt. Der aktuelle Präsident ist Abdel Fattah el-Sisi seit 2014. Ägypten war das Zentrum einer der frühesten Hochkulturen der Menschheit.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-4" class="scroll-mt-12">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">4. Textarbeit</h2>
+                        <h3 class="font-bold text-gray-700 mb-4">4a. Vervollständigen Sie die Sätze.</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-800 border-l-4 border-brand-500">
+                                <p><strong>→ Lösung 1. Gedenkstätte Berliner Mauer:</strong> Im Mittelpunkt der Ausstellung steht die Geschichte der Berliner Mauer von 1961 bis 1989. Es werden auch biografische Dokumente dargestellt, die zeigen, welche Auswirkungen die Teilung Berlins auf das Leben der Menschen hatte.</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-800 border-l-4 border-brand-500">
+                                <p><strong>→ Lösung 2. Alltag in der DDR im Museum in der Kulturbrauerei:</strong> Die Dauerausstellung im Museum in der Kulturbrauerei widmet sich dem Alltag in der DDR. Die Ausstellung beschäftigt sich mit den Themen politische Herrschaft, Arbeitsalltag, Konsum und Freizeitgestaltung.</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-800 border-l-4 border-brand-500">
+                                <p><strong>→ Lösung 3. Eine Stadtrundfahrt durch Berlin:</strong> Bei der Stadtrundfahrt City Circle Tour PURPLE fahren die Touristen im Bus dem Verlauf der Berliner Mauer entlang und sehen lebendige Berliner Bezirke wie Prenzlauer Berg, Kreuzberg oder Friedrichshain. Außerdem können die Teilnehmer an beliebten Sehenswürdigkeiten wie den Hackeschen Höfen und der Oberbaumbrücke vorbeifahren. Man kann die ganze Zeit im Bus bleiben oder die Tour an einer Haltestelle unterbrechen und später fortsetzen.</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-800 border-l-4 border-brand-500">
+                                <p><strong>→ Lösung 4. Rathaus Schöneberg:</strong> Vor dem Rathaus Schöneberg hat John F. Kennedy 1963 seinen berühmten Satz „Ich bin ein Berliner“ gesagt. Außerdem besitzt das Rathaus eine berühmte Glocke, die die Freiheitsglocke heißt, täglich um 12 Uhr läutet und am 3. Oktober 1990 die Wiedervereinigung Deutschlands eingeläutet hat.</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-800 border-l-4 border-brand-500">
+                                <p><strong>→ Lösung 5. Hinterm Horizont:</strong> Das rasante Berliner Musical „Hinterm Horizont“ im Stage Theater am Potsdamer Platz erzählt mit 20 Songs des deutschen Rockstars Udo Lindenberg eine Ost-West-Liebesgeschichte in Zeiten der geteilten Stadt. Die Handlung beschreibt die Begegnung des jungen Udo Lindenberg mit einem Mädchen aus Ostberlin, die sich ineinander verlieben und dabei viele Probleme erleben. Das Musical lebt von bekannten Lindenberg-Hits wie „Mädchen aus Ost-Berlin“ oder „Sonderzug nach Pankow“.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-8" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">8. Interview: Geschichte</h2>
+                            <p class="text-sm text-gray-600 mt-1">Fragen Sie zwei Gesprächspartner. Machen Sie sich Notizen und berichten Sie anschließend.</p>
+                        </div>
+                        <div class="p-6 grid grid-cols-1 gap-6">
+                            
+                            <div class="border border-gray-100 rounded-lg p-4 bg-white shadow-sm">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">1. Fanden Sie das Fach Geschichte in der Schule interessant? Interessieren Sie sich für Geschichte?</h4>
+                                <p class="text-sm text-brand-700 bg-brand-50 p-3 rounded"><strong>→ Lösung:</strong> Ja, ich fand das Fach Geschichte in der Schule sehr interessant. Besonders die Themen über das alte Ägypten und die Weltkriege haben mich fasziniert. Ich habe gerne gelernt, wie sich Gesellschaften im Laufe der Zeit entwickelt haben. Auch heute noch interessiere ich mich sehr für Geschichte. Ich lese regelmäßig historische Bücher und schaue Dokumentationen im Fernsehen. Geschichte hilft uns meiner Meinung nach, die Gegenwart besser zu verstehen.</p>
+                            </div>
+
+                            <div class="border border-gray-100 rounded-lg p-4 bg-white shadow-sm">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">2. Lesen Sie manchmal historische Romane oder sehen Sie Filme, die ein geschichtliches Ereignis darstellen?</h4>
+                                <p class="text-sm text-brand-700 bg-brand-50 p-3 rounded"><strong>→ Lösung:</strong> Ja, ich lese ab und zu historische Romane. Zuletzt habe ich einen Roman über das alte Rom gelesen, der mir sehr gut gefallen hat. Auch Filme über historische Ereignisse schaue ich mir gerne an. Zum Beispiel finde ich Filme über den Zweiten Weltkrieg oder über die ägyptische Antike sehr spannend. Solche Filme und Bücher machen Geschichte lebendig und helfen mir, historische Ereignisse besser nachzuvollziehen.</p>
+                            </div>
+
+                            <div class="border border-gray-100 rounded-lg p-4 bg-white shadow-sm">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">3. Welche historische Persönlichkeit spielte in Ihrem Heimatland eine wichtige Rolle?</h4>
+                                <p class="text-sm text-brand-700 bg-brand-50 p-3 rounded"><strong>→ Lösung:</strong> In meinem Heimatland spielte Gamal Abdel Nasser eine sehr wichtige Rolle. Er war von 1956 bis 1970 Präsident von Ägypten und eine führende Persönlichkeit in der arabischen Welt. Er hat die Revolution von 1952 angeführt und die Republik Ägypten gegründet. Bis heute wird er in meinem Heimatland verehrt und viele Straßen und Plätze sind nach ihm benannt.</p>
+                            </div>
+
+                            <div class="border border-gray-100 rounded-lg p-4 bg-white shadow-sm">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">4. Wenn Sie die Wahl hätten: In welchem Jahrhundert würden Sie gerne leben? Bei welchem geschichtlichen Ereignis wären Sie gern dabei gewesen? Warum?</h4>
+                                <p class="text-sm text-brand-700 bg-brand-50 p-3 rounded"><strong>→ Lösung:</strong> Wenn ich die Wahl hätte, würde ich gerne im 21. Jahrhundert leben, also in der heutigen Zeit. Wir haben viele technologische Fortschritte erlebt und leben in einer globalisierten Welt. Gerne wäre ich bei der Mondlandung 1969 dabei gewesen, weil das ein historischer Moment für die gesamte Menschheit war. Es muss unglaublich aufregend gewesen sein, als Neil Armstrong als erster Mensch den Mond betreten hat. Dieser Moment hat die Welt für immer verändert.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-9" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><i class="fa-solid fa-headphones text-brand-500 mr-3"></i> 9. Transkription Hörtext: Historische Gebäude – Die Wiener Hofburg</h2>
+                        
+                        <div class="dialogue-moderator text-sm mb-6">
+                            <strong class="text-indigo-700">Reiseleiter:</strong> So, liebe Gäste, wir erreichen jetzt gleich die Wiener Hofburg. Bevor Sie den Bus verlassen, möchte ich Ihnen noch ein paar allgemeine Informationen zur Hofburg geben und Sie über den weiteren Zeitplan informieren. Wie Sie vielleicht wissen, war Österreich über viele Jahrhunderte eine Monarchie. Die Hofburg wurde im 13. Jahrhundert unter der Herrschaft von König Rudolf I. gebaut und sie war bis 1918 die Residenz der Habsburger Könige und Kaiser. Auch heute wird das historische Gebäude noch aktiv genutzt: Es dient seit 1945 als Amtssitz des österreichischen Bundespräsidenten, das heißt, der Bundespräsident arbeitet hier und kann den Präsidentenpalast auch für offizielle Anlässe nutzen.
+                            <br><br>
+                            Außerdem können Sie hier das Sisi-Museum mit den Kaiserappartements und der Silberkammer besichtigen. Ganz besonders beliebt sind die originalen Amts- und Wohnräume von Kaiser Franz Joseph, der bis 1916 Kaiser von Österreich-Ungarn war, und seiner Frau Elisabeth, genannt Sisi. Die Führung beginnt um 15.00 Uhr. Treffpunkt ist der Museumseingang. Wenn Sie an Pferden interessiert sind, können Sie an einer Vorstellung in der Spanischen Hofreitschule teilnehmen und sich von der klassischen Reitkunst beeindrucken lassen. Die Vorstellung beginnt bereits um 14.30 Uhr. Es ist jetzt 13.00 Uhr. Sie haben also genug Zeit, die Hofburg zu erkunden. Wer zwischendurch eine Tasse Kaffee trinken möchte, sollte ins Café Hofburg gehen. Das Café befindet sich direkt neben dem Eingang zum Sisi-Museum. Wir treffen uns wieder um 17.00 Uhr hier am Bus. Ich wünsche Ihnen einen schönen Nachmittag.
+                        </div>
+
+                        <div class="bg-green-50 p-5 rounded-lg border border-green-200">
+                            <h4 class="font-bold text-green-800 mb-2">Was erfahren Sie über die Wiener Hofburg?</h4>
+                            <p class="text-sm text-gray-800"><strong>→ Lösung:</strong> Über die Wiener Hofburg erfahre ich viele interessante Informationen. Geschichte: Die Hofburg wurde im 13. Jahrhundert unter König Rudolf I. gebaut. Sie war bis 1918 die Residenz der Habsburger Könige und Kaiser. Österreich war also über viele Jahrhunderte eine Monarchie. Heutige Nutzung: Heute wird das Gebäude noch aktiv genutzt. Seit 1945 ist es der Amtssitz des österreichischen Bundespräsidenten. Der Präsident arbeitet hier und nutzt den Palast auch für offizielle Anlässe. Museen: In der Hofburg gibt es das Sisi-Museum mit den Kaiserappartements und der Silberkammer sowie verschiedene andere Museen. Besonderheiten: Besonders beliebt sind die originalen Amts- und Wohnräume von Kaiser Franz Joseph und seiner Frau Elisabeth, genannt Sisi. Kaiser Franz Joseph regierte bis 1916. Spanische Hofreitschule: Für Pferde-Interessierte gibt es Vorstellungen in der Spanischen Hofreitschule mit klassischer Reitkunst. Zeitplan: Die Führung beginnt um 15.00 Uhr, die Spanische Hofreitschule um 14.30 Uhr, Treffpunkt ist der Museumseingang und das Wiedertreffen ist um 17.00 Uhr am Bus. Das Café Hofburg liegt neben dem Sisi-Museum-Eingang.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-11" class="scroll-mt-12">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">11. Ein Tag in meiner Heimatstadt</h2>
+                        <p class="text-sm text-gray-600 mb-6">Erstellen Sie ein Tagesprogramm für Ihre Heimatstadt. Geben Sie einige Informationen über die Sehenswürdigkeiten. Berichten Sie darüber mündlich oder schriftlich.</p>
+
+                        <div class="bg-gray-50 border border-gray-200 p-6 rounded-xl">
+                            <h3 class="text-lg font-bold text-brand-700 mb-4 text-center border-b pb-2">→ Lösung: Tagesprogramm für Kairo – Ein unvergesslicher Tag</h3>
+                            
+                            <div class="space-y-4 text-sm text-gray-700 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
+                                
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-brand-500 text-white group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                        <i class="fa-solid fa-mug-hot"></i>
+                                    </div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded-lg shadow-sm">
+                                        <time class="text-xs font-bold text-brand-500 mb-1">8.00 Uhr</time>
+                                        <h4 class="font-bold text-gray-800">Frühstück</h4>
+                                        <p>Wir beginnen den Tag mit einem traditionellen ägyptischen Frühstück in einem lokalen Café mit Blick auf den Nil.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-brand-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                        <i class="fa-solid fa-monument"></i>
+                                    </div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded-lg shadow-sm">
+                                        <time class="text-xs font-bold text-brand-500 mb-1">9.00 Uhr</time>
+                                        <h4 class="font-bold text-gray-800">Die Pyramiden von Gizeh</h4>
+                                        <p>Unser erster Besuch gilt den weltberühmten Pyramiden von Gizeh, einem der sieben Weltwunder der Antike. Wir besichtigen die große Pyramide des Cheops, die Pyramide des Chephren und die Pyramide des Mykerinos. Danach fotografieren wir die Sphinx.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-brand-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                    </div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded-lg shadow-sm">
+                                        <time class="text-xs font-bold text-brand-500 mb-1">11.30 Uhr</time>
+                                        <h4 class="font-bold text-gray-800">Das Ägyptische Museum</h4>
+                                        <p>Im Museum bewundern wir die Schätze des Pharaos Tutanchamun und lernen mehr über die faszinierende altägyptische Kultur. Die Sammlung ist die größte der Welt.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-brand-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                        <i class="fa-solid fa-utensils"></i>
+                                    </div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded-lg shadow-sm">
+                                        <time class="text-xs font-bold text-brand-500 mb-1">13.30 Uhr</time>
+                                        <h4 class="font-bold text-gray-800">Mittagessen</h4>
+                                        <p>Traditionelles ägyptisches Essen in einem Restaurant mit Nilblick. Wir probieren Koshari, Falafel und andere lokale Spezialitäten.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-brand-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                        <i class="fa-brands fa-fort-awesome"></i>
+                                    </div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded-lg shadow-sm">
+                                        <time class="text-xs font-bold text-brand-500 mb-1">15.00 Uhr</time>
+                                        <h4 class="font-bold text-gray-800">Die Zitadelle</h4>
+                                        <p>Wir besuchen die mittelalterliche Zitadelle und die beeindruckende Mohammed-Ali-Moschee aus Alabaster. Von hier haben wir einen fantastischen Blick über die ganze Stadt.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-brand-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                        <i class="fa-solid fa-store"></i>
+                                    </div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded-lg shadow-sm">
+                                        <time class="text-xs font-bold text-brand-500 mb-1">17.00 Uhr</time>
+                                        <h4 class="font-bold text-gray-800">Khan el-Khalili Basar</h4>
+                                        <p>Auf dem historischen Basar können Sie Souvenirs kaufen, Gewürze riechen und die Atmosphäre des alten Kairo erleben. Der Basar existiert seit dem 14. Jahrhundert.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-brand-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                        <i class="fa-solid fa-moon"></i>
+                                    </div>
+                                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-4 rounded-lg shadow-sm">
+                                        <time class="text-xs font-bold text-brand-500 mb-1">19.00 Uhr</time>
+                                        <h4 class="font-bold text-gray-800">Abendessen am Nil</h4>
+                                        <p>Den Tag lassen wir bei einem gemütlichen Abendessen am Nil ausklingen, vielleicht mit einer traditionellen Tanura-Show.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 bg-white p-4 rounded border border-gray-200 text-sm">
+                                <h4 class="font-bold text-brand-700 mb-2">Sehenswürdigkeiten Zusammenfassung:</h4>
+                                <p class="text-gray-700">Die Pyramiden von Gizeh sind über 4500 Jahre alt und ein Weltwunder der Antike. Das Ägyptische Museum besitzt die weltweit größte Sammlung altägyptischer Kunst. Die historische Altstadt ist UNESCO-Weltkulturerbe. Der Khan el-Khalili Basar existiert seit dem 14. Jahrhundert. Die Zitadelle ist eine mittelalterliche Festung mit spektakulärem Panoramablick.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-12" class="scroll-mt-12">
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">12. Adjektive mit Präpositionen</h2>
+                            <h3 class="font-bold text-gray-700 mb-2">12b. Ergänzen Sie die richtige Präposition.</h3>
+                            <ul class="list-none text-sm text-gray-700 space-y-2 mb-6">
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">bei</span> Königen und Kaisern interessiert sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">bei</span> den Besuchern beliebt sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">mit</span> der Arbeit zufrieden sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">mit</span> allen Kollegen freundlich sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">auf</span> das Ergebnis froh sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">auf</span> den Besuch glücklich sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">für</span> die Politik verantwortlich sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">für</span> den Frieden wichtig sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">auf</span> die Schulnoten stolz sein</li>
+                                <li><i class="fa-solid fa-check text-green-500 mr-2"></i><strong>→ Lösung:</strong> <span class="bg-yellow-100 px-1 rounded">von</span> der Stadt begeistert sein</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="font-bold text-gray-700 mb-4">12c. Interviewfragen</h3>
+                            <div class="space-y-4 text-sm text-gray-700">
+                                <div>
+                                    <p class="font-bold">1. Wovon sind Sie begeistert?</p>
+                                    <p class="bg-gray-50 p-2 rounded mt-1"><strong>→ Lösung:</strong> Ich bin von der deutschen Geschichte begeistert, besonders von der Geschichte der Berliner Mauer. Auch von der ägyptischen Antike und den Pyramiden bin ich total begeistert.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold">2. Wofür/Für wen sind Sie verantwortlich?</p>
+                                    <p class="bg-gray-50 p-2 rounded mt-1"><strong>→ Lösung:</strong> In meinem Job bin ich für die Betreuung der Kunden verantwortlich. Außerdem bin ich für meine Familie verantwortlich und passe auf meine jüngeren Geschwister auf.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold">3. Woran sind Sie interessiert?</p>
+                                    <p class="bg-gray-50 p-2 rounded mt-1"><strong>→ Lösung:</strong> Ich interessiere mich sehr für Politik und Geschichte. Außerdem interessiere ich mich für fremde Kulturen und Sprachen. Im Moment lerne ich Deutsch, weil ich mich für Deutschland interessiere.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold">4. Worauf/Auf wen sind Sie stolz?</p>
+                                    <p class="bg-gray-50 p-2 rounded mt-1"><strong>→ Lösung:</strong> Ich bin stolz auf meine akademischen Leistungen und darauf, dass ich mein Studium erfolgreich abgeschlossen habe. Auf meine Eltern bin ich besonders stolz, weil sie immer für mich da waren.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold">5. Worüber sind Sie glücklich?</p>
+                                    <p class="bg-gray-50 p-2 rounded mt-1"><strong>→ Lösung:</strong> Ich bin glücklich über die Möglichkeit, im Ausland zu studieren und neue Kulturen kennenzulernen. Auch über meine Freunde und meine Gesundheit bin ich sehr glücklich.</p>
+                                </div>
+                                <div>
+                                    <p class="font-bold">6. Womit sind Sie zufrieden?</p>
+                                    <p class="bg-gray-50 p-2 rounded mt-1"><strong>→ Lösung:</strong> Ich bin mit meinem Leben im Moment sehr zufrieden. Auch mit meiner Arbeit und meinen Deutschkenntnissen bin ich zufrieden, obwohl ich noch viel lernen möchte.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-7" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">7. Strukturen: Temporale Nebensätze – Gleichzeitig ablaufende Handlungen</h2>
+                        
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <h3 class="font-bold text-blue-800 mb-2">7a. Hinweise</h3>
+                            <p class="text-sm text-blue-900">Gleichzeitigkeit in der Gegenwart/Zukunft: <strong>wenn</strong>. In der Vergangenheit einmalig: <strong>als</strong>. In der Vergangenheit mehrmalig: <strong>wenn</strong>. In Vergangenheit und Gegenwart: <strong>während</strong>. Dauer: <strong>seit/seitdem</strong> = von einem Zeitpunkt in der Vergangenheit bis jetzt; <strong>bis</strong> = von einem Zeitpunkt zu einem späteren Zeitpunkt.</p>
+                        </div>
+
+                        <h3 class="font-bold text-gray-700 mb-4">7b. Formulieren Sie Nebensätze.</h3>
+                        <ul class="space-y-3 text-sm text-gray-800">
+                            <li class="bg-gray-50 p-3 rounded border border-gray-100"><strong>→ Lösung 1:</strong> <strong>Als</strong> das Frauenwahlrecht 1853 zum ersten Mal in der Stadt Vélez in Kolumbien eingeführt wurde, wurden ihre Träume wahr.</li>
+                            <li class="bg-gray-50 p-3 rounded border border-gray-100"><strong>→ Lösung 2:</strong> Die Frauen in Finnland und Norwegen mussten etwas länger kämpfen, <strong>bis</strong> sie 1914 das Stimmrecht bekamen.</li>
+                            <li class="bg-gray-50 p-3 rounded border border-gray-100"><strong>→ Lösung 3:</strong> Noch <strong>während</strong> der Erste Weltkrieg tobte, wurden Frauen in Russland zu den Wahlen zugelassen.</li>
+                            <li class="bg-gray-50 p-3 rounded border border-gray-100"><strong>→ Lösung 4:</strong> <strong>Seitdem</strong> 1920 alle Einschränkungen des Wahlrechts aufgrund des Geschlechts verboten wurden, dürfen Frauen in den USA auf allen Ebenen wählen.</li>
+                            <li class="bg-gray-50 p-3 rounded border border-gray-100"><strong>→ Lösung 5:</strong> <strong>Seit</strong> sich 1984 das Frauenwahlrecht auch in Liechtenstein durchgesetzt hat, können alle wahlberechtigten Frauen und Männer in Europa an Wahlen teilnehmen.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="aufgabe-6" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800"><i class="fa-solid fa-headphones text-brand-500 mr-2"></i> 6. Transkription Hörtext: Die Einführung des Frauenwahlrechts in der Schweiz</h2>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4 text-sm mb-8">
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Heute kommt der Film „Die göttliche Ordnung“ der Schweizer Regisseurin Petra Volpe in die deutschen Kinos. In der Schweiz läuft der Film bereits und er begeistert die Zuschauer. Der Film ist eine Komödie mit einem ernsten Hintergrund. Er handelt von der Einführung des Frauenwahlrechts in der Schweiz. Am Telefon begrüße ich nun die Historikerin Marion Fischler von der Universität Bern. Guten Morgen, Frau Fischler!
+                                </div>
+                                <div class="pl-4 border-l-4 border-gray-300"><strong class="text-gray-800">Frau Fischler:</strong> Guten Morgen, Herr Hofmann.</div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Viele Menschen sind völlig überrascht, wenn sie hören, dass das Frauenwahlrecht in der Schweiz erst 1971 eingeführt wurde.
+                                </div>
+                                <div class="pl-4 border-l-4 border-gray-300"><strong class="text-gray-800">Frau Fischler:</strong> Das kann ich verstehen, denn in Deutschland, Österreich oder den Niederlanden gibt es das Wahlrecht für Frauen schon seit 1919, viele weitere Länder kamen in den 1920er-Jahren dazu. Die erste Stadt der Welt, die das Frauenwahlrecht einführte, war übrigens die Stadt Vélez in Kolumbien. Dort durften Frauen bereits 1853 wählen.</div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Wie kam es dazu, dass die Schweizerinnen so lange warten mussten? Die Schweiz gilt doch für viele als Musterland der Demokratie und der Mitbestimmung.
+                                </div>
+                                <div class="pl-4 border-l-4 border-gray-300"><strong class="text-gray-800">Frau Fischler:</strong> Um das im Detail zu beschreiben, würde ich viel mehr Zeit brauchen, als wir in diesem kurzen Interview haben. Fest steht, dass es ein langer und schwerer Kampf war. Es gab in der Schweiz bereits Mitte des 19. Jahrhunderts Frauengruppen, die sich für die Rechte der Frauen eingesetzt haben. Allerdings waren damals die Aufgaben für Frauen und Männer in der Schweiz und in vielen anderen Ländern klar getrennt: Frauen sollten in sozialen und moralischen Fragen mehr Mitbestimmungsrecht bekommen, für die Politik waren aber nur die Männer zuständig. Zu Beginn des 20. Jahrhunderts änderte sich das in vielen Ländern. Auch in der Schweiz wurden nach 1900 die Stimmen für das Frauenwahlrecht immer lauter. 1909 wurde der Schweizerische Verband für Frauenstimmrecht gegründet.</div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Aber bis 1971 verging doch noch eine sehr lange Zeit.
+                                </div>
+                                <div class="pl-4 border-l-4 border-gray-300"><strong class="text-gray-800">Frau Fischler:</strong> Die Schweizer Frauen sind in dieser Zeit nicht untätig geblieben, es gab immer wieder Unterschriftensammlungen und andere Aktivitäten. Ende der 1950er-Jahre hatten die Frauen erste Erfolge, sie bekamen in verschiedenen Gemeinden, unter anderem in Basel, das Stimmrecht auf kommunaler Ebene. Später motivierte vor allem die 1968er-Bewegung die Frauen in der Schweiz, für ihre Rechte auf nationaler Ebene weiter zu kämpfen. Am 7. Februar 1971 klappte es endlich: Die Bürger nahmen in einer Volksabstimmung das Stimm- und Wahlrecht für Frauen mit 65,7 Prozent Ja-Stimmen an.</div>
+                                <div class="dialogue-moderator">
+                                    <strong class="text-indigo-700">Moderator:</strong> Gab es dann auch gleich die ersten Politikerinnen?
+                                </div>
+                                <div class="pl-4 border-l-4 border-gray-300"><strong class="text-gray-800">Frau Fischler:</strong> Es gab auf kommunaler Ebene schon vor 1971 einige Politikerinnen. 1958 wurde Gertrud Späth-Schweizer als erste Frau in den Bürgerrat und somit in eine politische Behörde gewählt. Auf nationaler Ebene übernahm 1984 eine Frau als erste Bundesrätin ein wichtiges Amt, 1991 folgte die erste Ständeratspräsidentin. Heute gehören die Frauen ganz selbstverständlich in die Politik und man kann sie sich eigentlich gar nicht mehr anders vorstellen.</div>
+                            </div>
+                            
+                            <div class="bg-brand-50 p-5 rounded-lg border border-brand-100">
+                                <h4 class="font-bold text-gray-800 mb-2">Was erfahren Sie über die Einführung des Frauenwahlrechts in der Schweiz?</h4>
+                                <p class="text-sm text-gray-800 leading-relaxed"><strong>→ Lösung:</strong> Über die Einführung des Frauenwahlrechts in der Schweiz erfahre ich viele interessante Informationen. Verspätete Einführung: Die Schweiz führte das Frauenwahlrecht erst 1971 ein – viel später als andere Länder. In Deutschland und Österreich gab es das Wahlrecht für Frauen schon seit 1919. Gründe für die Verspätung: In der Schweiz waren die Aufgaben für Frauen und Männer klar getrennt. Frauen sollten nur in sozialen und moralischen Fragen mitbestimmen, für die Politik waren nur die Männer zuständig. Es war ein langer und schwerer Kampf. Historische Entwicklung: Mitte des 19. Jahrhunderts engagierten sich erste Frauengruppen. 1909 wurde der Schweizerische Verband für Frauenstimmrecht gegründet. Ende der 1950er-Jahre gab es erste Erfolge auf kommunaler Ebene, z. B. in Basel. Die 1968er-Bewegung motivierte Frauen, weiterzukämpfen. Am 7. Februar 1971 kam die endgültige Einführung mit 65,7 Prozent Ja-Stimmen. Erste Politikerinnen: 1958 wurde Gertrud Späth-Schweizer als erste Frau in den Bürgerrat gewählt, 1984 gab es die erste Bundesrätin und 1991 die erste Ständeratspräsidentin. Heute gehören Frauen ganz selbstverständlich in die Politik.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-14" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">14. Strukturen: Die Konjunktionen aber und sondern</h2>
+                        <h3 class="font-bold text-gray-700 mb-4">14b. Verbinden Sie die Sätze mit aber oder sondern.</h3>
+                        <ul class="space-y-2 text-sm text-gray-800 list-disc pl-5">
+                            <li><strong>→ Lösung 1:</strong> Ich interessiere mich nicht für Politik, <strong>sondern</strong> für Sport.</li>
+                            <li><strong>→ Lösung 2:</strong> Die Verträge wurden noch nicht unterzeichnet, <strong>sondern</strong> nur ausführlich besprochen.</li>
+                            <li><strong>→ Lösung 3:</strong> Angela möchte Politik studieren, <strong>aber</strong> sie findet auch Medizin interessant.</li>
+                            <li><strong>→ Lösung 4:</strong> Tobias kann sich schriftlich gut ausdrücken, <strong>aber</strong> er kann auch gut reden.</li>
+                            <li><strong>→ Lösung 5:</strong> Der Politiker will nicht mehr öffentlich auftreten, <strong>sondern</strong> sich ins Privatleben zurückziehen.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="aufgabe-15" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-gray-800">15. Politiker</h2>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-gray-800 mb-2">15a. Beschreiben Sie die Grafik.</h3>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-6 text-sm text-gray-800 border border-blue-100">
+                                <p><strong>→ Lösung:</strong> Die Grafik zeigt die Berufe der Bundestagsabgeordneten in Deutschland während der Wahlperiode von 2013 bis 2017. Auf dem ersten Platz liegen die Juristen mit 196 Abgeordneten. Das ist mit Abstand die größte Gruppe. Dahinter folgen die Politologen mit 48 Abgeordneten. Den dritten Platz belegen die Diplom-Volkswirte mit 26 Abgeordneten. Interessant ist, dass auch viele Lehrer (23), Verwaltungsfachleute (21) und Sozialarbeiter (20) im Bundestag sitzen. Außerdem gibt es 17 Diplom-Kaufleute, 15 Diplom-Betriebswirte, 14 Bankfachleute, 14 Soziologen und 13 Landwirte. In meinem Heimatland ist die Situation ähnlich. Die meisten Politiker haben Jura studiert oder haben einen wirtschaftswissenschaftlichen Hintergrund. Es gibt aber auch viele Lehrer und Ingenieure in der Politik. Meiner Meinung nach ist es wichtig, dass Politiker aus verschiedenen Berufen kommen, weil sie dann unterschiedliche Perspektiven und Erfahrungen einbringen können.</p>
+                            </div>
+
+                            <h3 class="font-bold text-gray-800 mb-2">15b. Diskutieren Sie in kleinen Gruppen.</h3>
+                            <div class="space-y-4 text-sm">
+                                <div class="border border-gray-200 rounded p-4">
+                                    <p><strong>→ Lösung Frage 1:</strong> Jemand, der in die Politik gehen möchte, sollte meiner Meinung nach praktische Erfahrungen in seinem Beruf gesammelt haben. Es ist wichtig, dass man weiß, wie das echte Leben funktioniert und welche Probleme die Menschen haben. Außerdem sind Kenntnisse in Wirtschaft, Recht und sozialen Fragen sehr wichtig. Ein Politiker sollte verstehen, wie die Wirtschaft funktioniert und welche Auswirkungen politische Entscheidungen haben. Ehrenamtliche Tätigkeiten zeigen Engagement für die Gesellschaft und sind daher sehr wertvoll. Wer sich schon vorher engagiert hat, kennt die Bedürfnisse der Menschen besser.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded p-4">
+                                    <p><strong>→ Lösung Frage 2:</strong> Ein akademischer Abschluss ist sicher hilfreich, aber nicht zwingend notwendig. Natürlich ist es gut, wenn Politiker gut ausgebildet sind und über Fachwissen verfügen. Aber ich finde, praktische Erfahrungen und Menschenkenntnis sind genauso wichtig. Auch Quereinsteiger können gute Politiker sein, wenn sie motiviert sind und sich für die Menschen einsetzen. Wichtiger als der Abschluss sind meiner Meinung nach Eigenschaften wie Integrität, Engagement und die Fähigkeit, Probleme zu lösen.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded p-4">
+                                    <p><strong>→ Lösung Frage 3:</strong> Politiker sollten zuverlässig und ehrlich sein, damit die Menschen ihnen vertrauen können. Sie sollten entscheidungsfreudig sein, weil sie auch in schwierigen Situationen Entscheidungen treffen müssen. Gute kommunikative Fähigkeiten, Empathie, Hilfsbereitschaft, Mut und Zielstrebigkeit sind ebenfalls wichtig. Egoismus, übermäßiger Ehrgeiz und zu starker Perfektionismus sind dagegen negative Eigenschaften. Ein guter Politiker sollte ein Gleichgewicht zwischen verschiedenen Eigenschaften finden und immer das Wohl der Bevölkerung im Auge haben.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-13" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">13. Wer bestimmt die Politik?</h2>
+                        
+                        <h3 class="font-bold text-gray-800 mb-2">13a. Was macht eigentlich eine Bundespräsidentin/ein Bundespräsident?</h3>
+                        <p class="text-sm text-gray-700 mb-6 bg-gray-50 p-4 rounded border border-gray-100">Der Bundespräsident/Die Bundespräsidentin in Österreich und der Bundespräsident/die Bundespräsidentin in Deutschland sind die offiziellen Staatsoberhäupter der beiden Länder. Sie vertreten ihre Länder nach außen und übernehmen viele repräsentative Aufgaben im In- und Ausland. Außerdem achten die Bundespräsidenten auf das Gleichgewicht und den sozialen Frieden in der Gesellschaft. Ein Unterschied besteht darin, dass das deutsche Staatsoberhaupt vom Bundestag gewählt wird, die österreichische Bundespräsidentin/der österreichische Bundespräsident wird direkt vom Volk gewählt. Die Politik des Landes bestimmen in Deutschland und in Österreich die jeweilige Bundesregierung, die von einer Bundeskanzlerin/einem Bundeskanzler geführt wird.</p>
+
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <h3 class="font-bold text-gray-800 mb-2">13b. Geben Sie die wichtigsten Informationen mündlich wieder.</h3>
+                                <p class="text-sm text-gray-700 bg-brand-50 p-3 rounded"><strong>→ Lösung:</strong> Die wichtigsten Informationen sind: Der Bundespräsident in Deutschland und Österreich ist das offizielle Staatsoberhaupt. Er vertritt sein Land nach außen und übernimmt repräsentative Aufgaben. Ein wichtiger Unterschied: In Deutschland wird der Bundespräsident vom Bundestag gewählt, in Österreich wählt das Volk den Bundespräsidenten direkt. Die Politik wird aber nicht vom Bundespräsidenten bestimmt, sondern von der Bundesregierung unter Leitung des Bundeskanzlers.</p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="font-bold text-gray-800 mb-2">13d. Berichten Sie. Wer regiert zurzeit in Ihrem Heimatland?</h3>
+                                <p class="text-sm text-gray-700 bg-brand-50 p-3 rounded"><strong>→ Lösung:</strong> In Ägypten regiert zurzeit Präsident Abdel Fattah el-Sisi. Er ist seit 2014 im Amt und wurde 2018 wiedergewählt. Das offizielle Staatsoberhaupt ist der Präsident. Er ernennt die Minister, unterzeichnet Gesetze und vertritt das Land international. Der Ministerpräsident leitet die Regierung und ist für die tägliche Politik verantwortlich. Zusammen mit dem Kabinett bestimmt er die Richtlinien der Politik.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <h3 class="font-bold text-gray-800 mb-2">13c. Was müssen Bundespräsidentin und Bundeskanzlerin tun?</h3>
+                            <ul class="list-disc pl-5 text-sm text-gray-700 grid grid-cols-2 gap-2">
+                                <li><strong>→ Lösung:</strong> Vorträge halten</li>
+                                <li><strong>→ Lösung:</strong> neue Gesetze unterzeichnen</li>
+                                <li><strong>→ Lösung:</strong> Minister ernennen</li>
+                                <li><strong>→ Lösung:</strong> Staatsgäste empfangen</li>
+                                <li><strong>→ Lösung:</strong> Verträge schließen</li>
+                                <li><strong>→ Lösung:</strong> über die Zusammenarbeit sprechen</li>
+                                <li><strong>→ Lösung:</strong> die Richtlinien der Politik bestimmen</li>
+                                <li><strong>→ Lösung:</strong> das Land international vertreten</li>
+                                <li><strong>→ Lösung:</strong> Kompromisse prüfen</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-16" class="scroll-mt-12">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">16. Nominalisierung</h2>
+                        
+                        <div class="mb-6">
+                            <h3 class="font-bold text-gray-700 mb-2">16a. Bilden Sie aus den Adjektiven Nomen.</h3>
+                            <p class="text-sm text-gray-800 bg-gray-50 p-4 rounded border border-gray-100 leading-relaxed">
+                                <strong>→ Lösung:</strong> die Zurückhaltung; die Ehrlichkeit; die Geduld; die Gutmütigkeit; die Zuverlässigkeit; die Kreativität; die Vorsichtigkeit; die Spontaneität; die Vernünftigkeit; die Höflichkeit; der Ehrgeiz; der Optimismus; der Perfektionismus; die Bescheidenheit; der Egoismus; die Hilfsbereitschaft; die Flexibilität; die Freundschaft; die Vorsicht; der Mut; die Ehre; das Ziel.
+                            </p>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="font-bold text-gray-700 mb-2">16b. Bilden Sie kurze Sätze mit den Nomen.</h3>
+                            <ul class="list-disc pl-5 text-sm text-gray-800 space-y-2">
+                                <li><strong>→ Lösung:</strong> Ein Politiker braucht Zuverlässigkeit und Ehrlichkeit, damit die Menschen ihm vertrauen können.</li>
+                                <li><strong>→ Lösung:</strong> Ein Chef sollte Entscheidungsfreude zeigen und zielstrebig sein, um das Unternehmen erfolgreich zu führen.</li>
+                                <li><strong>→ Lösung:</strong> Mitarbeiter in einer Firma brauchen Hilfsbereitschaft und Teamfähigkeit, um gut zusammenzuarbeiten.</li>
+                                <li><strong>→ Lösung:</strong> Ein Lehrer muss Geduld haben und kreativ sein, um seine Schüler motivieren zu können.</li>
+                                <li><strong>→ Lösung:</strong> Studenten sollten zielstrebig sein und Disziplin haben, um ihr Studium erfolgreich abzuschließen.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-gray-700 mb-2">16c. Der Arbeitstag einer Bundeskanzlerin</h3>
+                            <p class="text-sm text-gray-800 bg-blue-50 p-4 rounded border border-blue-100">
+                                <strong>→ Lösung:</strong> Der Arbeitstag einer Bundeskanzlerin/eines Bundeskanzlers beginnt mit dem Lesen der Nachrichten. Um 8.30 Uhr findet die erste Besprechung statt. Daran nehmen nur die engsten Mitarbeiter der Kanzlerin/des Kanzlers teil. Es folgt eine Diskussion über aktuelle Fragen und den Tagesablauf des Tages. Immer mittwochs um 9.30 Uhr gibt es eine Sitzung des Kabinetts. Hier sprechen die Minister ihre Tagesabläufe ab. Am Vormittag hat die Bundeskanzlerin/der Bundeskanzler weitere Termine. Das kann zum Beispiel ein Treffen mit Vertretern sein oder die Teilnahme an einer Veranstaltung. Neben den etwa 40 Terminen, die eine Kanzlerin/ein Kanzler pro Woche hat, gehört das Studium der Akten und die Unterzeichnung von Dokumenten zu ihren/seinen Aufgaben. Auch der Empfang von Staatsgästen steht oft auf dem Plan. Sie/Er muss mit dem Gast Gespräche über Politik führen und Lösungen für Probleme suchen. Die Beantwortung von Journalistenfragen erfolgt auf der anschließenden Pressekonferenz. Das Kanzleramt hat einen eigenen Koch, der das Essen für Staatsgäste zubereitet. Für eine Kanzlerin/einen Kanzler gibt es kaum eine Möglichkeit, Pause zu machen. Der Arbeitstag geht zwischen 22.00 Uhr und Mitternacht zu Ende. Für so viel Arbeit ist das Einkommen nicht hoch: Es liegt bei 21 000 Euro Grundgehalt im Monat. Das ist weniger als zum Beispiel Manager in hohen Positionen verdienen.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="aufgabe-17" class="scroll-mt-12">
+                    <div class="bg-gray-800 text-white rounded-2xl shadow-xl overflow-hidden mt-8">
+                        <div class="px-8 py-6 border-b border-gray-700">
+                            <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-file-signature text-brand-400 mr-3"></i> 17. Bewerbung um ein Praktikum bei einem Bundestagsabgeordneten</h2>
+                        </div>
+                        
+                        <div class="p-8">
+                            <h3 class="font-bold text-brand-400 mb-2">17a. Bringen Sie die Abschnitte in die richtige Reihenfolge.</h3>
+                            <p class="text-sm text-gray-300 mb-4"><strong>→ Lösung Reihenfolge:</strong> C – E – B – A – D.</p>
+                            
+                            <div class="bg-white text-gray-800 p-6 rounded-lg text-sm font-serif shadow-inner mb-8 leading-relaxed">
+                                <p>Sehr geehrte Frau Schöne,</p>
+                                <p class="mt-4">Mit großem Interesse verfolge ich Ihre politische Arbeit und ich möchte mich hiermit um ein Praktikum in Ihrem Abgeordnetenbüro in Berlin bewerben.</p>
+                                <p class="mt-4">Ich studiere im 6. Semester Politikwissenschaften an der Universität Leipzig und werde mein Bachelorstudium im Juli abschließen. Ich habe in meinem Studium einen theoretischen Einblick in die Welt der Politik erhalten, nun möchte ich gern weitere praktische Erfahrungen sammeln.</p>
+                                <p class="mt-4">Am Ende des vierten Semesters hatte ich bereits die Möglichkeit, ein Praktikum bei der Europaabgeordneten Anke Engel zu absolvieren. Während dieser Tätigkeit habe ich Einblicke in die Arbeit der Europäischen Union erhalten. Auch im Studium habe ich mich auf Europapolitik spezialisiert, insbesondere auf den Bereich Bildungspolitik, in dem ich auch meine Bachelorarbeit schreibe.</p>
+                                <p class="mt-4">Da Sie sich mit dem Thema Bildung intensiv beschäftigen, hoffe ich, Sie mit meinen Kenntnissen auf dem Gebiet unterstützen zu können. Außerdem verfüge ich über sehr gute Englisch- und Französischkenntnisse, arbeite gern im Team, bin kreativ und flexibel.</p>
+                                <p class="mt-4">Bis zum Beginn meines Masterstudiums Anfang Oktober würde ich Ihnen gern als Praktikantin zur Verfügung stehen. Es wäre für mich eine große Ehre, Freude und Bereicherung, für Sie arbeiten zu dürfen. Über eine Einladung zu einem persönlichen Gespräch würde ich mich freuen.</p>
+                                <p class="mt-4">Mit freundlichen Grüßen<br>Eva Morgenstern</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-8">
+                                <div>
+                                    <h3 class="font-bold text-brand-400 mb-2">17b. Würden Sie die Bewerberin als Praktikantin nehmen?</h3>
+                                    <div class="bg-gray-700 p-4 rounded text-sm text-gray-200">
+                                        <p><strong>→ Lösung:</strong> Ja, ich würde die Bewerberin definitiv als Praktikantin nehmen. Dafür gibt es mehrere Gründe. Erstens hat sie relevante Studienerfahrung. Sie studiert Politikwissenschaften im 6. Semester und schließt bald ihr Bachelorstudium ab. Das zeigt, dass sie über fundiertes theoretisches Wissen verfügt. Zweitens hat sie bereits Praktikumserfahrung bei einer Europaabgeordneten gesammelt. Das ist ein großer Vorteil, weil sie schon weiß, wie die politische Arbeit funktioniert. Drittens hat sie sich auf Bildungspolitik spezialisiert, was gut zur politischen Arbeit der Abgeordneten passt. Viertens verfügt sie über sehr gute Sprachkenntnisse in Englisch und Französisch. Das ist in der Politik sehr wichtig. Und schließlich beschreibt sie sich als teamfähig, kreativ und flexibel. Das sind wichtige Eigenschaften für eine Praktikantin. Insgesamt scheint sie sehr gut qualifiziert und motiviert zu sein.</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-brand-400 mb-2">17c. Eigenes Bewerbungsschreiben</h3>
+                                    <div class="bg-white text-gray-800 p-5 rounded-lg text-xs font-serif shadow-inner h-full">
+                                        <p><strong>→ Lösung:</strong></p>
+                                        <p class="mt-2">Sehr geehrte Damen und Herren,</p>
+                                        <p class="mt-2">mit großem Interesse verfolge ich die politische Arbeit Ihrer Partei und ich möchte mich hiermit um ein Praktikum in Ihrem Büro bewerben. Ich studiere im 4. Semester Politikwissenschaften an der Universität Kairo und werde mein Studium voraussichtlich im nächsten Jahr abschließen. Während meines Studiums habe ich mich intensiv mit dem Thema Demokratie und politische Partizipation beschäftigt. Ich habe mich auf den Bereich Internationale Beziehungen spezialisiert und bereits erste Erfahrungen in einer NGO gesammelt. Dort konnte ich wertvolle Kenntnisse in der Organisation von politischen Veranstaltungen sammeln. Außerdem verfüge ich über sehr gute Deutsch- und Englischkenntnisse (C1) und arbeite gerne im Team. Ich bin kreativ, flexibel und motiviert, neue Dinge zu lernen. Bis März 2025 würde ich Ihnen gern als Praktikant zur Verfügung stehen. Es wäre mir eine große Freude, von Ihnen zu lernen und Sie bei Ihrer wichtigen Arbeit zu unterstützen. Über eine Einladung zu einem persönlichen Gespräch würde ich mich sehr freuen.</p>
+                                        <p class="mt-2">Mit freundlichen Grüßen<br>Ihr Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Ende von Geschichte und Politik (Goethe B1/B2). Viel Erfolg beim Deutschlernen!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mainScrollArea = document.getElementById('main-scroll-area');
+
+            // Add smooth scroll click events
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        
+                        // Update active state manually on click
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active state on scroll
+            let scrollTimeout;
+            mainScrollArea.addEventListener('scroll', () => {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (mainScrollArea.scrollTop >= (sectionTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Function to wrap words in spans for click-to-translate functionality
+            function makeWordsTranslatable() {
+                // Select paragraphs, list items, headings, and dialogues that contain the text
+                const textElements = document.querySelectorAll('p, li, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
+                
+                textElements.forEach(el => {
+                    // Skip elements that shouldn't be processed directly (like icons or tooltips)
+                    if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i') {
+                        return;
+                    }
+
+                    // Only process text nodes to avoid messing up nested HTML structures
+                    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+                    const textNodes = [];
+                    let node;
+                    while (node = walker.nextNode()) {
+                        // Skip text nodes inside already processed spans or icons
+                        if (node.parentElement.classList.contains('translatable-word') || 
+                            node.parentElement.tagName.toLowerCase() === 'i' ||
+                            node.nodeValue.trim() === '') {
+                            continue;
+                        }
+                        textNodes.push(node);
+                    }
+
+                    textNodes.forEach(textNode => {
+                        const words = textNode.nodeValue.split(/([\s.,:;!?()„"'-]+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() !== '' && !/^[\s.,:;!?()„"'-]+$/.test(word)) {
+                                const span = document.createElement('span');
+                                span.className = 'translatable-word';
+                                span.textContent = word;
+                                
+                                // Create tooltip element inside the word
+                                const tooltip = document.createElement('span');
+                                tooltip.className = 'word-tooltip';
+                                span.appendChild(tooltip);
+
+                                // Add click listener
+                                span.addEventListener('click', async (e) => {
+                                    e.stopPropagation(); // Prevent triggering parent clicks
+                                    handleWordClick(span, word, tooltip);
+                                });
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(word));
+                            }
+                        });
+                        textNode.parentNode.replaceChild(fragment, textNode);
+                    });
+                });
+            }
+
+            // Cache for translations to avoid redundant API calls
+            const translationCache = {};
+            // Keep track of the currently active word/tooltip
+            let activeWordSpan = null;
+
+            async function handleWordClick(span, word, tooltip) {
+                // Remove special characters for translation
+                const cleanWord = word.replace(/[.,:;!?()„"'-]/g, '').trim();
+                if (!cleanWord) return;
+
+                // Close previously active tooltip if clicking a different word
+                if (activeWordSpan && activeWordSpan !== span) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                }
+
+                // Toggle visibility if clicking the same word
+                if (span.classList.contains('show-tooltip')) {
+                    span.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                    return;
+                }
+
+                activeWordSpan = span;
+                span.classList.add('show-tooltip');
+
+                // Use cache if available
+                if (translationCache[cleanWord.toLowerCase()]) {
+                    tooltip.textContent = translationCache[cleanWord.toLowerCase()];
+                    return;
+                }
+
+                // Show loading state
+                span.classList.add('loading');
+                tooltip.textContent = '...';
+
+                try {
+                    // Call free MyMemory Translation API (no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanWord)}&langpair=de|en`);
+                    const data = await response.json();
+
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        let translation = data.responseData.translatedText;
+                        if (translation.toLowerCase() === cleanWord.toLowerCase()) {
+                            translation = "[No trans]";
+                        }
+                        translationCache[cleanWord.toLowerCase()] = translation;
+                        tooltip.textContent = translation;
+                    } else {
+                        tooltip.textContent = "Error";
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    tooltip.textContent = "Failed";
+                } finally {
+                    span.classList.remove('loading');
+                }
+            }
+
+            // Close tooltips when clicking anywhere else on the document
+            document.addEventListener('click', () => {
+                if (activeWordSpan) {
+                    activeWordSpan.classList.remove('show-tooltip');
+                    activeWordSpan = null;
+                }
+            });
+
+            // Initialize the translation feature
+            makeWordsTranslatable();
+
+            // === PARAGRAPH TRANSLATION FEATURE ===
+            // Add translate buttons to all paragraphs and dialogues
+            function addParagraphTranslateButtons() {
+                const textElements = document.querySelectorAll(
+                    'section p:not(.english-text):not(.para-translation), ' +
+                    'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
+                    'section div[class*="border-l-4"] > p'
+                );
+                
+                textElements.forEach(el => {
+                    // Skip very short text, headers, buttons, icons
+                    const text = el.textContent.trim();
+                    if (text.length < 20) return;
+                    if (el.querySelector('.para-translate-btn')) return;
+                    if (el.classList.contains('para-translation')) return;
+                    if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
+                    if (el.classList.contains('english-text')) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'para-translate-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await translateParagraph(el, btn);
+                    });
+                    el.appendChild(btn);
+                });
+            }
+            
+            const paraTranslationCache = {};
+            
+            async function translateParagraph(el, btn) {
+                // Get clean text without the button text
+                const clonedEl = el.cloneNode(true);
+                clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
+                const text = clonedEl.textContent.trim();
+                
+                if (!text || text.length < 10) return;
+                
+                // Check cache
+                const cacheKey = text.substring(0, 100);
+                if (paraTranslationCache[cacheKey]) {
+                    showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
+                    return;
+                }
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+                btn.disabled = true;
+                
+                try {
+                    // Use MyMemory API (free, no key needed)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
+                    const data = await response.json();
+                    
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const translation = data.responseData.translatedText;
+                        paraTranslationCache[cacheKey] = translation;
+                        showParagraphTranslation(el, translation, btn);
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Error';
+                    }
+                } catch (error) {
+                    console.error('Paragraph translation error:', error);
+                    btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
+                }
+                
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+            
+            function showParagraphTranslation(el, translation, btn) {
+                // Remove existing translation if toggling
+                const existing = el.querySelector('.para-translation');
+                if (existing) {
+                    existing.remove();
+                    btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
+                    btn.classList.remove('translated');
+                    return;
+                }
+                
+                const transEl = document.createElement('span');
+                transEl.className = 'para-translation';
+                transEl.textContent = translation;
+                el.appendChild(transEl);
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
+                btn.classList.add('translated');
+            }
+            
+            // Initialize paragraph translate buttons
+            addParagraphTranslateButtons();
+    
+        });
+    </script>
+</body>
+</html>
