@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,18 +30,62 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        .dialogue-a { border-left: 4px solid #14b8a6; background-color: #f0fdfa; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
-        .dialogue-b { border-left: 4px solid #f59e0b; background-color: #fffbeb; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
-        .dialogue-moderator { border-left: 4px solid #6366f1; background-color: #eef2ff; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 0.5rem; }
-        
-        html { scroll-behavior: smooth; }
-        .nav-link.active { background-color: #e2e8f0; color: #0f766e; font-weight: 600; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .dialogue-a {
+            border-left: 4px solid #14b8a6;
+            background-color: #f0fdfa;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .dialogue-b {
+            border-left: 4px solid #f59e0b;
+            background-color: #fffbeb;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .dialogue-moderator {
+            border-left: 4px solid #6366f1;
+            background-color: #eef2ff;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin-bottom: 0.5rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .nav-link.active {
+            background-color: #e2e8f0;
+            color: #0f766e;
+            font-weight: 600;
+        }
 
         .translatable-word {
             cursor: pointer;
@@ -48,7 +93,7 @@
             position: relative;
             display: inline-block;
         }
-        
+
         .translatable-word:hover {
             background-color: #ccfbf1;
             color: #0f766e;
@@ -83,7 +128,7 @@
             font-family: 'Inter', sans-serif;
             letter-spacing: 0.025em;
         }
-        
+
         .word-tooltip::after {
             content: '';
             position: absolute;
@@ -102,10 +147,17 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
         }
-    
+
         .english-text {
             color: #64748b;
             font-size: 0.875rem;
@@ -113,7 +165,7 @@
             display: block;
             margin-top: 0.25rem;
         }
-    
+
         .para-translate-btn {
             display: inline-flex;
             align-items: center;
@@ -129,14 +181,17 @@
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
         }
+
         .para-translate-btn:hover {
             background: #ccfbf1;
             color: #0f766e;
         }
+
         .para-translate-btn.translated {
             background: #f0fdfa;
             border-color: #99f6e4;
         }
+
         .para-translation {
             color: #64748b;
             font-size: 0.875rem;
@@ -149,14 +204,15 @@
             border-radius: 0 6px 6px 0;
             line-height: 1.6;
         }
-    
     </style>
 </head>
+
 <body class="flex h-screen overflow-hidden antialiased">
 
     <aside class="w-72 bg-white shadow-xl flex-shrink-0 z-20 flex flex-col h-full hidden md:flex">
         <div class="p-6 border-b border-gray-100">
-            <a href="index.html" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
+            <a href="index.html"
+                class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 mb-3 transition-colors">
                 <i class="fa-solid fa-arrow-left mr-1.5"></i> Zurück zur Übersicht
             </a>
             <h1 class="text-xl font-bold text-gray-800 leading-tight">
@@ -166,87 +222,189 @@
         </div>
         <nav class="flex-1 overflow-y-auto py-4" id="sidebar-nav">
             <ul class="space-y-1 px-3">
-                <li class="pt-2 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Lesen & Entdecken</li>
-                <li><a href="#aufgabe-2" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-book-open w-5 text-center mr-2 text-gray-400"></i> Aufgabe 2: Reisen früher/heute</a></li>
-                <li><a href="#aufgabe-5" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-earth-americas w-5 text-center mr-2 text-gray-400"></i> Aufgabe 5: Entdecker</a></li>
-                <li><a href="#aufgabe-8" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-laptop w-5 text-center mr-2 text-gray-400"></i> Aufgabe 8: Evas Reiseblog</a></li>
-                
-                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Hören & Sprechen</li>
-                <li><a href="#aufgabe-6" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> Aufgabe 6: Interview</a></li>
-                <li><a href="#aufgabe-7" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-headphones w-5 text-center mr-2 text-gray-400"></i> Aufgabe 7: Abenteuer Urlaub</a></li>
-                <li><a href="#aufgabe-10" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-suitcase-rolling w-5 text-center mr-2 text-gray-400"></i> Aufgabe 10: Reiseprobleme</a></li>
-                <li><a href="#aufgabe-11" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-bullhorn w-5 text-center mr-2 text-gray-400"></i> Aufgabe 11: Durchsagen</a></li>
-                <li><a href="#aufgabe-14" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-users w-5 text-center mr-2 text-gray-400"></i> Aufgabe 14: Klassenspaziergang</a></li>
-                
-                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Umwelt & Präsentation</li>
-                <li><a href="#aufgabe-15" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-leaf w-5 text-center mr-2 text-gray-400"></i> Aufgabe 15: Umwelt & Verkehr</a></li>
-                <li><a href="#aufgabe-16" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-person-chalkboard w-5 text-center mr-2 text-gray-400"></i> Aufgabe 16: Präsentationen</a></li>
+                <li class="pt-2 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Lesen & Entdecken
+                </li>
+                <li><a href="#aufgabe-2"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-book-open w-5 text-center mr-2 text-gray-400"></i> Aufgabe 2: Reisen
+                        früher/heute</a></li>
+                <li><a href="#aufgabe-5"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-earth-americas w-5 text-center mr-2 text-gray-400"></i> Aufgabe 5:
+                        Entdecker</a></li>
+                <li><a href="#aufgabe-8"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-laptop w-5 text-center mr-2 text-gray-400"></i> Aufgabe 8: Evas
+                        Reiseblog</a></li>
+
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Hören & Sprechen
+                </li>
+                <li><a href="#aufgabe-6"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-comments w-5 text-center mr-2 text-gray-400"></i> Aufgabe 6:
+                        Interview</a></li>
+                <li><a href="#aufgabe-7"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-headphones w-5 text-center mr-2 text-gray-400"></i> Aufgabe 7: Abenteuer
+                        Urlaub</a></li>
+                <li><a href="#aufgabe-10"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-suitcase-rolling w-5 text-center mr-2 text-gray-400"></i> Aufgabe 10:
+                        Reiseprobleme</a></li>
+                <li><a href="#aufgabe-11"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-bullhorn w-5 text-center mr-2 text-gray-400"></i> Aufgabe 11:
+                        Durchsagen</a></li>
+                <li><a href="#aufgabe-14"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-users w-5 text-center mr-2 text-gray-400"></i> Aufgabe 14:
+                        Klassenspaziergang</a></li>
+
+                <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Umwelt &
+                    Präsentation</li>
+                <li><a href="#aufgabe-15"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-leaf w-5 text-center mr-2 text-gray-400"></i> Aufgabe 15: Umwelt &
+                        Verkehr</a></li>
+                <li><a href="#aufgabe-16"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-person-chalkboard w-5 text-center mr-2 text-gray-400"></i> Aufgabe 16:
+                        Präsentationen</a></li>
 
                 <li class="pt-4 pb-1 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Grammatik</li>
-                <li><a href="#grammatik" class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i class="fa-solid fa-spell-check w-5 text-center mr-2 text-gray-400"></i> Grammatik-Übersicht</a></li>
+                <li><a href="#grammatik"
+                        class="nav-link block px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm"><i
+                            class="fa-solid fa-spell-check w-5 text-center mr-2 text-gray-400"></i>
+                        Grammatik-Übersicht</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="flex-1 flex flex-col h-full bg-slate-50 relative">
         <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between z-10 md:hidden">
-            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel 9: Reisen und Verkehr</h1>
-            <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
+            <h1 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-book-open text-brand-500 mr-2"></i>Kapitel
+                9: Reisen und Verkehr</h1>
+            <button class="text-gray-500 hover:text-gray-800"
+                onclick="alert('Sidebar navigation available on desktop view.')"><i
+                    class="fa-solid fa-bars text-xl"></i></button>
         </header>
 
         <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
             <div class="max-w-4xl mx-auto space-y-12 pb-20">
-                
+
                 <!-- Title Block -->
                 <div class="text-center mb-12">
-                    <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Extrahierte Texte (Verbatim)</span>
+                    <span
+                        class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 text-sm font-semibold mb-4">Extrahierte
+                        Texte (Verbatim)</span>
                     <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Kapitel 9: Reisen und Verkehr</h1>
                     <p class="text-xl text-gray-600">Berufe, Bewerbungen, Arbeitswelt und Nebensätze</p>
                 </div>
 
                 <!-- AUFGABE 2 -->
                 <section id="aufgabe-2" class="scroll-mt-12">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">2</span> Aufgabe 2 – Reisen früher und heute</h2>
-                    <p class="text-sm text-gray-600 mb-6">a) Arbeiten Sie zu zweit. Eine Teilnehmerin/Ein Teilnehmer liest Teil A, eine Teilnehmerin/ein Teilnehmer liest Teil B.</p>
-                    
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span
+                            class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">2</span>
+                        Aufgabe 2 – Reisen früher und heute</h2>
+                    <p class="text-sm text-gray-600 mb-6">a) Arbeiten Sie zu zweit. Eine Teilnehmerin/Ein Teilnehmer
+                        liest Teil A, eine Teilnehmerin/ein Teilnehmer liest Teil B.</p>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">Teil A – Reisen bis zum 18. Jahrhundert</h3>
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">Teil A – Reisen bis zum
+                                18. Jahrhundert</h3>
                             <div class="text-gray-700 text-sm leading-relaxed space-y-3">
-                                <p>Seit der Erfindung der Schrift vor 5 000 Jahren berichten Reisende über ihre Erlebnisse. In frühen Reiseberichten kann man lesen, dass Reisen weit einfach und riskant war. Oft waren es Handelsreisende, die sich auf den Weg in fremde Orte oder Länder machten. Gefahren lauerten überall¹: Es gab Räuber, wilde Tiere, kaum Straßen und keine Wegweiser. Deshalb war das Wissen über „Weg und Steg“ für reisende Kaufleute überlebenswichtig. Wer wusste, welche Wege man benutzen kann, wo man am besten übernachten kann, hatte einen großen Vorteil.</p>
-                                <p>Zum Reisen benötigte man im Mittelalter mehr Zeit als heute. Viele waren zu Fuß oder mit dem Pferd unterwegs. Kaufleute nutzten für ihre Waren Ochsen- oder Pferdekarren. Ochsen schafften ca. 15 km am Tag, mit Pferden ging es etwas schneller.</p>
-                                <p>Im 18. Jahrhundert entdeckten Adlige und wohlhabende* Bürger das Reisen, vor allem um Kunst und Kultur in anderen Ländern kennenzulernen und sich zu bilden. Besonders beliebt waren die Städte Florenz, Rom, Venedig, Wien und Paris.</p>
-                                <p>Die bekannteste deutsche Bildungsreise im 18. Jahrhundert war die des Dichters Johann Wolfgang von Goethe, der im September 1786 eine zwei Jahre dauernde Reise nach Italien begann. Seine Eindrücke und Erlebnisse beschrieb er in seinem Buch „Italienische Reise“.</p>
-                                <p>Das übliche Reisegepäck enthielt damals nur Wäsche zum Wechseln und eine kleine Reiseapotheke mit diversen Medikamenten, z. B. gegen Bauchschmerzen.</p>
-                                <p class="text-xs text-gray-500 pt-2 border-t mt-2">¹Die Reise war gefährlich. *wohlhabend: reich</p>
+                                <p>Seit der Erfindung der Schrift vor 5 000 Jahren berichten Reisende über ihre
+                                    Erlebnisse. In frühen Reiseberichten kann man lesen, dass Reisen weit einfach und
+                                    riskant war. Oft waren es Handelsreisende, die sich auf den Weg in fremde Orte oder
+                                    Länder machten. Gefahren lauerten überall¹: Es gab Räuber, wilde Tiere, kaum Straßen
+                                    und keine Wegweiser. Deshalb war das Wissen über „Weg und Steg“ für reisende
+                                    Kaufleute überlebenswichtig. Wer wusste, welche Wege man benutzen kann, wo man am
+                                    besten übernachten kann, hatte einen großen Vorteil.</p>
+                                <p>Zum Reisen benötigte man im Mittelalter mehr Zeit als heute. Viele waren zu Fuß oder
+                                    mit dem Pferd unterwegs. Kaufleute nutzten für ihre Waren Ochsen- oder Pferdekarren.
+                                    Ochsen schafften ca. 15 km am Tag, mit Pferden ging es etwas schneller.</p>
+                                <p>Im 18. Jahrhundert entdeckten Adlige und wohlhabende* Bürger das Reisen, vor allem um
+                                    Kunst und Kultur in anderen Ländern kennenzulernen und sich zu bilden. Besonders
+                                    beliebt waren die Städte Florenz, Rom, Venedig, Wien und Paris.</p>
+                                <p>Die bekannteste deutsche Bildungsreise im 18. Jahrhundert war die des Dichters Johann
+                                    Wolfgang von Goethe, der im September 1786 eine zwei Jahre dauernde Reise nach
+                                    Italien begann. Seine Eindrücke und Erlebnisse beschrieb er in seinem Buch
+                                    „Italienische Reise“.</p>
+                                <p>Das übliche Reisegepäck enthielt damals nur Wäsche zum Wechseln und eine kleine
+                                    Reiseapotheke mit diversen Medikamenten, z. B. gegen Bauchschmerzen.</p>
+                                <p class="text-xs text-gray-500 pt-2 border-t mt-2">¹Die Reise war gefährlich.
+                                    *wohlhabend: reich</p>
                             </div>
                         </div>
 
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">Teil B – Modernes Reisen</h3>
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">Teil B – Modernes Reisen
+                            </h3>
                             <div class="text-gray-700 text-sm leading-relaxed space-y-3">
-                                <p>Die heute noch beliebte Vergnügungs- und Erholungsreise entstand im 19. Jahrhundert. Die Reiseziele wurden immer exotischer, die Reisenden suchten Spaß und Abenteuer. So fuhr man mit dem Orientexpress nach Istanbul oder mit dem Dampfschiff auf dem Nil.</p>
-                                <p>Auch das Gepäck passte sich¹ den neuen Ansprüchen an: Man reiste mit zwei oder drei großen Schrankkoffern. Übrigens waren im 19. Jahrhundert auch Forschungsreisen in Mode. Ziel vieler Forscher war es, unbekannte Gebiete in der Welt zu entdecken und zu erforschen.</p>
-                                <p>Die mondanen Seebäder² an der Ost- und Nordseeküste der Adria kamen zu Beginn des 20. Jahrhunderts in Mode. Dort brachte das Bürgertum bis zu zwei Wochen Sommerurlaub. Ende der 1950er-Jahre, als die sogenannte Wirtschaftswunder für allgemeinen Wohlstand in der Bundesrepublik Deutschland sorgte, wurde der Urlaub zum Massenphänomen. 1958 fuhren bereits 3,5 Millionen Deutsche nach Italien. Später kamen Reiseziele wie Spanien und ferne Länder wie Thailand oder die Malediven dazu. Ostdeutsche konnten bis zum Fall der Mauer 1989 von solchen Urlaubszielen nur träumen.</p>
-                                <p>Heute gibt es kaum einen Ort, wo keine Touristen waren. Man kann mit dem Schiff zu den Inuit in der Arktis fahren, zu Fuß durch die Wüste Gobi laufen oder auf den Berge im Himalaja klettern. Abenteuer- und Wellnessurlaub, in der Gruppe oder individuell, mit ortskundigem Reiseleiter³ oder einem Animationsprogramm – alles ist möglich.</p>
-                                <p>Die Erwartungen an das Reisen wachsen. Es soll sowohl bilden als auch entspannen. Statt wochenlang im Sommer am Meer zu erholen, unternehmen die Menschen mehrere kurze Reisen: Im Frühjahr steht ein Städtetrip auf dem Plan, im Herbst ein paar Wochenendreisen, im Winter Skifahren und im Sommer ein kurzer Strandurlaub. Nach dem Vergleich verschiedener Angebote buchen viele Menschen ihren nächsten Trip im Internet.</p>
-                                <p class="text-xs text-gray-500 pt-2 border-t mt-2">¹sich anpassen: sich verändern ²mondane Seebäder: exklusive Badeorte ³ortskundiger Reiseleiter: jemand, der die Gegend kennt</p>
+                                <p>Die heute noch beliebte Vergnügungs- und Erholungsreise entstand im 19. Jahrhundert.
+                                    Die Reiseziele wurden immer exotischer, die Reisenden suchten Spaß und Abenteuer. So
+                                    fuhr man mit dem Orientexpress nach Istanbul oder mit dem Dampfschiff auf dem Nil.
+                                </p>
+                                <p>Auch das Gepäck passte sich¹ den neuen Ansprüchen an: Man reiste mit zwei oder drei
+                                    großen Schrankkoffern. Übrigens waren im 19. Jahrhundert auch Forschungsreisen in
+                                    Mode. Ziel vieler Forscher war es, unbekannte Gebiete in der Welt zu entdecken und
+                                    zu erforschen.</p>
+                                <p>Die mondanen Seebäder² an der Ost- und Nordseeküste der Adria kamen zu Beginn des 20.
+                                    Jahrhunderts in Mode. Dort brachte das Bürgertum bis zu zwei Wochen Sommerurlaub.
+                                    Ende der 1950er-Jahre, als die sogenannte Wirtschaftswunder für allgemeinen
+                                    Wohlstand in der Bundesrepublik Deutschland sorgte, wurde der Urlaub zum
+                                    Massenphänomen. 1958 fuhren bereits 3,5 Millionen Deutsche nach Italien. Später
+                                    kamen Reiseziele wie Spanien und ferne Länder wie Thailand oder die Malediven dazu.
+                                    Ostdeutsche konnten bis zum Fall der Mauer 1989 von solchen Urlaubszielen nur
+                                    träumen.</p>
+                                <p>Heute gibt es kaum einen Ort, wo keine Touristen waren. Man kann mit dem Schiff zu
+                                    den Inuit in der Arktis fahren, zu Fuß durch die Wüste Gobi laufen oder auf den
+                                    Berge im Himalaja klettern. Abenteuer- und Wellnessurlaub, in der Gruppe oder
+                                    individuell, mit ortskundigem Reiseleiter³ oder einem Animationsprogramm – alles ist
+                                    möglich.</p>
+                                <p>Die Erwartungen an das Reisen wachsen. Es soll sowohl bilden als auch entspannen.
+                                    Statt wochenlang im Sommer am Meer zu erholen, unternehmen die Menschen mehrere
+                                    kurze Reisen: Im Frühjahr steht ein Städtetrip auf dem Plan, im Herbst ein paar
+                                    Wochenendreisen, im Winter Skifahren und im Sommer ein kurzer Strandurlaub. Nach dem
+                                    Vergleich verschiedener Angebote buchen viele Menschen ihren nächsten Trip im
+                                    Internet.</p>
+                                <p class="text-xs text-gray-500 pt-2 border-t mt-2">¹sich anpassen: sich verändern
+                                    ²mondane Seebäder: exklusive Badeorte ³ortskundiger Reiseleiter: jemand, der die
+                                    Gegend kennt</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-brand-50 p-6 rounded-xl border border-brand-100">
-                        <p class="text-sm font-bold text-gray-800 mb-4">b) Fassen Sie Ihren Textabschnitt zusammen. Machen Sie sich zuerst Notizen und geben Sie die Informationen anschließend mündlich wieder.</p>
-                        <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-2">Lösungen / Vollständige mündliche Zusammenfassungen:</h4>
-                        
+                        <p class="text-sm font-bold text-gray-800 mb-4">b) Fassen Sie Ihren Textabschnitt zusammen.
+                            Machen Sie sich zuerst Notizen und geben Sie die Informationen anschließend mündlich wieder.
+                        </p>
+                        <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-2">Lösungen /
+                            Vollständige mündliche Zusammenfassungen:</h4>
+
                         <div class="space-y-4 text-sm text-gray-800">
                             <div>
-                                <strong class="text-brand-700 block mb-1">Zusammenfassung Teil A – Reisen bis zum 18. Jahrhundert:</strong>
-                                <p>Früher war das Reisen sehr riskant und langsam. Handelsreisende mussten mit Räubern, wilden Tieren und schlechten Wegen kämpfen. Man reiste zu Fuß, mit dem Pferd oder mit Ochsenkarren, was sehr langsam war. Im 18. Jahrhundert entdeckten reiche Bürger und Adlige das Reisen zur Bildung, wobei Städte wie Rom, Paris und Wien besonders beliebt waren. Goethes Reise nach Italien ist das bekannteste Beispiel dieser Bildungsreisen.</p>
+                                <strong class="text-brand-700 block mb-1">Zusammenfassung Teil A – Reisen bis zum 18.
+                                    Jahrhundert:</strong>
+                                <p>Früher war das Reisen sehr riskant und langsam. Handelsreisende mussten mit Räubern,
+                                    wilden Tieren und schlechten Wegen kämpfen. Man reiste zu Fuß, mit dem Pferd oder
+                                    mit Ochsenkarren, was sehr langsam war. Im 18. Jahrhundert entdeckten reiche Bürger
+                                    und Adlige das Reisen zur Bildung, wobei Städte wie Rom, Paris und Wien besonders
+                                    beliebt waren. Goethes Reise nach Italien ist das bekannteste Beispiel dieser
+                                    Bildungsreisen.</p>
                             </div>
                             <div>
-                                <strong class="text-brand-700 block mb-1">Zusammenfassung Teil B – Modernes Reisen:</strong>
-                                <p>Im 19. Jahrhundert entstand die Vergnügungsreise, mit Zielen wie Istanbul oder dem Nil. Später kamen Seebäder an der Ostsee in Mode. Nach dem Zweiten Weltkrieg wurde der Urlaub durch das Wirtschaftswunder zum Massenphänomen, viele Deutsche reisten nach Italien und später nach Spanien. Heute sind fast alle Orte der Welt touristisch erschlossen, und die Menschen unternehmen häufig mehrere kurze Reisen im Jahr, statt einen langen Sommerurlaub zu machen.</p>
+                                <strong class="text-brand-700 block mb-1">Zusammenfassung Teil B – Modernes
+                                    Reisen:</strong>
+                                <p>Im 19. Jahrhundert entstand die Vergnügungsreise, mit Zielen wie Istanbul oder dem
+                                    Nil. Später kamen Seebäder an der Ostsee in Mode. Nach dem Zweiten Weltkrieg wurde
+                                    der Urlaub durch das Wirtschaftswunder zum Massenphänomen, viele Deutsche reisten
+                                    nach Italien und später nach Spanien. Heute sind fast alle Orte der Welt touristisch
+                                    erschlossen, und die Menschen unternehmen häufig mehrere kurze Reisen im Jahr, statt
+                                    einen langen Sommerurlaub zu machen.</p>
                             </div>
                         </div>
                     </div>
@@ -254,25 +412,45 @@
 
                 <!-- AUFGABE 5 -->
                 <section id="aufgabe-5" class="scroll-mt-12">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">5</span> Aufgabe 5 – Berühmte deutsche Entdecker und Abenteurer</h2>
-                    <p class="text-sm text-gray-600 mb-6">a) Ergänzen Sie in den kurzen Texten die Verben im Präteritum.</p>
-                    
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span
+                            class="bg-brand-500 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">5</span>
+                        Aufgabe 5 – Berühmte deutsche Entdecker und Abenteurer</h2>
+                    <p class="text-sm text-gray-600 mb-6">a) Ergänzen Sie in den kurzen Texten die Verben im Präteritum.
+                    </p>
+
                     <div class="grid grid-cols-1 gap-6">
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                             <h3 class="text-lg font-bold text-brand-700 mb-2">Ferdinand von Hochstetter (1829–1884)</h3>
-                            <p class="text-sm text-gray-700 leading-relaxed">Ferdinand von Hochstetter war Geograf und Geologe. 1857 nahm er an einer Weltumsegelung der Wiener Kaiserlichen Akademie der Wissenschaften teil. Er erstellte als Erster eine geologische Karte von Neuseeland.</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">Ferdinand von Hochstetter war Geograf und
+                                Geologe. 1857 nahm er an einer Weltumsegelung der Wiener Kaiserlichen Akademie der
+                                Wissenschaften teil. Er erstellte als Erster eine geologische Karte von Neuseeland.</p>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                             <h3 class="text-lg font-bold text-brand-700 mb-2">Alexander von Humboldt (1769–1859)</h3>
-                            <p class="text-sm text-gray-700 leading-relaxed">Der berühmteste deutsche Forschungsreisende, Alexander von Humboldt, war schon Anfang des 19. Jahrhunderts sehr bekannt. Eine fünfjährige Expedition führte ihn nach Süd- und Mittelamerika. Dort entdeckte er rund 6 000 Pflanzen und klassifizierte mehr als 3 000 unbekannte Arten. In den folgenden Jahren schrieb Humboldt einen Reisebericht, der aus 34 Bänden besteht.</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">Der berühmteste deutsche
+                                Forschungsreisende, Alexander von Humboldt, war schon Anfang des 19. Jahrhunderts sehr
+                                bekannt. Eine fünfjährige Expedition führte ihn nach Süd- und Mittelamerika. Dort
+                                entdeckte er rund 6 000 Pflanzen und klassifizierte mehr als 3 000 unbekannte Arten. In
+                                den folgenden Jahren schrieb Humboldt einen Reisebericht, der aus 34 Bänden besteht.</p>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                            <h3 class="text-lg font-bold text-brand-700 mb-2">Ferdinand Freiherr von Richthofen (1833–1905)</h3>
-                            <p class="text-sm text-gray-700 leading-relaxed">Nach einer zwölf Jahre dauernden Forschungsreise begann Ferdinand Freiherr von Richthofen China. Das Land faszinierte ihn sehr und er landete, die Geologie des Kaiserreiches zu erforschen. In seinen Studien über China prägte er unter anderem den Begriff der Seidenstraße für die antiken Handelswege.</p>
+                            <h3 class="text-lg font-bold text-brand-700 mb-2">Ferdinand Freiherr von Richthofen
+                                (1833–1905)</h3>
+                            <p class="text-sm text-gray-700 leading-relaxed">Nach einer zwölf Jahre dauernden
+                                Forschungsreise begann Ferdinand Freiherr von Richthofen China. Das Land faszinierte ihn
+                                sehr und er landete, die Geologie des Kaiserreiches zu erforschen. In seinen Studien
+                                über China prägte er unter anderem den Begriff der Seidenstraße für die antiken
+                                Handelswege.</p>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                             <h3 class="text-lg font-bold text-brand-700 mb-2">Johannes Rebmann (1820–1876)</h3>
-                            <p class="text-sm text-gray-700 leading-relaxed">Johannes Rebmann war ein deutscher Sprachforscher und Geograf, der lange in Afrika lebte. Er sah als erster Europäer den Kilimandscharo (den höchsten Berg Afrikas) und berichtete als erster Forscher über die Existenz großer afrikanischer Seen wie des Viktoriasees, von denen er eine Landkarte erstellte. Rebmanns Karte diente als Grundlage für viele spätere Afrikaexpeditionen. Neben den geografischen Besonderheiten interessierte sich Rebmann auch für die Erforschung afrikanischer Sprachen.</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">Johannes Rebmann war ein deutscher
+                                Sprachforscher und Geograf, der lange in Afrika lebte. Er sah als erster Europäer den
+                                Kilimandscharo (den höchsten Berg Afrikas) und berichtete als erster Forscher über die
+                                Existenz großer afrikanischer Seen wie des Viktoriasees, von denen er eine Landkarte
+                                erstellte. Rebmanns Karte diente als Grundlage für viele spätere Afrikaexpeditionen.
+                                Neben den geografischen Besonderheiten interessierte sich Rebmann auch für die
+                                Erforschung afrikanischer Sprachen.</p>
                         </div>
                     </div>
                 </section>
@@ -285,23 +463,51 @@
                             <p class="text-sm text-gray-600 mt-1">a) Lesen und hören Sie den Blogeintrag von Eva.</p>
                         </div>
                         <div class="p-8">
-                            <div class="bg-yellow-50 p-6 rounded-lg border border-yellow-200 font-serif text-gray-800 text-sm leading-relaxed mb-6 shadow-inner">
-                                <p>Kennt jemand von euch das Wellnesshotel Sonnenhügel im Schwarzwald? Ich habe dort letztes Wochenende verbracht, weil ich mich vom Arbeitsstress erholen wollte. Das war mal wieder so eine spontane Idee von mir. Am Donnerstag habe ich in der Mittagspause in einem Online-Portal nach Wellnessangeboten gesucht und das Hotel Sonnenhügel gefunden. Es hatte einige positive Bewertungen und machte einen guten Eindruck.</p>
-                                <p class="mt-3">Am Freitagnachmittag bin ich losgefahren. Nachdem ich den üblichen Stau auf der Autobahn überstanden hatte, kam ich gegen 20 Uhr im Hotel an. Da wartete schon die erste Überraschung auf mich: Das Zimmer war etwa acht Quadratmeter groß, es gab nur eine Toilette und ein Waschbecken, keine Dusche. Ich habe mich sofort beschwert und wollte ein anderes Zimmer. Aber das Hotel war komplett ausgebucht.</p>
-                                <p class="mt-3">Im Hotelrestaurant, das direkt unter meinem Zimmer lag, fand eine Hochzeitsfeier statt. Bis 2.00 Uhr nachts haben die Hochzeitsgäste bei lauter Musik gefeiert, sodass ich vor Hunger eingeschlafen bin, denn im Restaurant war es wegen der Feier kein Platz mehr. Am nächsten Tag ging das so weiter. Beim Frühstück stand ich 30 Minuten in der Warteschlange und für eine Massage habe ich keinen Termin mehr bekommen. Außerdem wurde der Swimmingpool gerade umgebaut, man konnte ihn nicht benutzen.</p>
-                                <p class="mt-3">Als ich Draußen spazieren gehen wollte, habe ich bemerkt, dass sich direkt neben dem Hotel eine Baustelle befand. Ich musste die ganze Straße runtergehen, damit ich über einen Berg raufklettern und erst dann kam ich auf einen Wanderweg. Glücklicherweise habe ich bei meiner Wanderung nette Leute getroffen, mit denen ich mich gut unterhalten konnte. Die haben in einem anderen Hotel übernachtet und waren mit ihrer Unterkunft sehr zufrieden.</p>
-                                <p class="mt-3">Am nächsten Morgen bin ich ohne Frühstück gleich nach Hause gefahren. Ich glaube, in meiner eigenen Wohnung hätte ich mich besser erholt. Habt ihr so was schon mal erlebt?</p>
+                            <div
+                                class="bg-yellow-50 p-6 rounded-lg border border-yellow-200 font-serif text-gray-800 text-sm leading-relaxed mb-6 shadow-inner">
+                                <p>Kennt jemand von euch das Wellnesshotel Sonnenhügel im Schwarzwald? Ich habe dort
+                                    letztes Wochenende verbracht, weil ich mich vom Arbeitsstress erholen wollte. Das
+                                    war mal wieder so eine spontane Idee von mir. Am Donnerstag habe ich in der
+                                    Mittagspause in einem Online-Portal nach Wellnessangeboten gesucht und das Hotel
+                                    Sonnenhügel gefunden. Es hatte einige positive Bewertungen und machte einen guten
+                                    Eindruck.</p>
+                                <p class="mt-3">Am Freitagnachmittag bin ich losgefahren. Nachdem ich den üblichen Stau
+                                    auf der Autobahn überstanden hatte, kam ich gegen 20 Uhr im Hotel an. Da wartete
+                                    schon die erste Überraschung auf mich: Das Zimmer war etwa acht Quadratmeter groß,
+                                    es gab nur eine Toilette und ein Waschbecken, keine Dusche. Ich habe mich sofort
+                                    beschwert und wollte ein anderes Zimmer. Aber das Hotel war komplett ausgebucht.</p>
+                                <p class="mt-3">Im Hotelrestaurant, das direkt unter meinem Zimmer lag, fand eine
+                                    Hochzeitsfeier statt. Bis 2.00 Uhr nachts haben die Hochzeitsgäste bei lauter Musik
+                                    gefeiert, sodass ich vor Hunger eingeschlafen bin, denn im Restaurant war es wegen
+                                    der Feier kein Platz mehr. Am nächsten Tag ging das so weiter. Beim Frühstück stand
+                                    ich 30 Minuten in der Warteschlange und für eine Massage habe ich keinen Termin mehr
+                                    bekommen. Außerdem wurde der Swimmingpool gerade umgebaut, man konnte ihn nicht
+                                    benutzen.</p>
+                                <p class="mt-3">Als ich Draußen spazieren gehen wollte, habe ich bemerkt, dass sich
+                                    direkt neben dem Hotel eine Baustelle befand. Ich musste die ganze Straße
+                                    runtergehen, damit ich über einen Berg raufklettern und erst dann kam ich auf einen
+                                    Wanderweg. Glücklicherweise habe ich bei meiner Wanderung nette Leute getroffen, mit
+                                    denen ich mich gut unterhalten konnte. Die haben in einem anderen Hotel übernachtet
+                                    und waren mit ihrer Unterkunft sehr zufrieden.</p>
+                                <p class="mt-3">Am nächsten Morgen bin ich ohne Frühstück gleich nach Hause gefahren.
+                                    Ich glaube, in meiner eigenen Wohnung hätte ich mich besser erholt. Habt ihr so was
+                                    schon mal erlebt?</p>
                                 <p class="mt-4">Bis bald<br>Eure Eva</p>
                             </div>
 
                             <div class="space-y-4 text-sm text-gray-700">
                                 <div>
-                                    <strong class="text-gray-900">b) Was ging bei Evas Reise schief, was war nicht angenehm? Erstellen Sie eine Liste.</strong>
-                                    <p class="italic text-gray-500 mt-1">Beispiel: Es gab den üblichen Stau auf der Autobahn. Das Zimmer war nur acht Quadratmeter groß …</p>
+                                    <strong class="text-gray-900">b) Was ging bei Evas Reise schief, was war nicht
+                                        angenehm? Erstellen Sie eine Liste.</strong>
+                                    <p class="italic text-gray-500 mt-1">Beispiel: Es gab den üblichen Stau auf der
+                                        Autobahn. Das Zimmer war nur acht Quadratmeter groß …</p>
                                 </div>
                                 <div>
-                                    <strong class="text-gray-900 block mb-2">c) Schreiben Sie einen Blogeintrag und berichten Sie kurz über eine Reise, bei der Ihnen einiges nicht gefallen hat. Schreiben Sie mindestens 80 Wörter.</strong>
-                                    <p class="text-gray-600 mb-2">Sie können einige Wendungen aus dem Text verwenden:</p>
+                                    <strong class="text-gray-900 block mb-2">c) Schreiben Sie einen Blogeintrag und
+                                        berichten Sie kurz über eine Reise, bei der Ihnen einiges nicht gefallen hat.
+                                        Schreiben Sie mindestens 80 Wörter.</strong>
+                                    <p class="text-gray-600 mb-2">Sie können einige Wendungen aus dem Text verwenden:
+                                    </p>
                                     <ul class="list-disc pl-5 text-gray-600 space-y-1 bg-gray-50 p-4 rounded">
                                         <li>Ich bin am … losgefahren.</li>
                                         <li>Ich habe … im Stau gestanden/war … Stunden unterwegs.</li>
@@ -320,34 +526,50 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
                             <h2 class="text-xl font-bold text-gray-800">Aufgabe 6 – Interview: Urlaubsreisen</h2>
-                            <p class="text-sm text-gray-600 mt-1">Interviewen Sie zwei Kursteilnehmer und berichten Sie anschließend.</p>
+                            <p class="text-sm text-gray-600 mt-1">Interviewen Sie zwei Kursteilnehmer und berichten Sie
+                                anschließend.</p>
                         </div>
                         <div class="p-6">
-                            <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-4">Lösung / Vollständiges Interview:</h4>
-                            
+                            <h4 class="text-sm font-bold text-brand-800 uppercase tracking-wider mb-4">Lösung /
+                                Vollständiges Interview:</h4>
+
                             <div class="space-y-6 text-sm">
                                 <div>
-                                    <p class="font-bold text-gray-800 mb-2">Frage – Wie oft fahren Sie im Jahr in den Urlaub?</p>
-                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich fahre normalerweise zweimal im Jahr in den Urlaub, einmal im Sommer und einmal im Winter.</div>
-                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir ist es nur einmal im Jahr, meistens im Sommer, weil ich dann am meisten Urlaubstage habe.</div>
+                                    <p class="font-bold text-gray-800 mb-2">Frage – Wie oft fahren Sie im Jahr in den
+                                        Urlaub?</p>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich fahre
+                                        normalerweise zweimal im Jahr in den Urlaub, einmal im Sommer und einmal im
+                                        Winter.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir ist es
+                                        nur einmal im Jahr, meistens im Sommer, weil ich dann am meisten Urlaubstage
+                                        habe.</div>
                                 </div>
 
                                 <div>
-                                    <p class="font-bold text-gray-800 mb-2">Frage – Wohin reisen Sie im Urlaub am liebsten? / Welche Reiseziele stehen auf Ihrer Wunschliste?</p>
-                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Am liebsten reise ich ans Meer, zum Beispiel nach Griechenland oder Italien. Auf meiner Wunschliste steht schon lange Japan.</div>
-                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich bevorzuge Bergregionen, zum Beispiel die Alpen. Ich würde gern einmal Neuseeland besuchen.</div>
+                                    <p class="font-bold text-gray-800 mb-2">Frage – Wohin reisen Sie im Urlaub am
+                                        liebsten? / Welche Reiseziele stehen auf Ihrer Wunschliste?</p>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Am liebsten reise
+                                        ich ans Meer, zum Beispiel nach Griechenland oder Italien. Auf meiner
+                                        Wunschliste steht schon lange Japan.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich bevorzuge
+                                        Bergregionen, zum Beispiel die Alpen. Ich würde gern einmal Neuseeland besuchen.
+                                    </div>
                                 </div>
 
                                 <div>
                                     <p class="font-bold text-gray-800 mb-2">Frage – Was machen Sie im Urlaub gern?</p>
-                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich schwimme gern, lese Bücher am Strand und probiere die lokale Küche aus.</div>
-                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich wandere gern und besuche historische Orte, um mehr über die Kultur zu lernen.</div>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Ich schwimme
+                                        gern, lese Bücher am Strand und probiere die lokale Küche aus.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Ich wandere gern
+                                        und besuche historische Orte, um mehr über die Kultur zu lernen.</div>
                                 </div>
 
                                 <div>
                                     <p class="font-bold text-gray-800 mb-2">Frage – Was stört Sie im Urlaub?</p>
-                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Mich stört es, wenn es zu viele Touristen an einem Ort gibt und alles überfüllt ist.</div>
-                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir ist es schlechtes Wetter, das meine Pläne durcheinanderbringt.</div>
+                                    <div class="dialogue-a"><strong class="text-brand-700">A:</strong> Mich stört es,
+                                        wenn es zu viele Touristen an einem Ort gibt und alles überfüllt ist.</div>
+                                    <div class="dialogue-b"><strong class="text-amber-600">B:</strong> Bei mir ist es
+                                        schlechtes Wetter, das meine Pläne durcheinanderbringt.</div>
                                 </div>
                             </div>
                         </div>
@@ -356,49 +578,121 @@
 
                 <!-- AUFGABE 7 & 11 -->
                 <section id="aufgabe-7" class="scroll-mt-12">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><i class="fa-solid fa-headphones text-brand-500 mr-3"></i> Hörtexte</h2>
-                    
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><i
+                            class="fa-solid fa-headphones text-brand-500 mr-3"></i> Hörtexte</h2>
+
                     <div class="grid grid-cols-1 gap-8">
                         <!-- Aufgabe 7 -->
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                            <h3 class="text-xl font-bold text-gray-800 mb-4">Aufgabe 7 – Transkription Hörtext: Abenteuer Urlaub</h3>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Aufgabe 7 – Transkription Hörtext:
+                                Abenteuer Urlaub</h3>
                             <div class="space-y-4 text-sm">
-                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Hallo Rainer.</div>
-                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Ah, hallo Hanna, ich habe dich lange nicht gesehen. Wie geht es dir?</div>
-                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Mir geht es wieder gut. Wie geht es dir? Warst du im Urlaub?</div>
-                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Ja, das ist doch passiert? Wo warst du im Urlaub?</div>
-                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Ja, das schon, aber unsere Reise war eine Katastrophe. Wir hatten in der Nahe eine Gardasee gebucht. Wir hatten dort auch einen Ferienwagen bestellt. Die Wohnung lag aber etwas abseits, in der Nähe gab es keinen Supermarkt und wir waren sechs Kilometer vom See entfernt.</div>
-                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Und das ohne Auto …</div>
-                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Genau. Aber es kommt noch schlimmer: Nach zwei Tagen stand ein Ehepaar vor unserer Tür. Sie hatten auch diese Ferienwohnung gemietet.</div>
-                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Wie bitte? Sie hatten die Doppelbuchung.</div>
-                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Und was habt ihr dann gemacht?</div>
-                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Wir waren überrascht und unsere Sachen gepackt und sind mit dem Zug nach Österreich zurückgefahren. Nach ein paar Tagen in Innsbruck konnten wir unser Auto abholen. Wir waren 3000 Euro bezahlt und sind mit dem Auto zurückgefahren.</div>
-                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Wow. Es war ganz toll. Wir haben uns in Kanada ein Auto gemietet und sind damit gefahren. Die Natur ist dort einfach wunderbar, ein riesige Wälder, schöne Seen, tolle Städte. Wir waren übrigens auch in Vancouver. Dort wolltest du doch nie hin, oder?</div>
-                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Ich glaube, ich sollte doch mal wieder verreisen, wenn ich das höre.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Hallo Rainer.
+                                </div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Ah, hallo Hanna,
+                                    ich habe dich lange nicht gesehen. Wie geht es dir?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Mir geht es jetzt
+                                    wieder gut.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Was heißt jetzt
+                                    wieder gut? Warst du krank?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Nein, ich war im
+                                    Urlaub.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Was ist denn
+                                    passiert? Wo warst du denn?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Wir waren in
+                                    Italien.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Aber Italien ist
+                                    doch wunderschön.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Ja, das schon,
+                                    aber unsere Reise war eine Katastrophe. Das ging schon damit los, dass auf der Fahrt
+                                    unser Auto kaputtgegangen ist: Motorschaden. Wir sind nur bis Österreich gekommen
+                                    und konnten nicht weiterfahren. Die Werkstatt hat gesagt, wir brauchen einen neuen
+                                    Motor, das dauert eine Woche und kostet 3 000 Euro.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Puh, das ist
+                                    aber teuer.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Du sagst es. Dann
+                                    sind wir mit dem Zug weiter von Innsbruck an den Gardasee gefahren. Wir hatten dort
+                                    eine Ferienwohnung gemietet. Die Wohnung lag aber etwas abseits, in der Nähe gab es
+                                    keinen Supermarkt und wir waren sechs Kilometer vom See entfernt.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Und das ohne
+                                    Auto ...</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Genau. Aber es
+                                    kommt noch schlimmer: Nach zwei Tagen stand ein Ehepaar aus Stuttgart vor unserer
+                                    Tür. Sie hatten auch diese Ferienwohnung gemietet.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Wie ist denn das
+                                    möglich?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Keine Ahnung.
+                                    Vermutlich eine Doppelbuchung.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Und was habt ihr
+                                    dann gemacht?</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Wir haben unsere
+                                    Sachen gepackt und sind mit dem Zug nach Österreich zurückgefahren. Nach ein paar
+                                    Tagen in Innsbruck konnten wir unser Auto abholen. Wir haben 3 000 Euro bezahlt und
+                                    sind nach Hause gefahren. Die restliche Urlaubszeit war ich in Berlin und habe einen
+                                    Beschwerdebrief an die Vermietungsfirma geschrieben. Ich möchte das ganze Geld
+                                    zurückhaben.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Das tut mir
+                                    wirklich leid für dich.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Warst du nicht
+                                    auch letzten Monat im Urlaub?</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Ja, ich war in
+                                    Kanada.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Wow.</div>
+                                <div class="dialogue-b"><strong class="text-amber-600">Rainer:</strong> Es war ganz
+                                    toll. Wir haben uns in Kanada ein Auto gemietet und sind quer durchs Land gefahren.
+                                    Die Natur ist dort einfach wunderschön, es gibt riesige Wälder, schöne Seen, tolle
+                                    Städte. Wir waren übrigens auch in Vancouver. Dort wolltest du doch immer mal
+                                    hinfahren.</div>
+                                <div class="dialogue-a"><strong class="text-brand-700">Hanna:</strong> Ich glaube, du
+                                    solltest nicht weiterreden, sonst werde ich total neidisch ...</div>
                             </div>
-                            
+
                             <div class="mt-6 bg-gray-50 p-4 rounded text-sm text-gray-700">
                                 <h4 class="font-bold mb-2">Lösungen (Kontrollfragen zu Aufgabe 7):</h4>
-                                <p><strong>a)</strong> 1. richtig | 2. richtig | 3. falsch | 4. richtig | 5. richtig | 6. falsch</p>
-                                <p class="mt-1"><strong>b)</strong> 1. Katastrophe | 2. Motorschaden | 3. Reparatur | 4. Werkstatt | 5. Nähe, Supermarkt | 6. Tage | 7. Doppelbuchung | 8. Sachen | 9. Beschwerdebrief, Vermieter | 10. Natur, Wälder, Seen</p>
+                                <p><strong>a)</strong> 1. richtig | 2. richtig | 3. falsch | 4. richtig | 5. richtig |
+                                    6. falsch</p>
+                                <p class="mt-1"><strong>b)</strong> 1. Katastrophe | 2. Motorschaden | 3. Reparatur | 4.
+                                    Werkstatt | 5. Nähe, Supermarkt | 6. Tage | 7. Doppelbuchung | 8. Sachen | 9.
+                                    Beschwerdebrief, Vermieter | 10. Natur, Wälder, Seen</p>
                             </div>
                         </div>
 
                         <!-- Aufgabe 11 -->
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                            <h3 class="text-xl font-bold text-gray-800 mb-4" id="aufgabe-11">Aufgabe 11 – Transkription Hörtexte: Verkehrsdurchsagen</h3>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4" id="aufgabe-11">Aufgabe 11 – Transkription
+                                Hörtexte: Verkehrsdurchsagen</h3>
                             <div class="space-y-6 text-sm">
                                 <div>
-                                    <strong class="block text-indigo-700 mb-2">1. Sie hören eine Durchsage am Hauptbahnhof.</strong>
-                                    <div class="dialogue-moderator">Hier eine Information für alle Reisenden. Aufgrund eines Serverproblems ist es im Moment möglich, Tickets an den Automaten zu kaufen. Die elektronischen Anzeigen sind ebenfalls ausgefallen. Bitte wenden Sie sich bei Fragen an die Mitarbeiter der Deutschen Bahn. Zugtickets sind in den Zügen beim Zugpersonal erhältlich.</div>
+                                    <strong class="block text-indigo-700 mb-2">1. Sie hören eine Durchsage am
+                                        Hauptbahnhof.</strong>
+                                    <div class="dialogue-moderator">Hier eine Information für alle Reisenden. Aufgrund
+                                        eines Serverproblems ist es im Moment möglich, Tickets an den Automaten zu
+                                        kaufen. Die elektronischen Anzeigen sind ebenfalls ausgefallen. Bitte wenden Sie
+                                        sich bei Fragen an die Mitarbeiter der Deutschen Bahn. Zugtickets sind in den
+                                        Zügen beim Zugpersonal erhältlich.</div>
                                 </div>
                                 <div>
-                                    <strong class="block text-indigo-700 mb-2">2. Sie hören eine Durchsage im Radio.</strong>
-                                    <div class="dialogue-moderator">Hier kommt eine wichtige Verkehrsdurchsage für Autofahrer auf der A2 in Richtung Hannover. An der Ausfahrt Lehrte-Ost hat sich ein schwerer Unfall ereignet. Im Moment sind alle Fahrspuren gesperrt. Die Staulänge beträgt 20 Kilometer. Auf der Gegenfahrbahn Richtung Berlin gibt es einen zehn Kilometer langen Stau durch Schaulustige. Wir empfehlen Autofahrern, rechtzeitig abzufahren und die ausgeschilderte Umleitung über die Bundesstraße zu nutzen.</div>
+                                    <strong class="block text-indigo-700 mb-2">2. Sie hören eine Durchsage im
+                                        Radio.</strong>
+                                    <div class="dialogue-moderator">Hier kommt eine wichtige Verkehrsdurchsage für
+                                        Autofahrer auf der A2 in Richtung Hannover. An der Ausfahrt Lehrte-Ost hat sich
+                                        ein schwerer Unfall ereignet. Im Moment sind alle Fahrspuren gesperrt. Die
+                                        Staulänge beträgt 20 Kilometer. Auf der Gegenfahrbahn Richtung Berlin gibt es
+                                        einen zehn Kilometer langen Stau durch Schaulustige. Wir empfehlen Autofahrern,
+                                        rechtzeitig abzufahren und die ausgeschilderte Umleitung über die Bundesstraße
+                                        zu nutzen.</div>
                                 </div>
                                 <div>
-                                    <strong class="block text-indigo-700 mb-2">3. Sie hören eine Durchsage im Flugzeug.</strong>
-                                    <div class="dialogue-moderator">Meine Damen, meine Herren, liebe Fluggäste. Im Namen von Kapitan Justus Koch und unserer Besatzung möchte ich Sie herzlich an Bord des Airbus A320 auf unserem Flug von Frankfurt nach Madrid begrüßen. Das Boarding ist jetzt abgeschlossen. Da ein Passagier nicht an Bord ist, müssen wir zunächst das Gepäckstück dieses Passagiers suchen und wieder ausladen. Das wird ungefähr 20 bis 30 Minuten dauern und den Abflug verzögern. Wir bitten Sie um Verständnis. Sie sind mit dem Sicherheitsmaßnahmen. Wir melden uns wieder, wenn wir startklar sind.</div>
+                                    <strong class="block text-indigo-700 mb-2">3. Sie hören eine Durchsage im
+                                        Flugzeug.</strong>
+                                    <div class="dialogue-moderator">Meine Damen, meine Herren, liebe Fluggäste. Im Namen
+                                        von Kapitan Justus Koch und unserer Besatzung möchte ich Sie herzlich an Bord
+                                        des Airbus A320 auf unserem Flug von Frankfurt nach Madrid begrüßen. Das
+                                        Boarding ist jetzt abgeschlossen. Da ein Passagier nicht an Bord ist, müssen wir
+                                        zunächst das Gepäckstück dieses Passagiers suchen und wieder ausladen. Das wird
+                                        ungefähr 20 bis 30 Minuten dauern und den Abflug verzögern. Wir bitten Sie um
+                                        Verständnis. Sie sind mit dem Sicherheitsmaßnahmen. Wir melden uns wieder, wenn
+                                        wir startklar sind.</div>
                                 </div>
                             </div>
                         </div>
@@ -410,42 +704,66 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
                             <h2 class="text-xl font-bold text-gray-800">Aufgabe 10 – Probleme auf Reisen</h2>
-                            <p class="text-sm text-gray-600 mt-1">Spielen Sie Dialoge. Notieren Sie vor Gesprächsbeginn wichtige Wörter.</p>
+                            <p class="text-sm text-gray-600 mt-1">Spielen Sie Dialoge. Notieren Sie vor Gesprächsbeginn
+                                wichtige Wörter.</p>
                         </div>
                         <div class="p-6 space-y-8">
-                            
+
                             <div>
-                                <p class="text-sm font-bold text-gray-800 mb-2">Verspätung: Sie haben um 11.00 Uhr eine wichtige Besprechung. Ihr Flugzeug hatte aber Verspätung, Sie sind erst um 10.55 Uhr in München gelandet. Rufen Sie eine Kontaktperson an und erklären Sie die Situation.</p>
+                                <p class="text-sm font-bold text-gray-800 mb-2">Verspätung: Sie haben um 11.00 Uhr eine
+                                    wichtige Besprechung. Ihr Flugzeug hatte aber Verspätung, Sie sind erst um 10.55 Uhr
+                                    in München gelandet. Rufen Sie eine Kontaktperson an und erklären Sie die Situation.
+                                </p>
                                 <div class="bg-brand-50 p-4 rounded-lg border border-brand-100 text-sm space-y-2">
                                     <h4 class="font-bold text-brand-800 mb-2">Lösung – Dialog 1:</h4>
-                                    <p><strong>Sie:</strong> Guten Tag, hier spricht [Name]. Ich rufe an, weil ich mich leider verspäten werde. Mein Flug hatte Verspätung und ich bin erst um 10.55 Uhr in München gelandet.</p>
-                                    <p><strong>Kollege:</strong> Oh, das ist ärgerlich. Wie viel Zeit brauchen Sie noch bis zum Büro?</p>
-                                    <p><strong>Sie:</strong> Ich denke, ich brauche noch etwa 30 Minuten. Könnten wir die Besprechung um eine halbe Stunde verschieben?</p>
-                                    <p><strong>Kollege:</strong> Kein Problem, wir warten auf Sie. Melden Sie sich, wenn Sie ankommen.</p>
+                                    <p><strong>Sie:</strong> Guten Tag, hier spricht [Name]. Ich rufe an, weil ich mich
+                                        leider verspäten werde. Mein Flug hatte Verspätung und ich bin erst um 10.55 Uhr
+                                        in München gelandet.</p>
+                                    <p><strong>Kollege:</strong> Oh, das ist ärgerlich. Wie viel Zeit brauchen Sie noch
+                                        bis zum Büro?</p>
+                                    <p><strong>Sie:</strong> Ich denke, ich brauche noch etwa 30 Minuten. Könnten wir
+                                        die Besprechung um eine halbe Stunde verschieben?</p>
+                                    <p><strong>Kollege:</strong> Kein Problem, wir warten auf Sie. Melden Sie sich, wenn
+                                        Sie ankommen.</p>
                                 </div>
                             </div>
 
                             <div>
-                                <p class="text-sm font-bold text-gray-800 mb-2">Koffer nicht angekommen: Sie sind von Miami nach Frankfurt geflogen, in London hatten Sie eine Zwischenlandung. Ihr Koffer ist nicht in Frankfurt angekommen. Erkundigen Sie sich am Flughafen nach Ihrem Koffer.</p>
+                                <p class="text-sm font-bold text-gray-800 mb-2">Koffer nicht angekommen: Sie sind von
+                                    Miami nach Frankfurt geflogen, in London hatten Sie eine Zwischenlandung. Ihr Koffer
+                                    ist nicht in Frankfurt angekommen. Erkundigen Sie sich am Flughafen nach Ihrem
+                                    Koffer.</p>
                                 <div class="bg-brand-50 p-4 rounded-lg border border-brand-100 text-sm space-y-2">
                                     <h4 class="font-bold text-brand-800 mb-2">Lösung – Dialog 2:</h4>
-                                    <p><strong>Sie:</strong> Entschuldigung, ich habe ein Problem mit meinem Koffer. Ich bin von Miami über London nach Frankfurt geflogen, aber mein Koffer ist nicht angekommen.</p>
-                                    <p><strong>Mitarbeiter:</strong> Das tut mir leid. Können Sie mir bitte Ihre Bordkarte und den Gepäckschein zeigen?</p>
+                                    <p><strong>Sie:</strong> Entschuldigung, ich habe ein Problem mit meinem Koffer. Ich
+                                        bin von Miami über London nach Frankfurt geflogen, aber mein Koffer ist nicht
+                                        angekommen.</p>
+                                    <p><strong>Mitarbeiter:</strong> Das tut mir leid. Können Sie mir bitte Ihre
+                                        Bordkarte und den Gepäckschein zeigen?</p>
                                     <p><strong>Sie:</strong> Ja, hier bitte.</p>
-                                    <p><strong>Mitarbeiter:</strong> Danke. Es sieht so aus, als wäre Ihr Koffer noch in London. Wir schicken ihn Ihnen so schnell wie möglich nach. Können Sie mir Ihre Adresse geben?</p>
+                                    <p><strong>Mitarbeiter:</strong> Danke. Es sieht so aus, als wäre Ihr Koffer noch in
+                                        London. Wir schicken ihn Ihnen so schnell wie möglich nach. Können Sie mir Ihre
+                                        Adresse geben?</p>
                                     <p><strong>Sie:</strong> Natürlich, hier ist meine Adresse.</p>
                                 </div>
                             </div>
 
                             <div>
-                                <p class="text-sm font-bold text-gray-800 mb-2">Doppelbuchung: Sie sind gerade in Ihrem Hotel angekommen. Da erfahren Sie, dass Ihr Zimmer schon vergeben und das Hotel ausgebucht ist. Leider ist dem Hotel bei der Buchung ein Fehler unterlaufen.</p>
+                                <p class="text-sm font-bold text-gray-800 mb-2">Doppelbuchung: Sie sind gerade in Ihrem
+                                    Hotel angekommen. Da erfahren Sie, dass Ihr Zimmer schon vergeben und das Hotel
+                                    ausgebucht ist. Leider ist dem Hotel bei der Buchung ein Fehler unterlaufen.</p>
                                 <div class="bg-brand-50 p-4 rounded-lg border border-brand-100 text-sm space-y-2">
                                     <h4 class="font-bold text-brand-800 mb-2">Lösung – Dialog 3:</h4>
-                                    <p><strong>Sie:</strong> Guten Abend, ich habe hier ein Zimmer reserviert, aber Sie sagen mir, es ist schon vergeben?</p>
-                                    <p><strong>Rezeptionist:</strong> Ja, das tut mir sehr leid. Es scheint, dass uns bei der Buchung ein Fehler unterlaufen ist.</p>
-                                    <p><strong>Sie:</strong> Das ist wirklich ärgerlich, ich bin extra hierhergekommen. Was schlagen Sie vor?</p>
-                                    <p><strong>Rezeptionist:</strong> Wir können Ihnen ein Zimmer in einem Partnerhotel in der Nähe anbieten, und die Übernachtung geht auf unsere Kosten.</p>
-                                    <p><strong>Sie:</strong> Gut, das ist akzeptabel. Vielen Dank für die schnelle Lösung.</p>
+                                    <p><strong>Sie:</strong> Guten Abend, ich habe hier ein Zimmer reserviert, aber Sie
+                                        sagen mir, es ist schon vergeben?</p>
+                                    <p><strong>Rezeptionist:</strong> Ja, das tut mir sehr leid. Es scheint, dass uns
+                                        bei der Buchung ein Fehler unterlaufen ist.</p>
+                                    <p><strong>Sie:</strong> Das ist wirklich ärgerlich, ich bin extra hierhergekommen.
+                                        Was schlagen Sie vor?</p>
+                                    <p><strong>Rezeptionist:</strong> Wir können Ihnen ein Zimmer in einem Partnerhotel
+                                        in der Nähe anbieten, und die Übernachtung geht auf unsere Kosten.</p>
+                                    <p><strong>Sie:</strong> Gut, das ist akzeptabel. Vielen Dank für die schnelle
+                                        Lösung.</p>
                                 </div>
                             </div>
 
@@ -456,50 +774,79 @@
                 <!-- AUFGABE 14 -->
                 <section id="aufgabe-14" class="scroll-mt-12">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Aufgabe 14 – Klassenspaziergang: Verkehrsmittel und Verkehr</h2>
-                        <p class="text-sm text-gray-600 mb-6">Wählen Sie drei Fragen aus und fragen Sie möglichst viele Kursteilnehmer. Berichten Sie anschließend.</p>
-                        
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Aufgabe 14 – Klassenspaziergang:
+                            Verkehrsmittel und Verkehr</h2>
+                        <p class="text-sm text-gray-600 mb-6">Wählen Sie drei Fragen aus und fragen Sie möglichst viele
+                            Kursteilnehmer. Berichten Sie anschließend.</p>
+
                         <div class="grid grid-cols-1 gap-8 mb-6">
                             <div>
-                                <h4 class="font-bold text-brand-700 mb-3 text-sm">Alle acht Fragen (aus dem Originaltext):</h4>
+                                <h4 class="font-bold text-brand-700 mb-3 text-sm">Alle acht Fragen (aus dem
+                                    Originaltext):</h4>
                                 <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-2">
-                                    <li>Welche Verkehrsmittel nutzen Sie im Alltag? Warum? Es ist … praktisch • preiswert • schnell • gesund • angenehm • flexibel • sicher …</li>
-                                    <li>Wo gibt es in Ihrem Heimatland/Ihrer Heimatstadt die meisten Verkehrsprobleme? Staus • Baustellen • Unfälle • gefährliche Strecken …</li>
-                                    <li>Was nervt Sie im täglichen Verkehr am meisten? Rücksichtslose Autofahrer • Verspätungen • Staus …</li>
-                                    <li>Was mögen Sie beim Fahren/Reisen? Die Landschaft genießen • sich gut unterhalten können • lesen/sich entspannen …</li>
+                                    <li>Welche Verkehrsmittel nutzen Sie im Alltag? Warum? Es ist … praktisch •
+                                        preiswert • schnell • gesund • angenehm • flexibel • sicher …</li>
+                                    <li>Wo gibt es in Ihrem Heimatland/Ihrer Heimatstadt die meisten Verkehrsprobleme?
+                                        Staus • Baustellen • Unfälle • gefährliche Strecken …</li>
+                                    <li>Was nervt Sie im täglichen Verkehr am meisten? Rücksichtslose Autofahrer •
+                                        Verspätungen • Staus …</li>
+                                    <li>Was mögen Sie beim Fahren/Reisen? Die Landschaft genießen • sich gut unterhalten
+                                        können • lesen/sich entspannen …</li>
                                     <li>Was ist das meistgenutzte Verkehrsmittel in Ihrem Heimatland?</li>
                                     <li>Mit welchen Verkehrsmitteln reisen Sie in den Urlaub?</li>
-                                    <li>Interessieren Sie sich für die Technik, die in Flugzeugen, Autos und Zügen steckt?</li>
+                                    <li>Interessieren Sie sich für die Technik, die in Flugzeugen, Autos und Zügen
+                                        steckt?</li>
                                     <li>Welche Verkehrsmittel sind am schädlichsten für die Umwelt?</li>
                                 </ol>
                             </div>
-                            
+
                             <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
-                                <h4 class="font-bold text-brand-800 mb-4 text-sm">Lösung / Vollständiger Klassenspaziergang (Beispielantworten):</h4>
+                                <h4 class="font-bold text-brand-800 mb-4 text-sm">Lösung / Vollständiger
+                                    Klassenspaziergang (Beispielantworten):</h4>
                                 <div class="space-y-4 text-sm">
                                     <div>
-                                        <p class="font-bold text-gray-800">Frage 1: Welche Verkehrsmittel nutzen Sie im Alltag? Warum?</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> Ich nutze meistens die U-Bahn, weil sie schnell und preiswert ist und ich mich nicht um Parkplätze sorgen muss.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Ich fahre mit dem Fahrrad, weil es gesund ist und ich dabei die frische Luft genießen kann.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> Ich benutze das Auto, weil es für mich am flexibelsten ist, besonders wenn ich Einkäufe transportieren muss.</p>
+                                        <p class="font-bold text-gray-800">Frage 1: Welche Verkehrsmittel nutzen Sie im
+                                            Alltag? Warum?</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> Ich nutze meistens
+                                            die U-Bahn, weil sie schnell und preiswert ist und ich mich nicht um
+                                            Parkplätze sorgen muss.</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Ich fahre mit dem
+                                            Fahrrad, weil es gesund ist und ich dabei die frische Luft genießen kann.
+                                        </p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> Ich benutze das
+                                            Auto, weil es für mich am flexibelsten ist, besonders wenn ich Einkäufe
+                                            transportieren muss.</p>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-gray-800">Frage 3: Was nervt Sie im täglichen Verkehr am meisten?</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> Mich nerven rücksichtslose Autofahrer, die zu schnell fahren oder nicht blinken.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Bei mir sind es die ständigen Verspätungen der Busse.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> Mich ärgern die täglichen Staus auf dem Weg zur Arbeit.</p>
+                                        <p class="font-bold text-gray-800">Frage 3: Was nervt Sie im täglichen Verkehr
+                                            am meisten?</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> Mich nerven
+                                            rücksichtslose Autofahrer, die zu schnell fahren oder nicht blinken.</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Bei mir sind es die
+                                            ständigen Verspätungen der Busse.</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> Mich ärgern die
+                                            täglichen Staus auf dem Weg zur Arbeit.</p>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-gray-800">Frage 5: Was ist das meistgenutzte Verkehrsmittel in Ihrem Heimatland?</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> In meinem Heimatland ist das Auto eindeutig das meistgenutzte Verkehrsmittel.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Bei uns ist es eher der Bus, weil viele Menschen sich kein Auto leisten können.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> In meinem Land ist der Zug sehr beliebt, weil das Schienennetz gut ausgebaut ist.</p>
+                                        <p class="font-bold text-gray-800">Frage 5: Was ist das meistgenutzte
+                                            Verkehrsmittel in Ihrem Heimatland?</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> In meinem
+                                            Heimatland ist das Auto eindeutig das meistgenutzte Verkehrsmittel.</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Bei uns ist es eher
+                                            der Bus, weil viele Menschen sich kein Auto leisten können.</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> In meinem Land ist
+                                            der Zug sehr beliebt, weil das Schienennetz gut ausgebaut ist.</p>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-gray-800">Frage 8: Welche Verkehrsmittel sind am schädlichsten für die Umwelt?</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> Ich denke, Flugzeuge sind am schädlichsten, weil sie sehr viel CO2 ausstoßen.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Autos mit Verbrennungsmotor sind auch sehr schädlich, besonders wenn sie nur mit einer Person besetzt sind.</p>
-                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> Ich stimme zu, aber ich glaube, dass auch alte Dieselbusse ein großes Problem darstellen.</p>
+                                        <p class="font-bold text-gray-800">Frage 8: Welche Verkehrsmittel sind am
+                                            schädlichsten für die Umwelt?</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 1:</strong> Ich denke,
+                                            Flugzeuge sind am schädlichsten, weil sie sehr viel CO2 ausstoßen.</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 2:</strong> Autos mit
+                                            Verbrennungsmotor sind auch sehr schädlich, besonders wenn sie nur mit einer
+                                            Person besetzt sind.</p>
+                                        <p class="text-gray-700 mt-1"><strong>Teilnehmer 3:</strong> Ich stimme zu, aber
+                                            ich glaube, dass auch alte Dieselbusse ein großes Problem darstellen.</p>
                                     </div>
                                 </div>
                             </div>
@@ -509,58 +856,132 @@
 
                 <!-- AUFGABE 15 & 16 -->
                 <section id="aufgabe-15" class="scroll-mt-12">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span class="bg-brand-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">15</span> Umwelt & Verkehr</h2>
-                    
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center"><span
+                            class="bg-brand-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-3 shadow-md">15</span>
+                        Umwelt & Verkehr</h2>
+
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-8">
                         <h3 class="text-xl font-bold text-gray-800 mb-2">Aufgabe 15 – Umwelt und Verkehr</h3>
-                        <p class="text-sm text-gray-600 mb-4">a) Sehen Sie sich die Grafik an. Lesen und hören Sie danach den Text.</p>
+                        <p class="text-sm text-gray-600 mb-4">a) Sehen Sie sich die Grafik an. Lesen und hören Sie
+                            danach den Text.</p>
                         <h4 class="font-bold text-brand-700 mb-2">Umweltfreundlichkeit von Verkehrsmitteln</h4>
                         <div class="text-sm text-gray-700 space-y-3 leading-relaxed">
-                            <p>Statistischen Angaben zufolge sind Verkehrsmittel für ungefähr 20 Prozent der CO2-Emissionen in Deutschland verantwortlich. Zu den Umweltverschmutzern zählen alle motorisierten Verkehrsmittel. Die schlimmsten Umweltschädiger sind Flugzeuge, gefolgt von Autos. Man geht davon aus, dass Autos im Durchschnitt mit 1,5 Personen besetzt sind. Würden durchschnittlich vier Personen in einem Auto sitzen, wären Pkws (Personenkraftwagen) viel umweltfreundlicher.</p>
-                            <p>Unter den öffentlichen Verkehrsmitteln sind Linienbusse am klimaschädlichsten, weil sie oft nur wenige Menschen befördern. Straßen- und U-Bahnen fahren mit Strom und sind besser für die Umwelt. Sieger in der Umweltstatistik sind im Nahverkehr die Züge. Im Fernverkehr schneiden die Reisebusse am besten ab, denn sie sind in der Regel ausgebucht.</p>
-                            <p>Am umweltfreundlichsten bewegt man sich zu Fuß oder mit dem Rad. Leider erreicht man damit nicht allzu große Strecken.</p>
+                            <p>Statistischen Angaben zufolge sind Verkehrsmittel für ungefähr 20 Prozent der
+                                CO2-Emissionen in Deutschland verantwortlich. Zu den Umweltverschmutzern zählen alle
+                                motorisierten Verkehrsmittel. Die schlimmsten Umweltsünder sind Flugzeuge, gefolgt von
+                                Autos. Man geht davon aus, dass Autos im Durchschnitt mit 1,5 Personen besetzt sind.
+                                Würden durchschnittlich vier Personen in einem Auto sitzen, wären Pkws* viel
+                                umweltfreundlicher.</p>
+                            <p>Unter den öffentlichen Verkehrsmitteln sind Linienbusse am klimaschädlichsten, weil sie
+                                oft nur wenige Menschen befördern. Straßen- und U-Bahnen fahren mit Strom und sind
+                                besser für die Umwelt. Sieger in der Umweltstatistik sind im Nahverkehr die Züge. Im
+                                Fernverkehr schneiden die Reisebusse am besten ab, denn sie sind in der Regel
+                                ausgebucht.</p>
+                            <p>Am umweltfreundlichsten bewegt man sich zu Fuß oder mit dem Rad. Leider erreicht man
+                                damit nicht jedes Ziel und ist deutlich langsamer. Außerdem ist diese Fortbewegungsart
+                                bei schlechtem Wetter nicht immer angenehm. Doch wenn man etwas für die Umwelt tun will,
+                                sollte man so oft wie möglich kurze Wege zu Fuß oder mit dem Fahrrad zurücklegen. Neben
+                                dem Klima schont das auch den Geldbeutel.</p>
+                            <p class="text-xs text-gray-500 pt-2 border-t mt-2">*Pkw: Personenkraftwagen</p>
                         </div>
                     </div>
 
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200" id="aufgabe-16">
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">Aufgabe 16 – Präsentationen: Umwelt und Verkehr</h3>
-                        
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Aufgabe 16 – Präsentationen: Umwelt und Verkehr
+                        </h3>
+
                         <div class="space-y-6">
                             <div>
-                                <p class="text-sm font-bold text-gray-800 mb-2">a) Gruppenarbeit: Verkehrsprobleme. Sie sind Mitglied der Projektgruppe „Sicher und sauber im Verkehr“ und sollen für Ihre Stadt Strategien zur Lösung der Verkehrsprobleme entwickeln. Welche Probleme gibt es? Was würden Sie vorschlagen? Präsentieren Sie Ihre Vorschläge im Kurs.</p>
+                                <p class="text-sm font-bold text-gray-800 mb-2">a) Gruppenarbeit: Verkehrsprobleme. Sie
+                                    sind Mitglied der Projektgruppe „Sicher und sauber im Verkehr“ und sollen für Ihre
+                                    Stadt Strategien zur Lösung der Verkehrsprobleme entwickeln. Welche Probleme gibt
+                                    es? Was würden Sie vorschlagen? Präsentieren Sie Ihre Vorschläge im Kurs.</p>
                                 <ul class="list-disc pl-5 text-sm text-gray-600 mb-4 space-y-1">
-                                    <li><strong>Mögliche Probleme:</strong> zu hohe CO2-Werte, zu viele Staus, zu viele Unfälle, schlechte Straßen, zu wenig Parkplätze, zu wenig Fahrradwege.</li>
-                                    <li><strong>Mögliche Lösungen:</strong> mehr/weniger Fußgängerzonen, mehr/weniger öffentliche Verkehrsmittel, mehr/weniger Polizeikontrollen, höhere/niedrigere Fahrpreise, mehr/weniger Geschwindigkeitskontrollen, das Tempolimit auf (… km/h) senken/erhöhen, autofreier Sonntag, Mautgebühr einführen, Fahrradwege bauen.</li>
+                                    <li><strong>Mögliche Probleme:</strong> zu hohe CO2-Werte, zu viele Staus, zu viele
+                                        Unfälle, schlechte Straßen, zu wenig Parkplätze, zu wenig Fahrradwege.</li>
+                                    <li><strong>Mögliche Lösungen:</strong> mehr/weniger Fußgängerzonen, mehr/weniger
+                                        öffentliche Verkehrsmittel, mehr/weniger Polizeikontrollen, höhere/niedrigere
+                                        Fahrpreise, mehr/weniger Geschwindigkeitskontrollen, das Tempolimit auf (… km/h)
+                                        senken/erhöhen, autofreier Sonntag, Mautgebühr einführen, Fahrradwege bauen.
+                                    </li>
                                 </ul>
-                                
+
                                 <div class="bg-brand-50 p-4 rounded-lg border border-brand-100 text-sm">
-                                    <h4 class="font-bold text-brand-800 mb-3">Lösung / Vollständige Gruppendiskussion (16a):</h4>
-                                    <p class="mb-2"><strong>Teilnehmer 1:</strong> In unserer Stadt gibt es vor allem zu viele Staus während der Hauptverkehrszeiten und zu wenig Parkplätze im Zentrum.</p>
-                                    <p class="mb-2"><strong>Teilnehmer 2:</strong> Das stimmt, und dazu kommt, dass es zu wenig Fahrradwege gibt, sodass viele Menschen sich nicht trauen, mit dem Rad zu fahren.</p>
-                                    <p class="mb-2"><strong>Teilnehmer 3:</strong> Ich würde vorschlagen, mehr Fußgängerzonen einzurichten und die Fahrpreise für öffentliche Verkehrsmittel zu senken, damit mehr Menschen den Bus oder die Bahn nutzen.</p>
-                                    <p class="mb-2"><strong>Teilnehmer 1:</strong> Eine gute Idee wäre auch, einen autofreien Sonntag einzuführen, wie es das in manchen Städten schon gibt.</p>
-                                    <p class="mb-2"><strong>Teilnehmer 2:</strong> Ich würde zusätzlich eine Mautgebühr für das Autofahren im Stadtzentrum einführen, das hat in anderen Städten den Verkehr deutlich reduziert.</p>
-                                    <p class="mb-2"><strong>Teilnehmer 3:</strong> Und um die Sicherheit zu erhöhen, sollten wir mehr Geschwindigkeitskontrollen an gefährlichen Stellen durchführen.</p>
-                                    <p><strong>Teilnehmer 1:</strong> Zusammenfassend schlagen wir also vor: mehr Fahrradwege bauen, die Fahrpreise für öffentliche Verkehrsmittel senken, einen autofreien Sonntag einführen und eine Mautgebühr für die Innenstadt einzuführen.</p>
+                                    <h4 class="font-bold text-brand-800 mb-3">Lösung / Vollständige Gruppendiskussion
+                                        (16a):</h4>
+                                    <p class="mb-2"><strong>Teilnehmer 1:</strong> In unserer Stadt gibt es vor allem zu
+                                        viele Staus während der Hauptverkehrszeiten und zu wenig Parkplätze im Zentrum.
+                                    </p>
+                                    <p class="mb-2"><strong>Teilnehmer 2:</strong> Das stimmt, und dazu kommt, dass es
+                                        zu wenig Fahrradwege gibt, sodass viele Menschen sich nicht trauen, mit dem Rad
+                                        zu fahren.</p>
+                                    <p class="mb-2"><strong>Teilnehmer 3:</strong> Ich würde vorschlagen, mehr
+                                        Fußgängerzonen einzurichten und die Fahrpreise für öffentliche Verkehrsmittel zu
+                                        senken, damit mehr Menschen den Bus oder die Bahn nutzen.</p>
+                                    <p class="mb-2"><strong>Teilnehmer 1:</strong> Eine gute Idee wäre auch, einen
+                                        autofreien Sonntag einzuführen, wie es das in manchen Städten schon gibt.</p>
+                                    <p class="mb-2"><strong>Teilnehmer 2:</strong> Ich würde zusätzlich eine Mautgebühr
+                                        für das Autofahren im Stadtzentrum einführen, das hat in anderen Städten den
+                                        Verkehr deutlich reduziert.</p>
+                                    <p class="mb-2"><strong>Teilnehmer 3:</strong> Und um die Sicherheit zu erhöhen,
+                                        sollten wir mehr Geschwindigkeitskontrollen an gefährlichen Stellen durchführen.
+                                    </p>
+                                    <p><strong>Teilnehmer 1:</strong> Zusammenfassend schlagen wir also vor: mehr
+                                        Fahrradwege bauen, die Fahrpreise für öffentliche Verkehrsmittel senken, einen
+                                        autofreien Sonntag einführen und eine Mautgebühr für die Innenstadt einzuführen.
+                                    </p>
                                 </div>
                             </div>
 
                             <div>
-                                <p class="text-sm font-bold text-gray-800 mb-2">b) Einzelpräsentation: Umweltfreundlicher Verkehr. Präsentieren Sie Ihren Zuhörern das Thema „Umweltfreundlicher Verkehr“.</p>
+                                <p class="text-sm font-bold text-gray-800 mb-2">b) Einzelpräsentation:
+                                    Umweltfreundlicher Verkehr. Präsentieren Sie Ihren Zuhörern das Thema
+                                    „Umweltfreundlicher Verkehr“.</p>
                                 <div class="bg-gray-50 p-5 rounded-lg border border-gray-200 text-sm">
-                                    <h4 class="font-bold text-gray-800 mb-3">Lösung / Vollständige simulierte Präsentation (16b):</h4>
+                                    <h4 class="font-bold text-gray-800 mb-3">Lösung / Vollständige simulierte
+                                        Präsentation (16b):</h4>
                                     <div class="space-y-3 mb-4">
-                                        <p><strong>Folie 1 (Thema und Struktur):</strong> Guten Tag zusammen, mein Thema heute ist umweltfreundlicher Verkehr. Ich werde Ihnen zuerst von meinen eigenen Erfahrungen berichten, dann die Situation in meinem Heimatland beschreiben, anschließend Vor- und Nachteile des Fahrradfahrens als umweltfreundliche Alternative vorstellen, und am Ende fasse ich zusammen und bedanke mich.</p>
-                                        <p><strong>Folie 2 (Persönliche Erfahrungen):</strong> Ich persönlich fahre seit einem Jahr mit dem Fahrrad zur Arbeit, statt das Auto zu benutzen. Am Anfang war es ungewohnt, aber jetzt spare ich Geld und fühle mich fitter. Einmal bin ich sogar bei Regen gefahren und war trotzdem froh, weil ich keinen Stau hatte.</p>
-                                        <p><strong>Folie 3 (Situation in meinem Heimatland):</strong> In meinem Heimatland ist das Auto immer noch das wichtigste Verkehrsmittel. Es gibt zwar öffentliche Verkehrsmittel, aber sie sind oft unpünktlich und nicht sehr komfortabel. Fahrradwege gibt es nur in großen Städten, und selbst dort sind sie oft schlecht ausgebaut.</p>
-                                        <p><strong>Folie 4 (Fahrradfahren: Vor- und Nachteile):</strong> Das Fahrradfahren hat den großen Vorteil, dass es keine CO2-Emissionen verursacht und gleichzeitig gesund für den Körper ist. Ein weiterer Vorteil ist, dass man in der Stadt oft schneller ans Ziel kommt als mit dem Auto, weil man keine Staus hat. Der Nachteil ist, dass es bei schlechtem Wetter unangenehm sein kann und man für längere Strecken zu viel Zeit braucht. Meiner Meinung nach sollte man trotzdem so oft wie möglich kurze Wege zu Fuß oder mit dem Fahrrad zurücklegen.</p>
-                                        <p><strong>Folie 5 (Abschluss und Dank):</strong> Zusammenfassend lässt sich sagen, dass das Fahrrad eine der umweltfreundlichsten Alternativen zum Auto ist, auch wenn es nicht für jede Strecke geeignet ist. Vielen Dank für Ihre Aufmerksamkeit.</p>
+                                        <p><strong>Folie 1 (Thema und Struktur):</strong> Guten Tag zusammen, mein Thema
+                                            heute ist umweltfreundlicher Verkehr. Ich werde Ihnen zuerst von meinen
+                                            eigenen Erfahrungen berichten, dann die Situation in meinem Heimatland
+                                            beschreiben, anschließend Vor- und Nachteile des Fahrradfahrens als
+                                            umweltfreundliche Alternative vorstellen, und am Ende fasse ich zusammen und
+                                            bedanke mich.</p>
+                                        <p><strong>Folie 2 (Persönliche Erfahrungen):</strong> Ich persönlich fahre seit
+                                            einem Jahr mit dem Fahrrad zur Arbeit, statt das Auto zu benutzen. Am Anfang
+                                            war es ungewohnt, aber jetzt spare ich Geld und fühle mich fitter. Einmal
+                                            bin ich sogar bei Regen gefahren und war trotzdem froh, weil ich keinen Stau
+                                            hatte.</p>
+                                        <p><strong>Folie 3 (Situation in meinem Heimatland):</strong> In meinem
+                                            Heimatland ist das Auto immer noch das wichtigste Verkehrsmittel. Es gibt
+                                            zwar öffentliche Verkehrsmittel, aber sie sind oft unpünktlich und nicht
+                                            sehr komfortabel. Fahrradwege gibt es nur in großen Städten, und selbst dort
+                                            sind sie oft schlecht ausgebaut.</p>
+                                        <p><strong>Folie 4 (Fahrradfahren: Vor- und Nachteile):</strong> Das
+                                            Fahrradfahren hat den großen Vorteil, dass es keine CO2-Emissionen
+                                            verursacht und gleichzeitig gesund für den Körper ist. Ein weiterer Vorteil
+                                            ist, dass man in der Stadt oft schneller ans Ziel kommt als mit dem Auto,
+                                            weil man keine Staus hat. Der Nachteil ist, dass es bei schlechtem Wetter
+                                            unangenehm sein kann und man für längere Strecken zu viel Zeit braucht.
+                                            Meiner Meinung nach sollte man trotzdem so oft wie möglich kurze Wege zu Fuß
+                                            oder mit dem Fahrrad zurücklegen.</p>
+                                        <p><strong>Folie 5 (Abschluss und Dank):</strong> Zusammenfassend lässt sich
+                                            sagen, dass das Fahrrad eine der umweltfreundlichsten Alternativen zum Auto
+                                            ist, auch wenn es nicht für jede Strecke geeignet ist. Vielen Dank für Ihre
+                                            Aufmerksamkeit.</p>
                                     </div>
-                                    <h5 class="font-bold text-gray-700 border-b pb-1 mb-2">Fragen der Kursteilnehmer:</h5>
-                                    <p class="mb-1"><strong>Teilnehmer 1:</strong> Glauben Sie, dass sich das Fahrradfahren in großen Städten in Zukunft durchsetzen wird?</p>
-                                    <p class="mb-3 text-brand-700 bg-white p-2 rounded border"><strong>Antwort:</strong> Ja, ich denke, mit besseren Fahrradwegen und mehr Bewusstsein für den Klimaschutz wird das Fahrrad immer wichtiger werden.</p>
-                                    <p class="mb-1"><strong>Teilnehmer 2:</strong> Was würden Sie tun, um mehr Menschen zum Umstieg auf das Fahrrad zu bewegen?</p>
-                                    <p class="text-brand-700 bg-white p-2 rounded border"><strong>Antwort:</strong> Ich würde vor allem sichere Fahrradwege bauen und finanzielle Anreize wie Steuervergünstigungen für Fahrradkäu0fe schaffen.</p>
+                                    <h5 class="font-bold text-gray-700 border-b pb-1 mb-2">Fragen der Kursteilnehmer:
+                                    </h5>
+                                    <p class="mb-1"><strong>Teilnehmer 1:</strong> Glauben Sie, dass sich das
+                                        Fahrradfahren in großen Städten in Zukunft durchsetzen wird?</p>
+                                    <p class="mb-3 text-brand-700 bg-white p-2 rounded border"><strong>Antwort:</strong>
+                                        Ja, ich denke, mit besseren Fahrradwegen und mehr Bewusstsein für den
+                                        Klimaschutz wird das Fahrrad immer wichtiger werden.</p>
+                                    <p class="mb-1"><strong>Teilnehmer 2:</strong> Was würden Sie tun, um mehr Menschen
+                                        zum Umstieg auf das Fahrrad zu bewegen?</p>
+                                    <p class="text-brand-700 bg-white p-2 rounded border"><strong>Antwort:</strong> Ich
+                                        würde vor allem sichere Fahrradwege bauen und finanzielle Anreize wie
+                                        Steuervergünstigungen für Fahrradkäu0fe schaffen.</p>
                                 </div>
                             </div>
                         </div>
@@ -571,98 +992,142 @@
                 <section id="grammatik" class="scroll-mt-12">
                     <div class="bg-gray-800 text-white rounded-2xl shadow-xl overflow-hidden mt-8">
                         <div class="px-8 py-6 border-b border-gray-700">
-                            <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-spell-check text-brand-400 mr-3"></i> Grammatik Übersicht</h2>
-                            <p class="text-gray-300 mt-2 text-sm">Plusquamperfekt, Konjunktionen (bevor/nachdem, sowohl...als auch)</p>
+                            <h2 class="text-2xl font-bold flex items-center"><i
+                                    class="fa-solid fa-spell-check text-brand-400 mr-3"></i> Grammatik Übersicht</h2>
+                            <p class="text-gray-300 mt-2 text-sm">Plusquamperfekt, Konjunktionen (bevor/nachdem,
+                                sowohl...als auch)</p>
                         </div>
-                        
+
                         <div class="p-8 grid grid-cols-1 gap-8">
-                            
+
                             <!-- Plusquamperfekt -->
                             <div>
-                                <h3 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-sm"><i class="fa-solid fa-clock-rotate-left mr-1"></i> Was ist vorher passiert? – Plusquamperfekt</h3>
+                                <h3 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-sm"><i
+                                        class="fa-solid fa-clock-rotate-left mr-1"></i> Was ist vorher passiert? –
+                                    Plusquamperfekt</h3>
                                 <div class="bg-gray-700 p-5 rounded-lg text-sm shadow-inner space-y-4">
                                     <p class="text-gray-300 mb-2">Ergänzen Sie die Sätze im Plusquamperfekt.</p>
-                                    
+
                                     <div>
-                                        <p class="text-gray-400 italic">er • drei Stunden • auf der A2 • im Stau • stehen</p>
+                                        <p class="text-gray-400 italic">er • drei Stunden • auf der A2 • im Stau •
+                                            stehen</p>
                                         <p>Klaus kam zu spät in Hannover an.</p>
-                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Er war drei Stunden auf der A2 im Stau gestanden.</p>
+                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Er war drei Stunden auf
+                                            der A2 im Stau gestanden.</p>
                                     </div>
                                     <div class="border-t border-gray-600 pt-2">
-                                        <p class="text-gray-400 italic">der Anbieter • die Ferienwohnung • doppelt vermieten</p>
+                                        <p class="text-gray-400 italic">der Anbieter • die Ferienwohnung • doppelt
+                                            vermieten</p>
                                         <p>Hanna schrieb einen Beschwerdebrief.</p>
-                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Der Anbieter hatte die Ferienwohnung doppelt vermietet.</p>
+                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Der Anbieter hatte die
+                                            Ferienwohnung doppelt vermietet.</p>
                                     </div>
                                     <div class="border-t border-gray-600 pt-2">
-                                        <p class="text-gray-400 italic">ihr Auto • auf der Fahrt zum Flughafen • kaputtgehen</p>
+                                        <p class="text-gray-400 italic">ihr Auto • auf der Fahrt zum Flughafen •
+                                            kaputtgehen</p>
                                         <p>Eva verpasste ihr Flugzeug.</p>
-                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Ihr Auto war auf der Fahrt zum Flughafen kaputtgegangen.</p>
+                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Ihr Auto war auf der
+                                            Fahrt zum Flughafen kaputtgegangen.</p>
                                     </div>
                                     <div class="border-t border-gray-600 pt-2">
-                                        <p class="text-gray-400 italic">auf dem Bahnhof • es • Probleme mit dem Server • geben</p>
+                                        <p class="text-gray-400 italic">auf dem Bahnhof • es • Probleme mit dem Server •
+                                            geben</p>
                                         <p>Stefan musste sein Bahnticket im Zug kaufen.</p>
-                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Auf dem Bahnhof hatte es Probleme mit dem Server gegeben.</p>
+                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Auf dem Bahnhof hatte es
+                                            Probleme mit dem Server gegeben.</p>
                                     </div>
                                     <div class="border-t border-gray-600 pt-2">
                                         <p class="text-gray-400 italic">sie • ihn • rechtzeitig buchen</p>
                                         <p>Kathrin bezahlte für den Urlaub nur 800 Euro.</p>
-                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Sie hatte ihn rechtzeitig gebucht.</p>
+                                        <p class="text-brand-300 font-semibold mt-1">→ Lösung: Sie hatte ihn rechtzeitig
+                                            gebucht.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Bevor / Nachdem -->
                             <div>
-                                <h3 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-sm"><i class="fa-solid fa-arrows-turn-right mr-1"></i> Nacheinander folgende Handlungen – bevor/nachdem</h3>
+                                <h3 class="text-brand-400 font-bold mb-3 uppercase tracking-wider text-sm"><i
+                                        class="fa-solid fa-arrows-turn-right mr-1"></i> Nacheinander folgende Handlungen
+                                    – bevor/nachdem</h3>
                                 <div class="bg-gray-700 p-5 rounded-lg text-sm shadow-inner space-y-4">
-                                    <p class="text-gray-300 mb-2">Bilden Sie Sätze mit bevor (Präteritum – Präteritum) und nachdem (Plusquamperfekt – Präteritum).</p>
-                                    
+                                    <p class="text-gray-300 mb-2">Bilden Sie Sätze mit bevor (Präteritum – Präteritum)
+                                        und nachdem (Plusquamperfekt – Präteritum).</p>
+
                                     <div>
-                                        <p class="text-gray-200">Im Büro druckte sie noch zwei Dokumente aus. Danach nahm sie ein Taxi zum Flughafen.</p>
-                                        <p class="text-amber-300 mt-1">→ bevor: Bevor sie ein Taxi zum Flughafen nahm, druckte sie im Büro noch zwei Dokumente aus.</p>
-                                        <p class="text-brand-300">→ nachdem: Nachdem sie im Büro noch zwei Dokumente ausgedruckt hatte, nahm sie ein Taxi zum Flughafen.</p>
+                                        <p class="text-gray-200">Im Büro druckte sie noch zwei Dokumente aus. Danach
+                                            nahm sie ein Taxi zum Flughafen.</p>
+                                        <p class="text-amber-300 mt-1">→ bevor: Bevor sie ein Taxi zum Flughafen nahm,
+                                            druckte sie im Büro noch zwei Dokumente aus.</p>
+                                        <p class="text-brand-300">→ nachdem: Nachdem sie im Büro noch zwei Dokumente
+                                            ausgedruckt hatte, nahm sie ein Taxi zum Flughafen.</p>
                                     </div>
                                     <div class="border-t border-gray-600 pt-2">
-                                        <p class="text-gray-200">Sie kaufte sich auf dem Londoner Flughafen einen Kaffee. Danach nahm sie die U-Bahn nach Kensington.</p>
-                                        <p class="text-amber-300 mt-1">→ bevor: Bevor sie die U-Bahn nach Kensington nahm, kaufte sie sich auf dem Londoner Flughafen einen Kaffee.</p>
-                                        <p class="text-brand-300">→ nachdem: Nachdem sie sich auf dem Londoner Flughafen einen Kaffee gekauft hatte, nahm sie die U-Bahn nach Kensington.</p>
+                                        <p class="text-gray-200">Sie kaufte sich auf dem Londoner Flughafen einen
+                                            Kaffee. Danach nahm sie die U-Bahn nach Kensington.</p>
+                                        <p class="text-amber-300 mt-1">→ bevor: Bevor sie die U-Bahn nach Kensington
+                                            nahm, kaufte sie sich auf dem Londoner Flughafen einen Kaffee.</p>
+                                        <p class="text-brand-300">→ nachdem: Nachdem sie sich auf dem Londoner Flughafen
+                                            einen Kaffee gekauft hatte, nahm sie die U-Bahn nach Kensington.</p>
                                     </div>
                                     <div class="border-t border-gray-600 pt-2">
-                                        <p class="text-gray-200">Sie sprach mit einigen Kollegen. Danach begann die Besprechung.</p>
-                                        <p class="text-amber-300 mt-1">→ bevor: Bevor die Besprechung begann, sprach sie mit einigen Kollegen.</p>
-                                        <p class="text-brand-300">→ nachdem: Nachdem sie mit einigen Kollegen gesprochen hatte, begann die Besprechung.</p>
+                                        <p class="text-gray-200">Sie sprach mit einigen Kollegen. Danach begann die
+                                            Besprechung.</p>
+                                        <p class="text-amber-300 mt-1">→ bevor: Bevor die Besprechung begann, sprach sie
+                                            mit einigen Kollegen.</p>
+                                        <p class="text-brand-300">→ nachdem: Nachdem sie mit einigen Kollegen gesprochen
+                                            hatte, begann die Besprechung.</p>
                                     </div>
                                     <div class="border-t border-gray-600 pt-2">
-                                        <p class="text-gray-200">Eva präsentierte ihre Arbeitsergebnisse. Danach besuchte sie eine Freundin in ihrer neuen Wohnung.</p>
-                                        <p class="text-amber-300 mt-1">→ bevor: Bevor sie eine Freundin in ihrer neuen Wohnung besuchte, präsentierte Eva ihre Arbeitsergebnisse.</p>
-                                        <p class="text-brand-300">→ nachdem: Nachdem Eva ihre Arbeitsergebnisse präsentiert hatte, besuchte sie eine Freundin in ihrer neuen Wohnung.</p>
+                                        <p class="text-gray-200">Eva präsentierte ihre Arbeitsergebnisse. Danach
+                                            besuchte sie eine Freundin in ihrer neuen Wohnung.</p>
+                                        <p class="text-amber-300 mt-1">→ bevor: Bevor sie eine Freundin in ihrer neuen
+                                            Wohnung besuchte, präsentierte Eva ihre Arbeitsergebnisse.</p>
+                                        <p class="text-brand-300">→ nachdem: Nachdem Eva ihre Arbeitsergebnisse
+                                            präsentiert hatte, besuchte sie eine Freundin in ihrer neuen Wohnung.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Konjunktionen -->
                             <div class=" border-t border-gray-700 pt-6">
-                                <h3 class="text-yellow-400 font-bold mb-3 uppercase tracking-wider text-sm"><i class="fa-solid fa-link mr-1"></i> Konjunktionen</h3>
+                                <h3 class="text-yellow-400 font-bold mb-3 uppercase tracking-wider text-sm"><i
+                                        class="fa-solid fa-link mr-1"></i> Konjunktionen</h3>
                                 <div class="bg-gray-700 p-5 rounded-lg text-sm shadow-inner">
-                                    <p class="text-gray-300 mb-4">(sowohl … als auch / weder … noch / nicht nur … sondern auch)<br>Formen Sie die Sätze um. Verwenden Sie die angegebenen Konjunktionen.</p>
-                                    
+                                    <p class="text-gray-300 mb-4">(sowohl … als auch / weder … noch / nicht nur …
+                                        sondern auch)<br>Formen Sie die Sätze um. Verwenden Sie die angegebenen
+                                        Konjunktionen.</p>
+
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
-                                            <p class="text-gray-200">Für die Reisenden stellten Räuber und wilde Tiere eine große Gefahr dar. (sowohl • als auch)</p>
-                                            <p class="text-brand-300 font-semibold mt-1 mb-3">→ Lösung: Für die Reisenden stellten sowohl Räuber als auch wilde Tiere eine große Gefahr dar.</p>
-                                            
-                                            <p class="text-gray-200">Es gab keine ausgebauten Straßen und keine Wegweiser. (weder • noch)</p>
-                                            <p class="text-brand-300 font-semibold mt-1 mb-3">→ Lösung: Es gab weder ausgebaute Straßen noch Wegweiser.</p>
-                                            
-                                            <p class="text-gray-200">Im 18. Jahrhundert befanden sich Wechselwäsche und Medikamente im Reisegepäck. (nicht nur • sondern auch)</p>
-                                            <p class="text-brand-300 font-semibold mt-1">→ Lösung: Im 18. Jahrhundert befanden sich nicht nur Wechselwäsche, sondern auch Medikamente im Reisegepäck.</p>
+                                            <p class="text-gray-200">Für die Reisenden stellten Räuber und wilde Tiere
+                                                eine große Gefahr dar. (sowohl • als auch)</p>
+                                            <p class="text-brand-300 font-semibold mt-1 mb-3">→ Lösung: Für die
+                                                Reisenden stellten sowohl Räuber als auch wilde Tiere eine große Gefahr
+                                                dar.</p>
+
+                                            <p class="text-gray-200">Es gab keine ausgebauten Straßen und keine
+                                                Wegweiser. (weder • noch)</p>
+                                            <p class="text-brand-300 font-semibold mt-1 mb-3">→ Lösung: Es gab weder
+                                                ausgebaute Straßen noch Wegweiser.</p>
+
+                                            <p class="text-gray-200">Im 18. Jahrhundert befanden sich Wechselwäsche und
+                                                Medikamente im Reisegepäck. (nicht nur • sondern auch)</p>
+                                            <p class="text-brand-300 font-semibold mt-1">→ Lösung: Im 18. Jahrhundert
+                                                befanden sich nicht nur Wechselwäsche, sondern auch Medikamente im
+                                                Reisegepäck.</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-200">Forschungsreisende wollten neue Gebiete und neue Pflanzen entdecken. (sowohl • als auch)</p>
-                                            <p class="text-brand-300 font-semibold mt-1 mb-3">→ Lösung: Forschungsreisende wollten sowohl neue Gebiete als auch neue Pflanzen entdecken.</p>
-                                            
-                                            <p class="text-gray-200">Menschen in der DDR konnten nicht nach Westeuropa und nicht nach Amerika reisen. (weder • noch)</p>
-                                            <p class="text-brand-300 font-semibold mt-1">→ Lösung: Menschen in der DDR konnten weder nach Westeuropa noch nach Amerika reisen.</p>
+                                            <p class="text-gray-200">Forschungsreisende wollten neue Gebiete und neue
+                                                Pflanzen entdecken. (sowohl • als auch)</p>
+                                            <p class="text-brand-300 font-semibold mt-1 mb-3">→ Lösung:
+                                                Forschungsreisende wollten sowohl neue Gebiete als auch neue Pflanzen
+                                                entdecken.</p>
+
+                                            <p class="text-gray-200">Menschen in der DDR konnten nicht nach Westeuropa
+                                                und nicht nach Amerika reisen. (weder • noch)</p>
+                                            <p class="text-brand-300 font-semibold mt-1">→ Lösung: Menschen in der DDR
+                                                konnten weder nach Westeuropa noch nach Amerika reisen.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -687,14 +1152,14 @@
 
             // Add smooth scroll click events
             navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function (e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href').substring(1);
                     const targetSection = document.getElementById(targetId);
-                    
+
                     if (targetSection) {
                         targetSection.scrollIntoView({ block: 'start' });
-                        
+
                         // Update active state manually on click
                         navLinks.forEach(l => l.classList.remove('active'));
                         this.classList.add('active');
@@ -728,7 +1193,7 @@
             function makeWordsTranslatable() {
                 // Select paragraphs, list items, headings, and dialogues that contain the text
                 const textElements = document.querySelectorAll('p, li, h1, h2, h3, h4, h5, .dialogue-a, .dialogue-b, .dialogue-moderator, strong');
-                
+
                 textElements.forEach(el => {
                     // Skip elements that shouldn't be processed directly (like icons or tooltips)
                     if (el.classList.contains('word-tooltip') || el.closest('.word-tooltip') || el.tagName.toLowerCase() === 'i') {
@@ -741,7 +1206,7 @@
                     let node;
                     while (node = walker.nextNode()) {
                         // Skip text nodes inside already processed spans or icons
-                        if (node.parentElement.classList.contains('translatable-word') || 
+                        if (node.parentElement.classList.contains('translatable-word') ||
                             node.parentElement.tagName.toLowerCase() === 'i' ||
                             node.nodeValue.trim() === '') {
                             continue;
@@ -758,7 +1223,7 @@
                                 const span = document.createElement('span');
                                 span.className = 'translatable-word';
                                 span.textContent = word;
-                                
+
                                 // Create tooltip element inside the word
                                 const tooltip = document.createElement('span');
                                 tooltip.className = 'word-tooltip';
@@ -856,7 +1321,7 @@
                     'section .dialogue-a, section .dialogue-b, section .dialogue-moderator, ' +
                     'section div[class*="border-l-4"] > p'
                 );
-                
+
                 textElements.forEach(el => {
                     // Skip very short text, headers, buttons, icons
                     const text = el.textContent.trim();
@@ -865,7 +1330,7 @@
                     if (el.classList.contains('para-translation')) return;
                     if (el.closest('nav') || el.closest('aside') || el.closest('header')) return;
                     if (el.classList.contains('english-text')) return;
-                    
+
                     const btn = document.createElement('button');
                     btn.className = 'para-translate-btn';
                     btn.innerHTML = '<i class="fa-solid fa-language"></i> Translate';
@@ -876,32 +1341,32 @@
                     el.appendChild(btn);
                 });
             }
-            
+
             const paraTranslationCache = {};
-            
+
             async function translateParagraph(el, btn) {
                 // Get clean text without the button text
                 const clonedEl = el.cloneNode(true);
                 clonedEl.querySelectorAll('.para-translate-btn, .para-translation').forEach(b => b.remove());
                 const text = clonedEl.textContent.trim();
-                
+
                 if (!text || text.length < 10) return;
-                
+
                 // Check cache
                 const cacheKey = text.substring(0, 100);
                 if (paraTranslationCache[cacheKey]) {
                     showParagraphTranslation(el, paraTranslationCache[cacheKey], btn);
                     return;
                 }
-                
+
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
                 btn.disabled = true;
-                
+
                 try {
                     // Use MyMemory API (free, no key needed)
                     const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0, 500))}&langpair=de|en`);
                     const data = await response.json();
-                    
+
                     if (data && data.responseData && data.responseData.translatedText) {
                         const translation = data.responseData.translatedText;
                         paraTranslationCache[cacheKey] = translation;
@@ -913,10 +1378,10 @@
                     console.error('Paragraph translation error:', error);
                     btn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Failed';
                 }
-                
+
                 setTimeout(() => { btn.disabled = false; }, 1000);
             }
-            
+
             function showParagraphTranslation(el, translation, btn) {
                 // Remove existing translation if toggling
                 const existing = el.querySelector('.para-translation');
@@ -926,7 +1391,7 @@
                     btn.classList.remove('translated');
                     return;
                 }
-                
+
                 const transEl = document.createElement('span');
                 transEl.className = 'para-translation';
                 transEl.textContent = translation;
@@ -934,11 +1399,12 @@
                 btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
                 btn.classList.add('translated');
             }
-            
+
             // Initialize paragraph translate buttons
             addParagraphTranslateButtons();
-    
+
         });
     </script>
 </body>
+
 </html>
