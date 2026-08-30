@@ -191,7 +191,7 @@
             <button class="text-gray-500 hover:text-gray-800" onclick="alert('Sidebar navigation available on desktop view.')"><i class="fa-solid fa-bars text-xl"></i></button>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12" id="main-scroll-area">
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 relative" id="main-scroll-area">
             <div class="max-w-4xl mx-auto space-y-12 pb-20">
                 
                 <!-- Title Block -->
@@ -358,7 +358,7 @@
 
                 <section id="aufgabe-9" class="scroll-mt-12">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><i class="fa-solid fa-headphones text-brand-500 mr-3"></i> 9. Transkription Hörtext: Historische Gebäude – Die Wiener Hofburg</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-headphones text-brand-500 mr-3"></i> 9. Transkription Hörtext: Historische Gebäude – Die Wiener Hofburg</h2>
                         
                         <div class="dialogue-moderator text-sm mb-6">
                             <strong class="text-indigo-700">Reiseleiter:</strong> So, liebe Gäste, wir erreichen jetzt gleich die Wiener Hofburg. Bevor Sie den Bus verlassen, möchte ich Ihnen noch ein paar allgemeine Informationen zur Hofburg geben und Sie über den weiteren Zeitplan informieren. Wie Sie vielleicht wissen, war Österreich über viele Jahrhunderte eine Monarchie. Die Hofburg wurde im 13. Jahrhundert unter der Herrschaft von König Rudolf I. gebaut und sie war bis 1918 die Residenz der Habsburger Könige und Kaiser. Auch heute wird das historische Gebäude noch aktiv genutzt: Es dient seit 1945 als Amtssitz des österreichischen Bundespräsidenten, das heißt, der Bundespräsident arbeitet hier und kann den Präsidentenpalast auch für offizielle Anlässe nutzen.
@@ -688,7 +688,7 @@
                 <section id="aufgabe-17" class="scroll-mt-12">
                     <div class="bg-gray-800 text-white rounded-2xl shadow-xl overflow-hidden mt-8">
                         <div class="px-8 py-6 border-b border-gray-700">
-                            <h2 class="text-2xl font-bold flex items-center"><i class="fa-solid fa-file-signature text-brand-400 mr-3"></i> 17. Bewerbung um ein Praktikum bei einem Bundestagsabgeordneten</h2>
+                            <h2 class="text-2xl font-bold"><i class="fa-solid fa-file-signature text-brand-400 mr-3"></i> 17. Bewerbung um ein Praktikum bei einem Bundestagsabgeordneten</h2>
                         </div>
                         
                         <div class="p-8">
@@ -735,7 +735,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('section[id]');
+            const sections = document.querySelectorAll('[id^="sec-"]');
             const navLinks = document.querySelectorAll('.nav-link');
             const mainScrollArea = document.getElementById('main-scroll-area');
 
@@ -747,7 +747,13 @@
                     const targetSection = document.getElementById(targetId);
                     
                     if (targetSection) {
-                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        
+                        const container = document.getElementById('main-scroll-area');
+                        container.scrollTo({
+                            top: targetSection.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+    
                         
                         // Update active state manually on click
                         navLinks.forEach(l => l.classList.remove('active'));
